@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Mi Pizzería</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f7f5f2;color:#1a1a1a;min-height:100vh;padding-bottom:80px}
+.header{background:#fff;border-bottom:1px solid #e8e2db;padding:14px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
+.logo{width:38px;height:38px;background:#D85A30;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo svg{width:20px;height:20px}
+.header h1{font-size:17px;font-weight:600;color:#1a1a1a}
+.header p{font-size:12px;color:#999;margin-top:1px}
+.nav{display:flex;background:#fff;border-top:1px solid #e8e2db;position:fixed;bottom:0;left:0;right:0;z-index:100;padding-bottom:env(safe-area-inset-bottom)}
+.nb{flex:1;padding:10px 4px 8px;border:none;background:none;color:#bbb;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:500}
+.nb svg{width:22px;height:22px;stroke-width:1.5}
+.nb.on{color:#D85A30}
+.content{padding:16px}
+.sec{display:none}.sec.on{display:block}
+.card{background:#fff;border-radius:14px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.ch{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.ci{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ci svg{width:16px;height:16px}
+.ct{font-size:14px;font-weight:600;color:#1a1a1a}
+.cs{font-size:11px;color:#aaa;margin-top:1px}
+.chips{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
+.chip{background:#fff;border-radius:12px;padding:12px 10px;box-shadow:0 1px 3px rgba(0,0,0,.06);text-align:center}
+.chl{font-size:10px;color:#999;margin-bottom:4px;font-weight:500}
+.chv{font-size:22px;font-weight:700;color:#1a1a1a}
+.chv.lo{color:#E24B4A}
+.chs{font-size:10px;color:#bbb;margin-top:2px}
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.r3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
+.f label{font-size:12px;color:#888;display:block;margin-bottom:6px;font-weight:500}
+.f input,.f select{width:100%;padding:10px 12px;border:1.5px solid #e8e2db;border-radius:10px;font-size:15px;background:#fafafa;color:#1a1a1a;-webkit-appearance:none}
+.f input:focus,.f select:focus{outline:none;border-color:#D85A30;background:#fff}
+.trow{display:flex;justify-content:space-between;align-items:center;background:#FAECE7;border-radius:10px;padding:12px 14px;margin:12px 0}
+.tl{font-size:13px;color:#712B13;font-weight:600}
+.ta{font-size:22px;font-weight:700;color:#993C1D}
+.abtn{width:100%;padding:13px;border-radius:10px;border:none;background:#D85A30;font-size:14px;font-weight:600;cursor:pointer;color:#fff}
+.abtn:active{background:#B94820}
+.abtn.purp{background:#534AB7}
+.abtn.purp:active{background:#3C3489}
+.pline{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f0ece8}
+.pline:last-of-type{border-bottom:none}
+.pline span{font-size:14px;color:#888}
+.pline input{width:110px;text-align:right;padding:8px 10px;border:1.5px solid #e8e2db;border-radius:8px;font-size:15px;background:#fafafa;color:#1a1a1a}
+.li{display:flex;justify-content:space-between;align-items:flex-start;padding:12px 0;border-bottom:1px solid #f0ece8}
+.li:last-child{border-bottom:none}
+.lim{font-size:14px;font-weight:600;color:#1a1a1a}
+.lis{font-size:11px;color:#aaa;margin-top:3px}
+.pl{font-size:11px;padding:4px 10px;border-radius:999px;font-weight:600;white-space:nowrap}
+.ptl{background:#E1F5EE;color:#085041}
+.pam{background:#FFF3E0;color:#7A4F00}
+.prd{background:#FCEBEB;color:#791F1F}
+.pi{border:1.5px solid #e8e2db;border-radius:12px;padding:12px 14px;margin-bottom:10px;background:#fff}
+.pi:last-child{margin-bottom:0}
+.pi.pend{border-left:4px solid #F59E0B}
+.pi.done{border-left:4px solid #34D399;opacity:.8}
+.ptop{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;gap:8px}
+.pbot{display:flex;justify-content:space-between;align-items:center}
+.delbtn{font-size:12px;padding:8px 14px;border-radius:999px;border:1.5px solid #34D399;background:#E1F5EE;color:#085041;cursor:pointer;font-weight:600}
+.tbrow{display:flex;gap:6px;margin-bottom:14px}
+.tb{padding:7px 14px;border-radius:999px;border:1.5px solid #e8e2db;background:#fff;font-size:12px;cursor:pointer;color:#888;font-weight:500}
+.tb.on{background:#D85A30;border-color:#D85A30;color:#fff;font-weight:600}
+.met{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.mc{border-radius:12px;padding:14px}
+.ml{font-size:11px;font-weight:600;margin-bottom:5px}
+.mv{font-size:20px;font-weight:700}
+.gbox{background:#fff;border-radius:14px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.gbox-title{font-size:11px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.grow{display:flex;justify-content:space-between;align-items:center;font-size:14px;padding:5px 0}
+.gsep{height:1px;background:#f0ece8;margin:8px 0}
+.bw{height:6px;background:#f0ece8;border-radius:999px;margin-top:6px}
+.bf{height:6px;border-radius:999px;background:#D85A30}
+.warn{display:none;font-size:12px;color:#A32D2D;background:#FCEBEB;border-radius:10px;padding:10px 12px;margin-bottom:10px;font-weight:500}
+.note{font-size:11px;color:#bbb;margin-top:10px;line-height:1.6}
+.empty{color:#ccc;font-size:13px;text-align:center;padding:2rem 0}
+.rn{width:22px;height:22px;border-radius:50%;background:#f0ece8;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#888;margin-right:8px;flex-shrink:0}
+.rn.g{background:#FFF3E0;color:#7A4F00}
+.neta-big{font-size:26px;font-weight:700}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg></div>
+  <div><h1>Mi pizzería</h1><p>Panel de gestión</p></div>
+</div>
+<div class="content">
+<div id="sec-stock" class="sec on">
+  <div class="chips">
+    <div class="chip"><div class="chl">Jamón</div><div class="chv" id="dj">0</div><div class="chs">unidades</div></div>
+    <div class="chip"><div class="chl">Cebolla</div><div class="chv" id="dc">0</div><div class="chs">unidades</div></div>
+    <div class="chip"><div class="chl">Muzza</div><div class="chv" id="dm">0</div><div class="chs">unidades</div></div>
+  </div>
+  <div class="card">
+    <div class="ch"><div class="ci" style="background:#FAECE7"><svg viewBox="0 0 16 16" fill="none" stroke="#993C1D" stroke-width="1.5"><path d="M8 2v12M2 8h12"/></svg></div><div><div class="ct">Precios por pizza</div><div class="cs">Afecta calculos futuros</div></div></div>
+    <div class="pline"><span>Jamon ($)</span><input type="number" id="pj" value="3500" oninput="calcP();save()"></div>
+    <div class="pline"><span>Cebolla ($)</span><input type="number" id="pc" value="3200" oninput="calcP();save()"></div>
+    <div class="pline"><span>Muzzarella ($)</span><input type="number" id="pm" value="3000" oninput="calcP();save()"></div>
+    <p class="note">Los pedidos ya registrados conservan su precio original.</p>
+  </div>
+  <div class="card">
+    <div class="ch"><div class="ci" style="background:#FFF3E0"><svg viewBox="0 0 16 16" fill="none" stroke="#7A4F00" stroke-width="1.5"><rect x="2" y="4" width="12" height="9" rx="1"/><path d="M5 4V3a1 1 0 011-1h4a1 1 0 011 1v1"/></svg></div><div><div class="ct">Cargar stock</div></div></div>
+    <div class="r2">
+      <div class="f"><label>Tipo</label><select id="sti"><option value="j">Jamon</option><option value="c">Cebolla</option><option value="m">Muzzarella</option></select></div>
+      <div class="f"><label>Cantidad</label><input type="number" id="sq" placeholder="0" min="0"></div>
+    </div>
+    <div class="r2">
+      <div class="f"><label>Costo unitario ($)</label><input type="number" id="sc" placeholder="0"></div>
+      <div class="f"><label>Mes</label><input type="month" id="sm"></div>
+    </div>
+    <button class="abtn" onclick="addStock()">+ Agregar al stock</button>
+  </div>
+  <div class="card">
+    <div class="ch"><div class="ci" style="background:#E1F5EE"><svg viewBox="0 0 16 16" fill="none" stroke="#0F6E56" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h8"/></svg></div><div><div class="ct">Historial de ingresos</div></div></div>
+    <div id="slist"><div class="empty">Sin registros aun</div></div>
+  </div>
+</div>
+<div id="sec-pedidos" class="sec">
+  <div class="card">
+    <div class="ch"><div class="ci" style="background:#FAECE7"><svg viewBox="0 0 16 16" fill="none" stroke="#993C1D" stroke-width="1.5"><path d="M8 2v12M2 8h12"/></svg></div><div><div class="ct">Nuevo pedido</div><div class="cs">Se descuenta del stock al registrar</div></div></div>
+    <div class="r2">
+      <div class="f"><label>Cliente</label><input type="text" id="pnom" placeholder="Nombre"></div>
+      <div class="f"><label>Fecha</label><input type="date" id="pfec"></div>
+    </div>
+    <div class="r3">
+      <div class="f"><label id="lj">Jamon</label><input type="number" id="pqj" value="0" min="0" oninput="calcP()"></div>
+      <div class="f"><label id="lc">Cebolla</label><input type="number" id="pqc" value="0" min="0" oninput="calcP()"></div>
+      <div class="f"><label id="lm">Muzza</label><input type="number" id="pqm" value="0" min="0" oninput="calcP()"></div>
+    </div>
+    <div class="warn" id="pwarn"></div>
+    <div class="trow"><span class="tl">Total del pedido</span><span class="ta" id="ptot">$0</span></div>
+    <button class="abtn" onclick="addPed()">+ Registrar como pendiente</button>
+  </div>
+  <div class="card">
+    <div class="ch"><div class="ci" style="background:#E1F5EE"><svg viewBox="0 0 16 16" fill="none" stroke="#0F6E56" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h8"/></svg></div><div><div class="ct">Pedidos</div></div></div>
+    <div class="tbrow">
+      <button class="tb on" id="tf-todos" onclick="filtrar('todos','tf-todos')">Todos</button>
+      <button class="tb" id="tf-pend" onclick="filtrar('pend','tf-pend')">Pendientes</button>
+      <button class="tb" id="tf-done" onclick="filtrar('done','tf-done')">Entregados</button>
+    </div>
+    <div id="plist"><div class="empty">Sin pedidos aun</div></div>
+  </div>
+</div>
+<div id="sec-ganancias" class="sec">
+  <div class="met">
+    <div class="mc" style="background:#E1F5EE"><div class="ml" style="color:#0F6E56">Ingresos totales</div><div class="mv" style="color:#085041" id="gv">$0</div></div>
+    <div class="mc" style="background:#FCEBEB"><div class="ml" style="color:#A32D2D">Gastos totales</div><div class="mv" style="color:#791F1F" id="gg">$0</div></div>
+  </div>
+  <div class="gbox">
+    <div class="gbox-title">Desglose de gastos</div>
+    <div class="grow"><span style="color:#888">Compra de stock</span><span id="gstock" style="font-weight:600">$0</span></div>
+    <div class="grow"><span style="color:#888">Gastos catering</span><span id="gcater" style="font-weight:600">$0</span></div>
+    <div class="gsep"></div>
+    <div class="grow"><span style="font-weight:600;font-size:15px">Ganancia neta</span><span class="neta-big" id="gn">$0</span></div>
+  </div>
+  <div class="card">
+    <div class="ch"><div class="ci" style="background:#FFF3E0"><svg viewBox="0 0 16 16" fill="none" stroke="#7A4F00" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg></div><div><div class="ct">Top clientes</div><div class="cs">Por total de ventas entregadas</div></div></div>
+    <div id="toplist"><div class="empty">Sin datos aun</div></div>
+  </div>
+  <div class="card">
+    <div class="ch"><div class="ci" style="background:#FAECE7"><svg viewBox="0 0 16 16" fill="none" stroke="#993C1D" stroke-width="1.5"><path d="M2 12l3-4 3 2 3-5 3 3"/></svg></div><div><div class="ct">Ventas por tipo</div></div></div>
+    <div id="vtipo"><div class="empty">Sin datos aun</div></div>
+  </div>
+</div>
+<div id="sec-catering" class="sec">
+  <div class="card">
+    <div class="ch"><div class="ci" style="background:#EEEDFE"><svg viewBox="0 0 16 16" fill="none" stroke="#534AB7" stroke-width="1.5"><path d="M2 13h12M4 13V6M12 13V6M8 13V4M1 6h14"/></svg></div><div><div class="ct">Nuevo evento</div><div class="cs">Los gastos impactan en ganancia neta</div></div></div>
+    <div class="r2">
+      <div class="f"><label>Cliente / Evento</label><input type="text" id="cnom" placeholder="Nombre"></div>
+      <div class="f"><label>Fecha</label><input type="date" id="cfec"></div>
+    </div>
+    <div class="r2">
+      <div class="f"><label>Ingresos ($)</label><input type="number" id="cing" placeholder="0" oninput="calcCat()"></div>
+      <div class="f"><label>Gastos ($)</label><input type="number" id="cgas" placeholder="0" oninput="calcCat()"></div>
+    </div>
+    <div class="f" style="margin-bottom:12px"><label>Detalle de gastos</label><input type="text" id="cdet" placeholder="Ingredientes, transporte..."></div>
+    <div class="trow" style="background:#EEEDFE"><span class="tl" style="color:#534AB7">Resultado neto</span><span class="ta" style="color:#3C3489" id="cnet">$0</span></div>
+    <button class="abtn purp" onclick="addCat()">+ Registrar catering</button>
+  </div>
+  <div class="card">
+    <div class="ch"><div class="ci" style="background:#E1F5EE"><svg viewBox="0 0 16 16" fill="none" stroke="#0F6E56" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h8"/></svg></div><div><div class="ct">Historial de catering</div></div></div>
+    <div id="clist"><div class="empty">Sin registros aun</div></div>
+  </div>
+</div>
+</div>
+<nav class="nav">
+  <button class="nb on" id="btn-stock" onclick="show('stock','btn-stock')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+    Stock
+  </button>
+  <button class="nb" id="btn-pedidos" onclick="show('pedidos','btn-pedidos')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12l2 14H4L6 2z"/><circle cx="9" cy="20.5" r="1.5"/><circle cx="15" cy="20.5" r="1.5"/></svg>
+    Pedidos
+  </button>
+  <button class="nb" id="btn-ganancias" onclick="show('ganancias','btn-ganancias')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l4-6 4 3 4-7 4 4"/></svg>
+    Ganancias
+  </button>
+  <button class="nb" id="btn-catering" onclick="show('catering','btn-catering')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19h18M6 19V9M18 19V9M12 19V6M2 9h20"/></svg>
+    Catering
+  </button>
+</nav>
+<script>
+var stocks=[],peds=[],cats=[],pfilt='todos';
+var disp={j:0,c:0,m:0};
+function save(){try{localStorage.setItem('piz_s',JSON.stringify(stocks));localStorage.setItem('piz_p',JSON.stringify(peds));localStorage.setItem('piz_c',JSON.stringify(cats));localStorage.setItem('piz_d',JSON.stringify(disp));localStorage.setItem('piz_pr',JSON.stringify({pj:document.getElementById('pj').value,pc:document.getElementById('pc').value,pm:document.getElementById('pm').value}));}catch(e){}}
+function load(){try{var s=localStorage.getItem('piz_s');if(s)stocks=JSON.parse(s);var p=localStorage.getItem('piz_p');if(p)peds=JSON.parse(p);var c=localStorage.getItem('piz_c');if(c)cats=JSON.parse(c);var d=localStorage.getItem('piz_d');if(d)disp=JSON.parse(d);var pr=localStorage.getItem('piz_pr');if(pr){var v=JSON.parse(pr);document.getElementById('pj').value=v.pj;document.getElementById('pc').value=v.pc;document.getElementById('pm').value=v.pm;}}catch(e){}}
+function show(sec,btnId){document.querySelectorAll('.sec').forEach(function(s){s.classList.remove('on')});document.querySelectorAll('.nb').forEach(function(b){b.classList.remove('on')});document.getElementById('sec-'+sec).classList.add('on');document.getElementById(btnId).classList.add('on');if(sec==='ganancias')renderGan();if(sec==='pedidos')updHints();window.scrollTo(0,0);}
+function fmt(n){return '$'+Math.round(n).toLocaleString('es-AR')}
+function updChips(){var ej=document.getElementById('dj'),ec=document.getElementById('dc'),em=document.getElementById('dm');ej.textContent=disp.j;ej.className='chv'+(disp.j<=2?' lo':'');ec.textContent=disp.c;ec.className='chv'+(disp.c<=2?' lo':'');em.textContent=disp.m;em.className='chv'+(disp.m<=2?' lo':'');updHints();}
+function updHints(){var lj=document.getElementById('lj'),lc=document.getElementById('lc'),lm=document.getElementById('lm');if(lj)lj.textContent='Jamon ('+disp.j+')';if(lc)lc.textContent='Cebolla ('+disp.c+')';if(lm)lm.textContent='Muzza ('+disp.m+')';}
+function calcP(){var pj=parseFloat(document.getElementById('pj').value)||0,pc=parseFloat(document.getElementById('pc').value)||0,pm=parseFloat(document.getElementById('pm').value)||0,qj=parseFloat(document.getElementById('pqj').value)||0,qc=parseFloat(document.getElementById('pqc').value)||0,qm=parseFloat(document.getElementById('pqm').value)||0;document.getElementById('ptot').textContent=fmt(qj*pj+qc*pc+qm*pm);var w=[];if(qj>disp.j)w.push('Jamon: pedis '+qj+', hay '+disp.j);if(qc>disp.c)w.push('Cebolla: pedis '+qc+', hay '+disp.c);if(qm>disp.m)w.push('Muzza: pedis '+qm+', hay '+disp.m);var we=document.getElementById('pwarn');if(w.length){we.style.display='block';we.textContent='Stock insuficiente - '+w.join(' / ');}else{we.style.display='none';}}
+function calcCat(){var i=parseFloat(document.getElementById('cing').value)||0,g=parseFloat(document.getElementById('cgas').value)||0,n=i-g;document.getElementById('cnet').textContent=fmt(n);document.getElementById('cnet').style.color=n>=0?'#3C3489':'#791F1F';}
+function renderSlist(){var labels={j:'Jamon',c:'Cebolla',m:'Muzzarella'},el=document.getElementById('slist');if(!stocks.length){el.innerHTML='<div class="empty">Sin registros aun</div>';return;}el.innerHTML=stocks.slice().reverse().map(function(s){return '<div class="li"><div><div class="lim">'+labels[s.tipo]+' - '+s.qty+' u.</div><div class="lis">'+(s.mes||'Sin mes')+'</div></div><div style="text-align:right"><span class="pl pam">'+fmt(s.cost)+'/u</span><div class="lis">Total: '+fmt(s.cost*s.qty)+'</div></div></div>';}).join('');}
+function addStock(){var tipo=document.getElementById('sti').value,qty=parseFloat(document.getElementById('sq').value)||0,cost=parseFloat(document.getElementById('sc').value)||0,mes=document.getElementById('sm').value;if(!qty)return;stocks.push({tipo:tipo,qty:qty,cost:cost,mes:mes});disp[tipo]+=qty;updChips();renderSlist();save();document.getElementById('sq').value='';document.getElementById('sc').value='';}
+function addPed(){var nom=document.getElementById('pnom').value.trim(),fec=document.getElementById('pfec').value,qj=parseFloat(document.getElementById('pqj').value)||0,qc=parseFloat(document.getElementById('pqc').value)||0,qm=parseFloat(document.getElementById('pqm').value)||0;if(!nom||(!qj&&!qc&&!qm))return;if(qj>disp.j||qc>disp.c||qm>disp.m){var we=document.getElementById('pwarn');we.style.display='block';we.textContent='No hay stock suficiente para este pedido.';return;}var pj=parseFloat(document.getElementById('pj').value)||0,pc=parseFloat(document.getElementById('pc').value)||0,pm=parseFloat(document.getElementById('pm').value)||0,tot=qj*pj+qc*pc+qm*pm,id=Date.now();peds.push({id:id,nom:nom,fec:fec,qj:qj,qc:qc,qm:qm,tot:tot,pj:pj,pc:pc,pm:pm,est:'pend'});disp.j-=qj;disp.c-=qc;disp.m-=qm;updChips();renderPeds();save();document.getElementById('pnom').value='';document.getElementById('pqj').value=0;document.getElementById('pqc').value=0;document.getElementById('pqm').value=0;document.getElementById('pwarn').style.display='none';calcP();}
+function entregar(id){for(var i=0;i<peds.length;i++){if(peds[i].id===id){peds[i].est='done';break;}}renderPeds();save();}
+function filtrar(f,btnId){pfilt=f;document.querySelectorAll('.tb').forEach(function(b){b.classList.remove('on')});document.getElementById(btnId).classList.add('on');renderPeds();}
+function renderPeds(){var lista=peds.filter(function(p){return pfilt==='todos'||p.est===pfilt;}).slice().reverse(),el=document.getElementById('plist');if(!lista.length){el.innerHTML='<div class="empty">Sin pedidos aun</div>';return;}el.innerHTML=lista.map(function(p){var pizzas=[p.qj?p.qj+' jamon':'',p.qc?p.qc+' cebolla':'',p.qm?p.qm+' muzza':''].filter(Boolean).join(', '),btn=p.est==='pend'?'<button class="delbtn" onclick="entregar('+p.id+')">Marcar entregado</button>':'<span style="font-size:11px;color:#bbb">Completado</span>',badge=p.est==='pend'?'<span class="pl pam">Pendiente</span>':'<span class="pl ptl">Entregado</span>';return '<div class="pi '+p.est+'"><div class="ptop"><div><div class="lim">'+p.nom+'</div><div class="lis">'+(p.fec||'Sin fecha')+' / '+pizzas+'</div></div>'+badge+'</div><div class="pbot"><span style="font-size:16px;font-weight:700">'+fmt(p.tot)+'</span>'+btn+'</div></div>';}).join('');}
+function renderGan(){var ent=peds.filter(function(p){return p.est==='done';}),ventas=ent.reduce(function(a,p){return a+p.tot;},0),catIng=cats.reduce(function(a,c){return a+c.ing;},0),catGas=cats.reduce(function(a,c){return a+c.gas;},0),stockGas=stocks.reduce(function(a,s){return a+s.cost*s.qty;},0),totalIng=ventas+catIng,totalGas=stockGas+catGas,neta=totalIng-totalGas;document.getElementById('gv').textContent=fmt(totalIng);document.getElementById('gg').textContent=fmt(totalGas);document.getElementById('gstock').textContent=fmt(stockGas);document.getElementById('gcater').textContent=fmt(catGas);var gne=document.getElementById('gn');gne.textContent=fmt(neta);gne.style.color=neta>=0?'#1D9E75':'#E24B4A';var cl={};ent.forEach(function(p){cl[p.nom]=(cl[p.nom]||0)+p.tot;});cats.forEach(function(c){cl[c.nom]=(cl[c.nom]||0)+c.ing;});var sorted=Object.keys(cl).map(function(k){return[k,cl[k]];}).sort(function(a,b){return b[1]-a[1];}).slice(0,5),te=document.getElementById('toplist');if(!sorted.length){te.innerHTML='<div class="empty">Sin datos aun</div>';}else{te.innerHTML=sorted.map(function(x,i){return '<div class="li"><div style="display:flex;align-items:center"><span class="rn'+(i===0?' g':'')+'>'+(i+1)+'</span><span class="lim">'+x[0]+'</span></div><span style="font-size:15px;font-weight:700">'+fmt(x[1])+'</span></div>';}).join('');}var tj=ent.reduce(function(a,p){return a+p.qj*p.pj;},0),tc=ent.reduce(function(a,p){return a+p.qc*p.pc;},0),tm=ent.reduce(function(a,p){return a+p.qm*p.pm;},0),tt=tj+tc+tm||1,ve=document.getElementById('vtipo');if(!ent.length){ve.innerHTML='<div class="empty">Sin datos aun</div>';}else{ve.innerHTML=[['Jamon',tj],['Cebolla',tc],['Muzzarella',tm]].map(function(x){return '<div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:14px;color:#888">'+x[0]+'</span><span style="font-size:14px;font-weight:600">'+fmt(x[1])+' <span style="color:#bbb;font-weight:400">'+Math.round(x[1]/tt*100)+'%</span></span></div><div class="bw"><div class="bf" style="width:'+Math.round(x[1]/tt*100)+'%"></div></div></div>';}).join('');}}
+function renderClist(){var el=document.getElementById('clist');if(!cats.length){el.innerHTML='<div class="empty">Sin registros aun</div>';return;}el.innerHTML=cats.slice().reverse().map(function(c){return '<div class="li"><div><div class="lim">'+c.nom+'</div>'+(c.det?'<div class="lis">'+c.det+'</div>':'')+(c.fec?'<div class="lis">'+c.fec+'</div>':'')+'</div><div style="text-align:right"><span class="pl '+(c.net>=0?'ptl':'prd')+'">'+fmt(c.net)+'</span><div class="lis">Ing: '+fmt(c.ing)+' / Gas: '+fmt(c.gas)+'</div></div></div>';}).join('');}
+function addCat(){var nom=document.getElementById('cnom').value.trim(),fec=document.getElementById('cfec').value,ing=parseFloat(document.getElementById('cing').value)||0,gas=parseFloat(document.getElementById('cgas').value)||0,det=document.getElementById('cdet').value;if(!nom)return;cats.push({nom:nom,fec:fec,ing:ing,gas:gas,det:det,net:ing-gas});renderClist();save();document.getElementById('cnom').value='';document.getElementById('cing').value='';document.getElementById('cgas').value='';document.getElementById('cdet').value='';calcCat();}
+load();
+var today=new Date().toISOString().split('T')[0];
+document.getElementById('pfec').value=today;
+document.getElementById('cfec').value=today;
+document.getElementById('sm').value=today.slice(0,7);
+updChips();renderSlist();renderPeds();renderClist();calcP();calcCat();
+</script>
+</body>
+</html>
