@@ -13,9 +13,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .logo svg{width:20px;height:20px}
 .header h1{font-size:17px;font-weight:600;color:#1a1a1a}
 .header p{font-size:12px;color:#999;margin-top:1px}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:#ccc;margin-left:auto;flex-shrink:0;transition:background .3s}
+.sync-dot.ok{background:#34D399}
+.sync-dot.err{background:#E24B4A}
 .nav{display:flex;background:#fff;border-top:1px solid #e8e2db;position:fixed;bottom:0;left:0;right:0;z-index:100;padding-bottom:env(safe-area-inset-bottom)}
-.nb{flex:1;padding:10px 4px 8px;border:none;background:none;color:#bbb;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:500}
-.nb svg{width:22px;height:22px;stroke-width:1.5}
+.nb{flex:1;padding:10px 2px 8px;border:none;background:none;color:#bbb;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9px;font-weight:500}
+.nb svg{width:20px;height:20px;stroke-width:1.5}
 .nb.on{color:#D85A30}
 .content{padding:16px}
 .sec{display:none}.sec.on{display:block}
@@ -25,12 +28,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .ci svg{width:16px;height:16px}
 .ct{font-size:14px;font-weight:600;color:#1a1a1a}
 .cs{font-size:11px;color:#aaa;margin-top:1px}
-.chips{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
-.chip{background:#fff;border-radius:12px;padding:12px 10px;box-shadow:0 1px 3px rgba(0,0,0,.06);text-align:center}
-.chl{font-size:10px;color:#999;margin-bottom:4px;font-weight:500}
-.chv{font-size:22px;font-weight:700;color:#1a1a1a}
-.chv.lo{color:#E24B4A}
-.chs{font-size:10px;color:#bbb;margin-top:2px}
 .r2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
 .r3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
 .f label{font-size:12px;color:#888;display:block;margin-bottom:6px;font-weight:500}
@@ -42,7 +39,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .abtn{width:100%;padding:13px;border-radius:10px;border:none;background:#D85A30;font-size:14px;font-weight:600;cursor:pointer;color:#fff}
 .abtn:active{background:#B94820}
 .abtn.purp{background:#534AB7}
-.abtn.purp:active{background:#3C3489}
+.abtn.teal{background:#0F6E56}
 .pline{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f0ece8}
 .pline:last-of-type{border-bottom:none}
 .pline span{font-size:14px;color:#888}
@@ -55,6 +52,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .ptl{background:#E1F5EE;color:#085041}
 .pam{background:#FFF3E0;color:#7A4F00}
 .prd{background:#FCEBEB;color:#791F1F}
+.ppu{background:#EEEDFE;color:#3C3489}
+.pgr{background:#f0ece8;color:#666}
 .pi{border:1.5px solid #e8e2db;border-radius:12px;padding:12px 14px;margin-bottom:10px;background:#fff}
 .pi:last-child{margin-bottom:0}
 .pi.pend{border-left:4px solid #F59E0B}
@@ -62,8 +61,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .ptop{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;gap:8px}
 .pbot{display:flex;justify-content:space-between;align-items:center}
 .delbtn{font-size:12px;padding:8px 14px;border-radius:999px;border:1.5px solid #34D399;background:#E1F5EE;color:#085041;cursor:pointer;font-weight:600}
-.tbrow{display:flex;gap:6px;margin-bottom:14px}
-.tb{padding:7px 14px;border-radius:999px;border:1.5px solid #e8e2db;background:#fff;font-size:12px;cursor:pointer;color:#888;font-weight:500}
+.tbrow{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.tb{padding:7px 12px;border-radius:999px;border:1.5px solid #e8e2db;background:#fff;font-size:12px;cursor:pointer;color:#888;font-weight:500}
 .tb.on{background:#D85A30;border-color:#D85A30;color:#fff;font-weight:600}
 .met{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
 .mc{border-radius:12px;padding:14px}
@@ -81,31 +80,52 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .rn{width:22px;height:22px;border-radius:50%;background:#f0ece8;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#888;margin-right:8px;flex-shrink:0}
 .rn.g{background:#FFF3E0;color:#7A4F00}
 .neta-big{font-size:26px;font-weight:700}
+.stock-section{margin-bottom:16px}
+.stock-section-title{font-size:12px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.stock-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.stock-card{background:#fff;border-radius:12px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.stock-card-name{font-size:11px;color:#999;font-weight:500;margin-bottom:6px}
+.stock-loc{display:flex;justify-content:space-between;align-items:center;padding:3px 0}
+.stock-loc-name{font-size:12px;color:#888}
+.stock-loc-val{font-size:16px;font-weight:700;color:#1a1a1a}
+.stock-loc-val.lo{color:#E24B4A}
+.mov-item{padding:10px 0;border-bottom:1px solid #f0ece8}
+.mov-item:last-child{border-bottom:none}
+.mov-top{display:flex;justify-content:space-between;align-items:flex-start}
+.mov-title{font-size:13px;font-weight:600;color:#1a1a1a}
+.mov-sub{font-size:11px;color:#aaa;margin-top:2px}
+.loading{text-align:center;padding:3rem 0;color:#aaa;font-size:14px}
 </style>
 </head>
 <body>
+
 <div class="header">
   <div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg></div>
   <div><h1>Mi pizzería</h1><p>Panel de gestión</p></div>
+  <div class="sync-dot" id="sync-dot" title="Estado de conexión"></div>
 </div>
+
 <div class="content">
+
 <div id="sec-stock" class="sec on">
-  <div class="chips">
-    <div class="chip"><div class="chl">Jamón</div><div class="chv" id="dj">0</div><div class="chs">unidades</div></div>
-    <div class="chip"><div class="chl">Cebolla</div><div class="chv" id="dc">0</div><div class="chs">unidades</div></div>
-    <div class="chip"><div class="chl">Muzza</div><div class="chv" id="dm">0</div><div class="chs">unidades</div></div>
-  </div>
+  <div id="stock-display"><div class="loading">Cargando stock...</div></div>
   <div class="card">
-    <div class="ch"><div class="ci" style="background:#FAECE7"><svg viewBox="0 0 16 16" fill="none" stroke="#993C1D" stroke-width="1.5"><path d="M8 2v12M2 8h12"/></svg></div><div><div class="ct">Precios por pizza</div><div class="cs">Afecta calculos futuros</div></div></div>
-    <div class="pline"><span>Jamon ($)</span><input type="number" id="pj" value="3500" oninput="calcP();save()"></div>
-    <div class="pline"><span>Cebolla ($)</span><input type="number" id="pc" value="3200" oninput="calcP();save()"></div>
-    <div class="pline"><span>Muzzarella ($)</span><input type="number" id="pm" value="3000" oninput="calcP();save()"></div>
+    <div class="ch"><div class="ci" style="background:#FAECE7"><svg viewBox="0 0 16 16" fill="none" stroke="#993C1D" stroke-width="1.5"><path d="M8 2v12M2 8h12"/></svg></div><div><div class="ct">Precios por producto</div><div class="cs">Afecta calculos futuros</div></div></div>
+    <div class="pline"><span>Pizza Jamon ($)</span><input type="number" id="pj" value="3500" oninput="savePrecios()"></div>
+    <div class="pline"><span>Pizza Cebolla ($)</span><input type="number" id="pc" value="3200" oninput="savePrecios()"></div>
+    <div class="pline"><span>Pizza Mozzarella ($)</span><input type="number" id="pm" value="3000" oninput="savePrecios()"></div>
+    <div class="pline"><span>Empanada Carne ($)</span><input type="number" id="pec" value="800" oninput="savePrecios()"></div>
+    <div class="pline"><span>Empanada Queso ($)</span><input type="number" id="peq" value="800" oninput="savePrecios()"></div>
     <p class="note">Los pedidos ya registrados conservan su precio original.</p>
   </div>
   <div class="card">
     <div class="ch"><div class="ci" style="background:#FFF3E0"><svg viewBox="0 0 16 16" fill="none" stroke="#7A4F00" stroke-width="1.5"><rect x="2" y="4" width="12" height="9" rx="1"/><path d="M5 4V3a1 1 0 011-1h4a1 1 0 011 1v1"/></svg></div><div><div class="ct">Cargar stock</div></div></div>
     <div class="r2">
-      <div class="f"><label>Tipo</label><select id="sti"><option value="j">Jamon</option><option value="c">Cebolla</option><option value="m">Muzzarella</option></select></div>
+      <div class="f"><label>Categoria</label><select id="s-cat" onchange="updVarSelect()"><option value="pizza">Pizza</option><option value="empanada">Empanada</option></select></div>
+      <div class="f"><label>Variedad</label><select id="s-var"></select></div>
+    </div>
+    <div class="r2">
+      <div class="f"><label>Ubicacion</label><select id="s-loc"><option value="Manuel">Manuel</option><option value="Santiago">Santiago</option></select></div>
       <div class="f"><label>Cantidad</label><input type="number" id="sq" placeholder="0" min="0"></div>
     </div>
     <div class="r2">
@@ -115,21 +135,39 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <button class="abtn" onclick="addStock()">+ Agregar al stock</button>
   </div>
   <div class="card">
-    <div class="ch"><div class="ci" style="background:#E1F5EE"><svg viewBox="0 0 16 16" fill="none" stroke="#0F6E56" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h8"/></svg></div><div><div class="ct">Historial de ingresos</div></div></div>
-    <div id="slist"><div class="empty">Sin registros aun</div></div>
+    <div class="ch"><div class="ci" style="background:#EEEDFE"><svg viewBox="0 0 16 16" fill="none" stroke="#534AB7" stroke-width="1.5"><path d="M2 8h12M9 5l3 3-3 3M7 5L4 8l3 3"/></svg></div><div><div class="ct">Transferir stock</div><div class="cs">Entre Manuel y Santiago</div></div></div>
+    <div class="r2">
+      <div class="f"><label>Categoria</label><select id="t-cat" onchange="updTrVar()"><option value="pizza">Pizza</option><option value="empanada">Empanada</option></select></div>
+      <div class="f"><label>Variedad</label><select id="t-var"></select></div>
+    </div>
+    <div class="r2">
+      <div class="f"><label>Desde</label><select id="t-from"><option value="Manuel">Manuel</option><option value="Santiago">Santiago</option></select></div>
+      <div class="f"><label>Hacia</label><select id="t-to"><option value="Santiago">Santiago</option><option value="Manuel">Manuel</option></select></div>
+    </div>
+    <div class="f" style="margin-bottom:10px"><label>Cantidad</label><input type="number" id="t-qty" placeholder="0" min="0"></div>
+    <div class="warn" id="t-warn"></div>
+    <button class="abtn purp" onclick="transferStock()">Transferir</button>
   </div>
 </div>
+
 <div id="sec-pedidos" class="sec">
   <div class="card">
-    <div class="ch"><div class="ci" style="background:#FAECE7"><svg viewBox="0 0 16 16" fill="none" stroke="#993C1D" stroke-width="1.5"><path d="M8 2v12M2 8h12"/></svg></div><div><div class="ct">Nuevo pedido</div><div class="cs">Se descuenta del stock al registrar</div></div></div>
+    <div class="ch"><div class="ci" style="background:#FAECE7"><svg viewBox="0 0 16 16" fill="none" stroke="#993C1D" stroke-width="1.5"><path d="M8 2v12M2 8h12"/></svg></div><div><div class="ct">Nuevo pedido</div><div class="cs">Selecciona ubicacion para descontar stock</div></div></div>
     <div class="r2">
       <div class="f"><label>Cliente</label><input type="text" id="pnom" placeholder="Nombre"></div>
       <div class="f"><label>Fecha</label><input type="date" id="pfec"></div>
     </div>
+    <div class="f" style="margin-bottom:10px"><label>Ubicacion (descuento de stock)</label><select id="p-loc"><option value="Manuel">Manuel</option><option value="Santiago">Santiago</option></select></div>
+    <div style="font-size:12px;color:#888;font-weight:500;margin-bottom:8px">Pizzas</div>
     <div class="r3">
-      <div class="f"><label id="lj">Jamon</label><input type="number" id="pqj" value="0" min="0" oninput="calcP()"></div>
-      <div class="f"><label id="lc">Cebolla</label><input type="number" id="pqc" value="0" min="0" oninput="calcP()"></div>
-      <div class="f"><label id="lm">Muzza</label><input type="number" id="pqm" value="0" min="0" oninput="calcP()"></div>
+      <div class="f"><label id="lj">Jamon</label><input type="number" id="pqj" value="0" min="0" oninput="calcPed()"></div>
+      <div class="f"><label id="lc">Cebolla</label><input type="number" id="pqc" value="0" min="0" oninput="calcPed()"></div>
+      <div class="f"><label id="lm">Mozzarella</label><input type="number" id="pqm" value="0" min="0" oninput="calcPed()"></div>
+    </div>
+    <div style="font-size:12px;color:#888;font-weight:500;margin-bottom:8px">Empanadas</div>
+    <div class="r2">
+      <div class="f"><label id="lec">Carne</label><input type="number" id="pqec" value="0" min="0" oninput="calcPed()"></div>
+      <div class="f"><label id="leq">Queso</label><input type="number" id="pqeq" value="0" min="0" oninput="calcPed()"></div>
     </div>
     <div class="warn" id="pwarn"></div>
     <div class="trow"><span class="tl">Total del pedido</span><span class="ta" id="ptot">$0</span></div>
@@ -145,6 +183,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div id="plist"><div class="empty">Sin pedidos aun</div></div>
   </div>
 </div>
+
 <div id="sec-ganancias" class="sec">
   <div class="met">
     <div class="mc" style="background:#E1F5EE"><div class="ml" style="color:#0F6E56">Ingresos totales</div><div class="mv" style="color:#085041" id="gv">$0</div></div>
@@ -166,6 +205,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div id="vtipo"><div class="empty">Sin datos aun</div></div>
   </div>
 </div>
+
 <div id="sec-catering" class="sec">
   <div class="card">
     <div class="ch"><div class="ci" style="background:#EEEDFE"><svg viewBox="0 0 16 16" fill="none" stroke="#534AB7" stroke-width="1.5"><path d="M2 13h12M4 13V6M12 13V6M8 13V4M1 6h14"/></svg></div><div><div class="ct">Nuevo evento</div><div class="cs">Los gastos impactan en ganancia neta</div></div></div>
@@ -186,7 +226,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div id="clist"><div class="empty">Sin registros aun</div></div>
   </div>
 </div>
+
+<div id="sec-movimientos" class="sec">
+  <div class="card">
+    <div class="ch"><div class="ci" style="background:#E1F5EE"><svg viewBox="0 0 16 16" fill="none" stroke="#0F6E56" stroke-width="1.5"><path d="M2 8h12M10 4l4 4-4 4"/></svg></div><div><div class="ct">Movimientos de stock</div><div class="cs">Ingresos, ventas y transferencias</div></div></div>
+    <div class="tbrow">
+      <button class="tb on" id="mf-todos" onclick="filtrarMov('todos','mf-todos')">Todos</button>
+      <button class="tb" id="mf-ingreso" onclick="filtrarMov('Ingreso','mf-ingreso')">Ingresos</button>
+      <button class="tb" id="mf-venta" onclick="filtrarMov('Venta','mf-venta')">Ventas</button>
+      <button class="tb" id="mf-transf" onclick="filtrarMov('Transferencia','mf-transf')">Transferencias</button>
+    </div>
+    <div id="movlist"><div class="loading">Cargando...</div></div>
+  </div>
 </div>
+
+</div>
+
 <nav class="nav">
   <button class="nb on" id="btn-stock" onclick="show('stock','btn-stock')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
@@ -204,33 +259,254 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19h18M6 19V9M18 19V9M12 19V6M2 9h20"/></svg>
     Catering
   </button>
+  <button class="nb" id="btn-movimientos" onclick="show('movimientos','btn-movimientos')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M15 6l6 6-6 6"/></svg>
+    Movim.
+  </button>
 </nav>
-<script>
-var stocks=[],peds=[],cats=[],pfilt='todos';
-var disp={j:0,c:0,m:0};
-function save(){try{localStorage.setItem('piz_s',JSON.stringify(stocks));localStorage.setItem('piz_p',JSON.stringify(peds));localStorage.setItem('piz_c',JSON.stringify(cats));localStorage.setItem('piz_d',JSON.stringify(disp));localStorage.setItem('piz_pr',JSON.stringify({pj:document.getElementById('pj').value,pc:document.getElementById('pc').value,pm:document.getElementById('pm').value}));}catch(e){}}
-function load(){try{var s=localStorage.getItem('piz_s');if(s)stocks=JSON.parse(s);var p=localStorage.getItem('piz_p');if(p)peds=JSON.parse(p);var c=localStorage.getItem('piz_c');if(c)cats=JSON.parse(c);var d=localStorage.getItem('piz_d');if(d)disp=JSON.parse(d);var pr=localStorage.getItem('piz_pr');if(pr){var v=JSON.parse(pr);document.getElementById('pj').value=v.pj;document.getElementById('pc').value=v.pc;document.getElementById('pm').value=v.pm;}}catch(e){}}
-function show(sec,btnId){document.querySelectorAll('.sec').forEach(function(s){s.classList.remove('on')});document.querySelectorAll('.nb').forEach(function(b){b.classList.remove('on')});document.getElementById('sec-'+sec).classList.add('on');document.getElementById(btnId).classList.add('on');if(sec==='ganancias')renderGan();if(sec==='pedidos')updHints();window.scrollTo(0,0);}
-function fmt(n){return '$'+Math.round(n).toLocaleString('es-AR')}
-function updChips(){var ej=document.getElementById('dj'),ec=document.getElementById('dc'),em=document.getElementById('dm');ej.textContent=disp.j;ej.className='chv'+(disp.j<=2?' lo':'');ec.textContent=disp.c;ec.className='chv'+(disp.c<=2?' lo':'');em.textContent=disp.m;em.className='chv'+(disp.m<=2?' lo':'');updHints();}
-function updHints(){var lj=document.getElementById('lj'),lc=document.getElementById('lc'),lm=document.getElementById('lm');if(lj)lj.textContent='Jamon ('+disp.j+')';if(lc)lc.textContent='Cebolla ('+disp.c+')';if(lm)lm.textContent='Muzza ('+disp.m+')';}
-function calcP(){var pj=parseFloat(document.getElementById('pj').value)||0,pc=parseFloat(document.getElementById('pc').value)||0,pm=parseFloat(document.getElementById('pm').value)||0,qj=parseFloat(document.getElementById('pqj').value)||0,qc=parseFloat(document.getElementById('pqc').value)||0,qm=parseFloat(document.getElementById('pqm').value)||0;document.getElementById('ptot').textContent=fmt(qj*pj+qc*pc+qm*pm);var w=[];if(qj>disp.j)w.push('Jamon: pedis '+qj+', hay '+disp.j);if(qc>disp.c)w.push('Cebolla: pedis '+qc+', hay '+disp.c);if(qm>disp.m)w.push('Muzza: pedis '+qm+', hay '+disp.m);var we=document.getElementById('pwarn');if(w.length){we.style.display='block';we.textContent='Stock insuficiente - '+w.join(' / ');}else{we.style.display='none';}}
-function calcCat(){var i=parseFloat(document.getElementById('cing').value)||0,g=parseFloat(document.getElementById('cgas').value)||0,n=i-g;document.getElementById('cnet').textContent=fmt(n);document.getElementById('cnet').style.color=n>=0?'#3C3489':'#791F1F';}
-function renderSlist(){var labels={j:'Jamon',c:'Cebolla',m:'Muzzarella'},el=document.getElementById('slist');if(!stocks.length){el.innerHTML='<div class="empty">Sin registros aun</div>';return;}el.innerHTML=stocks.slice().reverse().map(function(s){return '<div class="li"><div><div class="lim">'+labels[s.tipo]+' - '+s.qty+' u.</div><div class="lis">'+(s.mes||'Sin mes')+'</div></div><div style="text-align:right"><span class="pl pam">'+fmt(s.cost)+'/u</span><div class="lis">Total: '+fmt(s.cost*s.qty)+'</div></div></div>';}).join('');}
-function addStock(){var tipo=document.getElementById('sti').value,qty=parseFloat(document.getElementById('sq').value)||0,cost=parseFloat(document.getElementById('sc').value)||0,mes=document.getElementById('sm').value;if(!qty)return;stocks.push({tipo:tipo,qty:qty,cost:cost,mes:mes});disp[tipo]+=qty;updChips();renderSlist();save();document.getElementById('sq').value='';document.getElementById('sc').value='';}
-function addPed(){var nom=document.getElementById('pnom').value.trim(),fec=document.getElementById('pfec').value,qj=parseFloat(document.getElementById('pqj').value)||0,qc=parseFloat(document.getElementById('pqc').value)||0,qm=parseFloat(document.getElementById('pqm').value)||0;if(!nom||(!qj&&!qc&&!qm))return;if(qj>disp.j||qc>disp.c||qm>disp.m){var we=document.getElementById('pwarn');we.style.display='block';we.textContent='No hay stock suficiente para este pedido.';return;}var pj=parseFloat(document.getElementById('pj').value)||0,pc=parseFloat(document.getElementById('pc').value)||0,pm=parseFloat(document.getElementById('pm').value)||0,tot=qj*pj+qc*pc+qm*pm,id=Date.now();peds.push({id:id,nom:nom,fec:fec,qj:qj,qc:qc,qm:qm,tot:tot,pj:pj,pc:pc,pm:pm,est:'pend'});disp.j-=qj;disp.c-=qc;disp.m-=qm;updChips();renderPeds();save();document.getElementById('pnom').value='';document.getElementById('pqj').value=0;document.getElementById('pqc').value=0;document.getElementById('pqm').value=0;document.getElementById('pwarn').style.display='none';calcP();}
-function entregar(id){for(var i=0;i<peds.length;i++){if(peds[i].id===id){peds[i].est='done';break;}}renderPeds();save();}
-function filtrar(f,btnId){pfilt=f;document.querySelectorAll('.tb').forEach(function(b){b.classList.remove('on')});document.getElementById(btnId).classList.add('on');renderPeds();}
-function renderPeds(){var lista=peds.filter(function(p){return pfilt==='todos'||p.est===pfilt;}).slice().reverse(),el=document.getElementById('plist');if(!lista.length){el.innerHTML='<div class="empty">Sin pedidos aun</div>';return;}el.innerHTML=lista.map(function(p){var pizzas=[p.qj?p.qj+' jamon':'',p.qc?p.qc+' cebolla':'',p.qm?p.qm+' muzza':''].filter(Boolean).join(', '),btn=p.est==='pend'?'<button class="delbtn" onclick="entregar('+p.id+')">Marcar entregado</button>':'<span style="font-size:11px;color:#bbb">Completado</span>',badge=p.est==='pend'?'<span class="pl pam">Pendiente</span>':'<span class="pl ptl">Entregado</span>';return '<div class="pi '+p.est+'"><div class="ptop"><div><div class="lim">'+p.nom+'</div><div class="lis">'+(p.fec||'Sin fecha')+' / '+pizzas+'</div></div>'+badge+'</div><div class="pbot"><span style="font-size:16px;font-weight:700">'+fmt(p.tot)+'</span>'+btn+'</div></div>';}).join('');}
-function renderGan(){var ent=peds.filter(function(p){return p.est==='done';}),ventas=ent.reduce(function(a,p){return a+p.tot;},0),catIng=cats.reduce(function(a,c){return a+c.ing;},0),catGas=cats.reduce(function(a,c){return a+c.gas;},0),stockGas=stocks.reduce(function(a,s){return a+s.cost*s.qty;},0),totalIng=ventas+catIng,totalGas=stockGas+catGas,neta=totalIng-totalGas;document.getElementById('gv').textContent=fmt(totalIng);document.getElementById('gg').textContent=fmt(totalGas);document.getElementById('gstock').textContent=fmt(stockGas);document.getElementById('gcater').textContent=fmt(catGas);var gne=document.getElementById('gn');gne.textContent=fmt(neta);gne.style.color=neta>=0?'#1D9E75':'#E24B4A';var cl={};ent.forEach(function(p){cl[p.nom]=(cl[p.nom]||0)+p.tot;});cats.forEach(function(c){cl[c.nom]=(cl[c.nom]||0)+c.ing;});var sorted=Object.keys(cl).map(function(k){return[k,cl[k]];}).sort(function(a,b){return b[1]-a[1];}).slice(0,5),te=document.getElementById('toplist');if(!sorted.length){te.innerHTML='<div class="empty">Sin datos aun</div>';}else{te.innerHTML=sorted.map(function(x,i){return '<div class="li"><div style="display:flex;align-items:center"><span class="rn'+(i===0?' g':'')+'>'+(i+1)+'</span><span class="lim">'+x[0]+'</span></div><span style="font-size:15px;font-weight:700">'+fmt(x[1])+'</span></div>';}).join('');}var tj=ent.reduce(function(a,p){return a+p.qj*p.pj;},0),tc=ent.reduce(function(a,p){return a+p.qc*p.pc;},0),tm=ent.reduce(function(a,p){return a+p.qm*p.pm;},0),tt=tj+tc+tm||1,ve=document.getElementById('vtipo');if(!ent.length){ve.innerHTML='<div class="empty">Sin datos aun</div>';}else{ve.innerHTML=[['Jamon',tj],['Cebolla',tc],['Muzzarella',tm]].map(function(x){return '<div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:14px;color:#888">'+x[0]+'</span><span style="font-size:14px;font-weight:600">'+fmt(x[1])+' <span style="color:#bbb;font-weight:400">'+Math.round(x[1]/tt*100)+'%</span></span></div><div class="bw"><div class="bf" style="width:'+Math.round(x[1]/tt*100)+'%"></div></div></div>';}).join('');}}
-function renderClist(){var el=document.getElementById('clist');if(!cats.length){el.innerHTML='<div class="empty">Sin registros aun</div>';return;}el.innerHTML=cats.slice().reverse().map(function(c){return '<div class="li"><div><div class="lim">'+c.nom+'</div>'+(c.det?'<div class="lis">'+c.det+'</div>':'')+(c.fec?'<div class="lis">'+c.fec+'</div>':'')+'</div><div style="text-align:right"><span class="pl '+(c.net>=0?'ptl':'prd')+'">'+fmt(c.net)+'</span><div class="lis">Ing: '+fmt(c.ing)+' / Gas: '+fmt(c.gas)+'</div></div></div>';}).join('');}
-function addCat(){var nom=document.getElementById('cnom').value.trim(),fec=document.getElementById('cfec').value,ing=parseFloat(document.getElementById('cing').value)||0,gas=parseFloat(document.getElementById('cgas').value)||0,det=document.getElementById('cdet').value;if(!nom)return;cats.push({nom:nom,fec:fec,ing:ing,gas:gas,det:det,net:ing-gas});renderClist();save();document.getElementById('cnom').value='';document.getElementById('cing').value='';document.getElementById('cgas').value='';document.getElementById('cdet').value='';calcCat();}
-load();
-var today=new Date().toISOString().split('T')[0];
-document.getElementById('pfec').value=today;
-document.getElementById('cfec').value=today;
-document.getElementById('sm').value=today.slice(0,7);
-updChips();renderSlist();renderPeds();renderClist();calcP();calcCat();
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, doc, setDoc, getDoc, onSnapshot, addDoc, query, orderBy, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// ============================================================
+// REEMPLAZA ESTO CON TU CONFIGURACION DE FIREBASE
+// ============================================================
+const firebaseConfig = {
+  apiKey: "TU_API_KEY",
+  authDomain: "TU_PROJECT.firebaseapp.com",
+  projectId: "TU_PROJECT_ID",
+  storageBucket: "TU_PROJECT.appspot.com",
+  messagingSenderId: "TU_SENDER_ID",
+  appId: "TU_APP_ID"
+};
+// ============================================================
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+let stockData = {};
+let peds = [], cats = [], movimientos = [];
+let pfilt = 'todos', movFilt = 'todos';
+let precios = { pj: 3500, pc: 3200, pm: 3000, pec: 800, peq: 800 };
+
+const LOCS = ['Manuel', 'Santiago'];
+const PRODUCTOS = {
+  pizza: { label: 'Pizza', vars: ['jamon','cebolla','mozzarella'], labels: { jamon:'Jamon', cebolla:'Cebolla', mozzarella:'Mozzarella' } },
+  empanada: { label: 'Empanada', vars: ['carne','queso'], labels: { carne:'Carne', queso:'Queso' } }
+};
+
+function stockKey(cat, vari, loc) { return cat+'_'+vari+'_'+loc; }
+function getStock(cat, vari, loc) { return stockData[stockKey(cat,vari,loc)] || 0; }
+function setSyncDot(ok) { document.getElementById('sync-dot').className = 'sync-dot '+(ok?'ok':'err'); }
+function fmt(n) { return '$'+Math.round(n).toLocaleString('es-AR'); }
+
+window.show = function(sec, btnId) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(b => b.classList.remove('on'));
+  document.getElementById('sec-'+sec).classList.add('on');
+  document.getElementById(btnId).classList.add('on');
+  if (sec==='ganancias') renderGan();
+  if (sec==='movimientos') renderMov();
+  window.scrollTo(0,0);
+};
+
+function renderStockDisplay() {
+  let html = '';
+  for (const [cat, info] of Object.entries(PRODUCTOS)) {
+    html += '<div class="stock-section"><div class="stock-section-title">'+info.label+'s</div><div class="stock-grid">';
+    for (const vari of info.vars) {
+      html += '<div class="stock-card"><div class="stock-card-name">'+info.labels[vari]+'</div>';
+      for (const loc of LOCS) {
+        const v = getStock(cat, vari, loc);
+        html += '<div class="stock-loc"><span class="stock-loc-name">'+loc+'</span><span class="stock-loc-val'+(v<=3?' lo':'')+'">'+v+'</span></div>';
+      }
+      html += '</div>';
+    }
+    html += '</div></div>';
+  }
+  document.getElementById('stock-display').innerHTML = '<div class="card">'+html+'</div>';
+  updHints();
+}
+
+function updHints() {
+  const loc = document.getElementById('p-loc') ? document.getElementById('p-loc').value : 'Manuel';
+  if (document.getElementById('lj')) document.getElementById('lj').textContent = 'Jamon ('+getStock('pizza','jamon',loc)+')';
+  if (document.getElementById('lc')) document.getElementById('lc').textContent = 'Cebolla ('+getStock('pizza','cebolla',loc)+')';
+  if (document.getElementById('lm')) document.getElementById('lm').textContent = 'Mozzarella ('+getStock('pizza','mozzarella',loc)+')';
+  if (document.getElementById('lec')) document.getElementById('lec').textContent = 'Carne ('+getStock('empanada','carne',loc)+')';
+  if (document.getElementById('leq')) document.getElementById('leq').textContent = 'Queso ('+getStock('empanada','queso',loc)+')';
+}
+
+function getPrecio(cat, vari) {
+  const map = { pizza_jamon: precios.pj, pizza_cebolla: precios.pc, pizza_mozzarella: precios.pm, empanada_carne: precios.pec, empanada_queso: precios.peq };
+  return map[cat+'_'+vari] || 0;
+}
+
+window.updVarSelect = function() {
+  const cat = document.getElementById('s-cat').value;
+  document.getElementById('s-var').innerHTML = PRODUCTOS[cat].vars.map(v => '<option value="'+v+'">'+PRODUCTOS[cat].labels[v]+'</option>').join('');
+};
+window.updTrVar = function() {
+  const cat = document.getElementById('t-cat').value;
+  document.getElementById('t-var').innerHTML = PRODUCTOS[cat].vars.map(v => '<option value="'+v+'">'+PRODUCTOS[cat].labels[v]+'</option>').join('');
+};
+updVarSelect(); updTrVar();
+
+window.savePrecios = function() {
+  precios = { pj: parseFloat(document.getElementById('pj').value)||0, pc: parseFloat(document.getElementById('pc').value)||0, pm: parseFloat(document.getElementById('pm').value)||0, pec: parseFloat(document.getElementById('pec').value)||0, peq: parseFloat(document.getElementById('peq').value)||0 };
+  setDoc(doc(db,'config','precios'), precios).catch(() => setSyncDot(false));
+};
+
+window.addStock = async function() {
+  const cat = document.getElementById('s-cat').value, vari = document.getElementById('s-var').value;
+  const loc = document.getElementById('s-loc').value, qty = parseFloat(document.getElementById('sq').value)||0;
+  const cost = parseFloat(document.getElementById('sc').value)||0, mes = document.getElementById('sm').value;
+  if (!qty) return;
+  const key = stockKey(cat,vari,loc);
+  stockData[key] = (stockData[key]||0) + qty;
+  try {
+    await setDoc(doc(db,'stock',key), { cat, vari, loc, qty: stockData[key] });
+    await addDoc(collection(db,'movimientos'), { fecha: new Date().toISOString().split('T')[0], producto: PRODUCTOS[cat].label+' '+PRODUCTOS[cat].labels[vari], cantidad: qty, ubicacion: loc, tipo: 'Ingreso', costo: cost, mes, ts: serverTimestamp() });
+    setSyncDot(true); renderStockDisplay();
+    document.getElementById('sq').value = ''; document.getElementById('sc').value = '';
+  } catch(e) { setSyncDot(false); alert('Error al guardar.'); }
+};
+
+window.transferStock = async function() {
+  const cat = document.getElementById('t-cat').value, vari = document.getElementById('t-var').value;
+  const from = document.getElementById('t-from').value, to = document.getElementById('t-to').value;
+  const qty = parseFloat(document.getElementById('t-qty').value)||0;
+  const warn = document.getElementById('t-warn');
+  if (!qty || from===to) return;
+  const fromKey = stockKey(cat,vari,from), toKey = stockKey(cat,vari,to);
+  const fromStock = stockData[fromKey]||0;
+  if (qty > fromStock) { warn.style.display='block'; warn.textContent='Stock insuficiente en '+from+'. Hay '+fromStock+' unidades.'; return; }
+  warn.style.display='none';
+  stockData[fromKey] = fromStock - qty;
+  stockData[toKey] = (stockData[toKey]||0) + qty;
+  try {
+    await setDoc(doc(db,'stock',fromKey), { cat, vari, loc: from, qty: stockData[fromKey] });
+    await setDoc(doc(db,'stock',toKey), { cat, vari, loc: to, qty: stockData[toKey] });
+    await addDoc(collection(db,'movimientos'), { fecha: new Date().toISOString().split('T')[0], producto: PRODUCTOS[cat].label+' '+PRODUCTOS[cat].labels[vari], cantidad: qty, ubicacion: from+' → '+to, tipo: 'Transferencia', ts: serverTimestamp() });
+    setSyncDot(true); renderStockDisplay(); document.getElementById('t-qty').value = '';
+  } catch(e) { setSyncDot(false); }
+};
+
+window.calcPed = function() {
+  const loc = document.getElementById('p-loc').value;
+  const qj=parseFloat(document.getElementById('pqj').value)||0, qc=parseFloat(document.getElementById('pqc').value)||0, qm=parseFloat(document.getElementById('pqm').value)||0;
+  const qec=parseFloat(document.getElementById('pqec').value)||0, qeq=parseFloat(document.getElementById('pqeq').value)||0;
+  document.getElementById('ptot').textContent = fmt(qj*precios.pj+qc*precios.pc+qm*precios.pm+qec*precios.pec+qeq*precios.peq);
+  const w=[];
+  if(qj>getStock('pizza','jamon',loc)) w.push('Jamon: '+qj+'/'+getStock('pizza','jamon',loc));
+  if(qc>getStock('pizza','cebolla',loc)) w.push('Cebolla: '+qc+'/'+getStock('pizza','cebolla',loc));
+  if(qm>getStock('pizza','mozzarella',loc)) w.push('Mozza: '+qm+'/'+getStock('pizza','mozzarella',loc));
+  if(qec>getStock('empanada','carne',loc)) w.push('Emp.Carne: '+qec+'/'+getStock('empanada','carne',loc));
+  if(qeq>getStock('empanada','queso',loc)) w.push('Emp.Queso: '+qeq+'/'+getStock('empanada','queso',loc));
+  const we=document.getElementById('pwarn');
+  if(w.length){we.style.display='block';we.textContent='Stock insuficiente en '+loc+': '+w.join(' / ');}
+  else{we.style.display='none';}
+};
+
+window.addPed = async function() {
+  const nom=document.getElementById('pnom').value.trim(), fec=document.getElementById('pfec').value, loc=document.getElementById('p-loc').value;
+  const qj=parseFloat(document.getElementById('pqj').value)||0, qc=parseFloat(document.getElementById('pqc').value)||0, qm=parseFloat(document.getElementById('pqm').value)||0;
+  const qec=parseFloat(document.getElementById('pqec').value)||0, qeq=parseFloat(document.getElementById('pqeq').value)||0;
+  if(!nom||(!qj&&!qc&&!qm&&!qec&&!qeq)) return;
+  const checks=[['pizza','jamon',qj],['pizza','cebolla',qc],['pizza','mozzarella',qm],['empanada','carne',qec],['empanada','queso',qeq]];
+  for(const [cat,vari,qty] of checks){ if(qty>getStock(cat,vari,loc)){ document.getElementById('pwarn').style.display='block'; document.getElementById('pwarn').textContent='Stock insuficiente en '+loc+'.'; return; } }
+  const tot=qj*precios.pj+qc*precios.pc+qm*precios.pm+qec*precios.pec+qeq*precios.peq;
+  for(const [cat,vari,qty] of checks){ if(qty>0){ const key=stockKey(cat,vari,loc); stockData[key]=(stockData[key]||0)-qty; await setDoc(doc(db,'stock',key),{cat,vari,loc,qty:stockData[key]}); } }
+  await addDoc(collection(db,'pedidos'),{nom,fec,loc,qj,qc,qm,qec,qeq,tot,pj:precios.pj,pc:precios.pc,pm:precios.pm,pec:precios.pec,peq:precios.peq,est:'pend',ts:serverTimestamp()});
+  await addDoc(collection(db,'movimientos'),{fecha:fec,producto:'Pedido',cantidad:qj+qc+qm+qec+qeq,ubicacion:loc,tipo:'Venta',cliente:nom,total:tot,ts:serverTimestamp()});
+  setSyncDot(true); renderStockDisplay();
+  document.getElementById('pnom').value='';
+  ['pqj','pqc','pqm','pqec','pqeq'].forEach(id=>document.getElementById(id).value=0);
+  document.getElementById('pwarn').style.display='none'; calcPed();
+};
+
+window.entregar = async function(id) {
+  await updateDoc(doc(db,'pedidos',id),{est:'done'}); setSyncDot(true);
+};
+
+window.filtrar = function(f,btnId) {
+  pfilt=f; document.querySelectorAll('.tb').forEach(b=>b.classList.remove('on')); document.getElementById(btnId).classList.add('on'); renderPeds();
+};
+
+function renderPeds() {
+  const lista=peds.filter(p=>pfilt==='todos'||p.est===pfilt);
+  const el=document.getElementById('plist');
+  if(!lista.length){el.innerHTML='<div class="empty">Sin pedidos aun</div>';return;}
+  el.innerHTML=lista.map(p=>{
+    const parts=[p.qj?p.qj+' jamon':'',p.qc?p.qc+' cebolla':'',p.qm?p.qm+' mozza':'',p.qec?p.qec+' emp.carne':'',p.qeq?p.qeq+' emp.queso':''].filter(Boolean).join(', ');
+    const btn=p.est==='pend'?'<button class="delbtn" onclick="entregar(\''+p.id+'\')">Marcar entregado</button>':'<span style="font-size:11px;color:#bbb">Completado</span>';
+    const badge=p.est==='pend'?'<span class="pl pam">Pendiente</span>':'<span class="pl ptl">Entregado</span>';
+    return '<div class="pi '+p.est+'"><div class="ptop"><div><div class="lim">'+p.nom+'</div><div class="lis">'+(p.fec||'')+' · '+p.loc+' · '+parts+'</div></div>'+badge+'</div><div class="pbot"><span style="font-size:16px;font-weight:700">'+fmt(p.tot)+'</span>'+btn+'</div></div>';
+  }).join('');
+}
+
+function renderGan() {
+  const ent=peds.filter(p=>p.est==='done');
+  const ventas=ent.reduce((a,p)=>a+p.tot,0), catIng=cats.reduce((a,c)=>a+c.ing,0), catGas=cats.reduce((a,c)=>a+c.gas,0);
+  const stockGas=movimientos.filter(m=>m.tipo==='Ingreso').reduce((a,m)=>a+(m.costo||0)*(m.cantidad||0),0);
+  const neta=ventas+catIng-stockGas-catGas;
+  document.getElementById('gv').textContent=fmt(ventas+catIng); document.getElementById('gg').textContent=fmt(stockGas+catGas);
+  document.getElementById('gstock').textContent=fmt(stockGas); document.getElementById('gcater').textContent=fmt(catGas);
+  document.getElementById('gn').textContent=fmt(neta); document.getElementById('gn').style.color=neta>=0?'#1D9E75':'#E24B4A';
+  const cl={};
+  ent.forEach(p=>{cl[p.nom]=(cl[p.nom]||0)+p.tot;}); cats.forEach(c=>{cl[c.nom]=(cl[c.nom]||0)+c.ing;});
+  const sorted=Object.keys(cl).map(k=>[k,cl[k]]).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  document.getElementById('toplist').innerHTML=sorted.length?sorted.map((x,i)=>'<div class="li"><div style="display:flex;align-items:center"><span class="rn'+(i===0?' g':'')+'>'+(i+1)+'</span><span class="lim">'+x[0]+'</span></div><span style="font-size:15px;font-weight:700">'+fmt(x[1])+'</span></div>').join(''):'<div class="empty">Sin datos aun</div>';
+  const byType={};
+  ent.forEach(p=>{if(p.qj)byType['Pizza Jamon']=(byType['Pizza Jamon']||0)+p.qj*p.pj;if(p.qc)byType['Pizza Cebolla']=(byType['Pizza Cebolla']||0)+p.qc*p.pc;if(p.qm)byType['Pizza Mozzarella']=(byType['Pizza Mozzarella']||0)+p.qm*p.pm;if(p.qec)byType['Emp. Carne']=(byType['Emp. Carne']||0)+p.qec*p.pec;if(p.qeq)byType['Emp. Queso']=(byType['Emp. Queso']||0)+p.qeq*p.peq;});
+  const tt=Object.values(byType).reduce((a,v)=>a+v,0)||1;
+  document.getElementById('vtipo').innerHTML=ent.length?Object.entries(byType).sort((a,b)=>b[1]-a[1]).map(([n,v])=>'<div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:14px;color:#888">'+n+'</span><span style="font-size:14px;font-weight:600">'+fmt(v)+' <span style="color:#bbb">'+Math.round(v/tt*100)+'%</span></span></div><div class="bw"><div class="bf" style="width:'+Math.round(v/tt*100)+'%"></div></div></div>').join(''):'<div class="empty">Sin datos aun</div>';
+}
+
+window.calcCat = function() {
+  const n=(parseFloat(document.getElementById('cing').value)||0)-(parseFloat(document.getElementById('cgas').value)||0);
+  document.getElementById('cnet').textContent=fmt(n); document.getElementById('cnet').style.color=n>=0?'#3C3489':'#791F1F';
+};
+
+window.addCat = async function() {
+  const nom=document.getElementById('cnom').value.trim(), fec=document.getElementById('cfec').value;
+  const ing=parseFloat(document.getElementById('cing').value)||0, gas=parseFloat(document.getElementById('cgas').value)||0;
+  const det=document.getElementById('cdet').value;
+  if(!nom) return;
+  await addDoc(collection(db,'catering'),{nom,fec,ing,gas,det,net:ing-gas,ts:serverTimestamp()});
+  setSyncDot(true);
+  ['cnom','cing','cgas','cdet'].forEach(id=>document.getElementById(id).value=''); calcCat();
+};
+
+function renderCats() {
+  const el=document.getElementById('clist');
+  if(!cats.length){el.innerHTML='<div class="empty">Sin registros aun</div>';return;}
+  el.innerHTML=cats.map(c=>'<div class="li"><div><div class="lim">'+c.nom+'</div>'+(c.det?'<div class="lis">'+c.det+'</div>':'')+(c.fec?'<div class="lis">'+c.fec+'</div>':'')+'</div><div style="text-align:right"><span class="pl '+(c.net>=0?'ptl':'prd')+'">'+fmt(c.net)+'</span><div class="lis">Ing: '+fmt(c.ing)+' / Gas: '+fmt(c.gas)+'</div></div></div>').join('');
+}
+
+window.filtrarMov = function(f,btnId) {
+  movFilt=f; document.querySelectorAll('.tb').forEach(b=>b.classList.remove('on')); document.getElementById(btnId).classList.add('on'); renderMov();
+};
+
+function renderMov() {
+  const lista=movFilt==='todos'?movimientos:movimientos.filter(m=>m.tipo===movFilt);
+  const el=document.getElementById('movlist');
+  if(!lista.length){el.innerHTML='<div class="empty">Sin movimientos aun</div>';return;}
+  const cmap={Ingreso:'ptl',Venta:'prd',Transferencia:'ppu'};
+  el.innerHTML=lista.map(m=>'<div class="mov-item"><div class="mov-top"><div><div class="mov-title">'+m.producto+' — '+m.cantidad+' u.</div><div class="mov-sub">'+[m.fecha,m.ubicacion,m.cliente?'Cliente: '+m.cliente:''].filter(Boolean).join(' · ')+'</div></div><span class="pl '+(cmap[m.tipo]||'pgr')+'">'+m.tipo+'</span></div></div>').join('');
+}
+
+// Listeners Firebase
+onSnapshot(collection(db,'stock'),snap=>{snap.forEach(d=>{stockData[d.id]=d.data().qty||0;});renderStockDisplay();setSyncDot(true);});
+onSnapshot(query(collection(db,'pedidos'),orderBy('ts','desc')),snap=>{peds=snap.docs.map(d=>({id:d.id,...d.data()}));renderPeds();setSyncDot(true);});
+onSnapshot(query(collection(db,'catering'),orderBy('ts','desc')),snap=>{cats=snap.docs.map(d=>({id:d.id,...d.data()}));renderCats();setSyncDot(true);});
+onSnapshot(query(collection(db,'movimientos'),orderBy('ts','desc')),snap=>{movimientos=snap.docs.map(d=>({id:d.id,...d.data()}));renderMov();setSyncDot(true);});
+getDoc(doc(db,'config','precios')).then(d=>{if(d.exists()){precios=d.data();document.getElementById('pj').value=precios.pj||3500;document.getElementById('pc').value=precios.pc||3200;document.getElementById('pm').value=precios.pm||3000;document.getElementById('pec').value=precios.pec||800;document.getElementById('peq').value=precios.peq||800;}});
+
+const today=new Date().toISOString().split('T')[0];
+document.getElementById('pfec').value=today; document.getElementById('cfec').value=today; document.getElementById('sm').value=today.slice(0,7);
+document.getElementById('p-loc').addEventListener('change',()=>{updHints();calcPed();}); calcCat();
 </script>
 </body>
 </html>
