@@ -428,8 +428,14 @@ window.addPed = async function() {
   document.getElementById('pwarn').style.display='none'; calcPed();
 };
 
-window.entregar = async function(id) {
-  await updateDoc(doc(db,'pedidos',id),{est:'done'}); setSyncDot(true);
+window.showPagoOpts = function(id) {
+  const el = document.getElementById('pago-opts-'+id);
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+};
+
+window.registrarPago = async function(id, forma) {
+  await updateDoc(doc(db,'pedidos',id), { pago: forma });
+  setSyncDot(true);
 };
 
 window.filtrar = function(f,btnId) {
