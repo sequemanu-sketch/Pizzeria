@@ -442,10 +442,14 @@ function renderPeds() {
   if(!lista.length){el.innerHTML='<div class="empty">Sin pedidos aun</div>';return;}
   el.innerHTML=lista.map(p=>{
     const parts=[p.qj?p.qj+' jamon':'',p.qc?p.qc+' cebolla':'',p.qm?p.qm+' mozza':'',p.qec?p.qec+' emp.carne':'',p.qeq?p.qeq+' emp.queso':''].filter(Boolean).join(', ');
-    const btn=p.est==='pend'?'<button class="delbtn" onclick="entregar(\''+p.id+'\')">Marcar entregado</button>':'<span style="font-size:11px;color:#bbb">Completado</span>';
     const badge=p.est==='pend'?'<span class="pl pam">Pendiente</span>':'<span class="pl ptl">Entregado</span>';
-    return '<div class="pi '+p.est+'"><div class="ptop"><div><div class="lim">'+p.nom+'</div><div class="lis">'+(p.fec||'')+' · '+p.loc+' · '+parts+'</div></div>'+badge+'</div><div class="pbot"><span style="font-size:16px;font-weight:700">'+fmt(p.tot)+'</span>'+btn+'</div></div>';
+    const btnEntrega=p.est==='pend'?'<button class="delbtn" onclick="entregar(\''+p.id+'\')">✓ Entregar</button>':'<span style="font-size:11px;color:#bbb">Entregado</span>';
+    const pago=p.pago||'sin_pagar';
+    const pagoBadge=pago==='sin_pagar'?'<span class="pl prd">Sin pagar</span>':pago==='efectivo'?'<span class="pl ptl">Efectivo</span>':'<span class="pl ppu">Transferencia</span>';
+    const btnPago=pago==='sin_pagar'?'<button class="delbtn" style="border-color:#534AB7;background:#EEEDFE;color:#3C3489" onclick="showPagoOpts(\''+p.id+'\')">$ Pago</button>':'';
+    return '<div class="pi '+p.est+'" id="pi-'+p.id+'"><div class="ptop"><div><div class="lim">'+p.nom+'</div><div class="lis">'+(p.fec||'')+' · '+p.loc+' · '+parts+'</div></div>'+badge+'</div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'+pagoBadge+'<span style="font-size:16px;font-weight:700">'+fmt(p.tot)+'</span></div><div id="pago-opts-'+p.id+'" style="display:none;background:#f7f5f2;border-radius:10px;padding:10px;margin-bottom:8px"><div style="font-size:12px;color:#888;margin-bottom:8px;font-weight:500">Seleccionar forma de pago:</div><div style="display:flex;gap:8px"><button onclick="registrarPago(\''+p.id+'\',\'efectivo\')" style="flex:1;padding:9px;border-radius:8px;border:1.5px solid #34D399;background:#E1F5EE;color:#085041;font-weight:600;cursor:pointer;font-size:13px">💵 Efectivo</button><button onclick="registrarPago(\''+p.id+'\',\'transferencia\')" style="flex:1;padding:9px;border-radius:8px;border:1.5px solid #534AB7;background:#EEEDFE;color:#3C3489;font-weight:600;cursor:pointer;font-size:13px">📲 Transferencia</button></div></div><div class="pbot">'+btnEntrega+btnPago+'</div></div>';
   }).join('');
+}
 }
 
 function renderGan() {
