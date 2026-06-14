@@ -196,6 +196,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="gsep"></div>
     <div class="grow"><span style="font-weight:600;font-size:15px">Ganancia neta</span><span class="neta-big" id="gn">$0</span></div>
   </div>
+  <div class="gbox">
+    <div class="gbox-title">Cobros de pedidos</div>
+    <div id="g-pagos"></div>
+  </div>
   <div class="card">
     <div class="ch"><div class="ci" style="background:#FFF3E0"><svg viewBox="0 0 16 16" fill="none" stroke="#7A4F00" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg></div><div><div class="ct">Top clientes</div><div class="cs">Por total de ventas entregadas</div></div></div>
     <div id="toplist"><div class="empty">Sin datos aun</div></div>
@@ -269,9 +273,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, doc, setDoc, getDoc, onSnapshot, addDoc, query, orderBy, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// ============================================================
-// REEMPLAZA ESTO CON TU CONFIGURACION DE FIREBASE
-// ============================================================
 const firebaseConfig = {
   apiKey: "AIzaSyC0yrI1SUgWxIJ3ScuuCGDvggEiett_Iog",
   authDomain: "pizzasempana.firebaseapp.com",
@@ -282,7 +283,6 @@ const firebaseConfig = {
   appId: "1:892967179041:web:3ba22b1188d7da1f7f2460",
   measurementId: "G-XN0QDBF4D1"
 };
-// ============================================================
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -338,11 +338,6 @@ function updHints() {
   if (document.getElementById('lm')) document.getElementById('lm').textContent = 'Mozzarella ('+getStock('pizza','mozzarella',loc)+')';
   if (document.getElementById('lec')) document.getElementById('lec').textContent = 'Carne ('+getStock('empanada','carne',loc)+')';
   if (document.getElementById('leq')) document.getElementById('leq').textContent = 'Queso ('+getStock('empanada','queso',loc)+')';
-}
-
-function getPrecio(cat, vari) {
-  const map = { pizza_jamon: precios.pj, pizza_cebolla: precios.pc, pizza_mozzarella: precios.pm, empanada_carne: precios.pec, empanada_queso: precios.peq };
-  return map[cat+'_'+vari] || 0;
 }
 
 window.updVarSelect = function() {
@@ -428,6 +423,10 @@ window.addPed = async function() {
   document.getElementById('pwarn').style.display='none'; calcPed();
 };
 
+window.entregar = async function(id) {
+  await updateDoc(doc(db,'pedidos',id),{est:'done'}); setSyncDot(true);
+};
+
 window.showPagoOpts = function(id) {
   const el = document.getElementById('pago-opts-'+id);
   el.style.display = el.style.display === 'none' ? 'block' : 'none';
@@ -451,11 +450,10 @@ function renderPeds() {
     const badge=p.est==='pend'?'<span class="pl pam">Pendiente</span>':'<span class="pl ptl">Entregado</span>';
     const btnEntrega=p.est==='pend'?'<button class="delbtn" onclick="entregar(\''+p.id+'\')">✓ Entregar</button>':'<span style="font-size:11px;color:#bbb">Entregado</span>';
     const pago=p.pago||'sin_pagar';
-    const pagoBadge=pago==='sin_pagar'?'<span class="pl prd">Sin pagar</span>':pago==='efectivo'?'<span class="pl ptl">Efectivo</span>':'<span class="pl ppu">Transferencia</span>';
+    const pagoBadge=pago==='sin_pagar'?'<span class="pl prd">Sin pagar</span>':pago==='efectivo'?'<span class="pl ptl">💵 Efectivo</span>':'<span class="pl ppu">📲 Transferencia</span>';
     const btnPago=pago==='sin_pagar'?'<button class="delbtn" style="border-color:#534AB7;background:#EEEDFE;color:#3C3489" onclick="showPagoOpts(\''+p.id+'\')">$ Pago</button>':'';
     return '<div class="pi '+p.est+'" id="pi-'+p.id+'"><div class="ptop"><div><div class="lim">'+p.nom+'</div><div class="lis">'+(p.fec||'')+' · '+p.loc+' · '+parts+'</div></div>'+badge+'</div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'+pagoBadge+'<span style="font-size:16px;font-weight:700">'+fmt(p.tot)+'</span></div><div id="pago-opts-'+p.id+'" style="display:none;background:#f7f5f2;border-radius:10px;padding:10px;margin-bottom:8px"><div style="font-size:12px;color:#888;margin-bottom:8px;font-weight:500">Seleccionar forma de pago:</div><div style="display:flex;gap:8px"><button onclick="registrarPago(\''+p.id+'\',\'efectivo\')" style="flex:1;padding:9px;border-radius:8px;border:1.5px solid #34D399;background:#E1F5EE;color:#085041;font-weight:600;cursor:pointer;font-size:13px">💵 Efectivo</button><button onclick="registrarPago(\''+p.id+'\',\'transferencia\')" style="flex:1;padding:9px;border-radius:8px;border:1.5px solid #534AB7;background:#EEEDFE;color:#3C3489;font-weight:600;cursor:pointer;font-size:13px">📲 Transferencia</button></div></div><div class="pbot">'+btnEntrega+btnPago+'</div></div>';
   }).join('');
-}
 }
 
 function renderGan() {
@@ -463,13 +461,17 @@ function renderGan() {
   const ventas=ent.reduce((a,p)=>a+p.tot,0), catIng=cats.reduce((a,c)=>a+c.ing,0), catGas=cats.reduce((a,c)=>a+c.gas,0);
   const stockGas=movimientos.filter(m=>m.tipo==='Ingreso').reduce((a,m)=>a+(m.costo||0)*(m.cantidad||0),0);
   const neta=ventas+catIng-stockGas-catGas;
-  document.getElementById('gv').textContent=fmt(ventas+catIng); document.getElementById('gg').textContent=fmt(stockGas+catGas);
-  document.getElementById('gstock').textContent=fmt(stockGas); document.getElementById('gcater').textContent=fmt(catGas);const efectivo=ent.filter(p=>p.pago==='efectivo').reduce((a,p)=>a+p.tot,0);
+  document.getElementById('gv').textContent=fmt(ventas+catIng);
+  document.getElementById('gg').textContent=fmt(stockGas+catGas);
+  document.getElementById('gstock').textContent=fmt(stockGas);
+  document.getElementById('gcater').textContent=fmt(catGas);
+  document.getElementById('gn').textContent=fmt(neta);
+  document.getElementById('gn').style.color=neta>=0?'#1D9E75':'#E24B4A';
+  const efectivo=ent.filter(p=>p.pago==='efectivo').reduce((a,p)=>a+p.tot,0);
   const transf=ent.filter(p=>p.pago==='transferencia').reduce((a,p)=>a+p.tot,0);
   const sinPagar=ent.filter(p=>!p.pago||p.pago==='sin_pagar').reduce((a,p)=>a+p.tot,0);
   const gpEl=document.getElementById('g-pagos');
   if(gpEl) gpEl.innerHTML='<div class="grow"><span style="color:#888">💵 Efectivo</span><span style="font-weight:600">'+fmt(efectivo)+'</span></div><div class="grow"><span style="color:#888">📲 Transferencia</span><span style="font-weight:600">'+fmt(transf)+'</span></div><div class="grow"><span style="color:#888">⏳ Sin cobrar</span><span style="font-weight:600;color:#E24B4A">'+fmt(sinPagar)+'</span></div>';
-  document.getElementById('gn').textContent=fmt(neta); document.getElementById('gn').style.color=neta>=0?'#1D9E75':'#E24B4A';
   const cl={};
   ent.forEach(p=>{cl[p.nom]=(cl[p.nom]||0)+p.tot;}); cats.forEach(c=>{cl[c.nom]=(cl[c.nom]||0)+c.ing;});
   const sorted=Object.keys(cl).map(k=>[k,cl[k]]).sort((a,b)=>b[1]-a[1]).slice(0,5);
@@ -513,7 +515,6 @@ function renderMov() {
   el.innerHTML=lista.map(m=>'<div class="mov-item"><div class="mov-top"><div><div class="mov-title">'+m.producto+' — '+m.cantidad+' u.</div><div class="mov-sub">'+[m.fecha,m.ubicacion,m.cliente?'Cliente: '+m.cliente:''].filter(Boolean).join(' · ')+'</div></div><span class="pl '+(cmap[m.tipo]||'pgr')+'">'+m.tipo+'</span></div></div>').join('');
 }
 
-// Listeners Firebase
 onSnapshot(collection(db,'stock'),snap=>{snap.forEach(d=>{stockData[d.id]=d.data().qty||0;});renderStockDisplay();setSyncDot(true);});
 onSnapshot(query(collection(db,'pedidos'),orderBy('ts','desc')),snap=>{peds=snap.docs.map(d=>({id:d.id,...d.data()}));renderPeds();setSyncDot(true);});
 onSnapshot(query(collection(db,'catering'),orderBy('ts','desc')),snap=>{cats=snap.docs.map(d=>({id:d.id,...d.data()}));renderCats();setSyncDot(true);});
