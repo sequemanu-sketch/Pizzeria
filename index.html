@@ -464,7 +464,11 @@ function renderGan() {
   const stockGas=movimientos.filter(m=>m.tipo==='Ingreso').reduce((a,m)=>a+(m.costo||0)*(m.cantidad||0),0);
   const neta=ventas+catIng-stockGas-catGas;
   document.getElementById('gv').textContent=fmt(ventas+catIng); document.getElementById('gg').textContent=fmt(stockGas+catGas);
-  document.getElementById('gstock').textContent=fmt(stockGas); document.getElementById('gcater').textContent=fmt(catGas);
+  document.getElementById('gstock').textContent=fmt(stockGas); document.getElementById('gcater').textContent=fmt(catGas);const efectivo=ent.filter(p=>p.pago==='efectivo').reduce((a,p)=>a+p.tot,0);
+  const transf=ent.filter(p=>p.pago==='transferencia').reduce((a,p)=>a+p.tot,0);
+  const sinPagar=ent.filter(p=>!p.pago||p.pago==='sin_pagar').reduce((a,p)=>a+p.tot,0);
+  const gpEl=document.getElementById('g-pagos');
+  if(gpEl) gpEl.innerHTML='<div class="grow"><span style="color:#888">💵 Efectivo</span><span style="font-weight:600">'+fmt(efectivo)+'</span></div><div class="grow"><span style="color:#888">📲 Transferencia</span><span style="font-weight:600">'+fmt(transf)+'</span></div><div class="grow"><span style="color:#888">⏳ Sin cobrar</span><span style="font-weight:600;color:#E24B4A">'+fmt(sinPagar)+'</span></div>';
   document.getElementById('gn').textContent=fmt(neta); document.getElementById('gn').style.color=neta>=0?'#1D9E75':'#E24B4A';
   const cl={};
   ent.forEach(p=>{cl[p.nom]=(cl[p.nom]||0)+p.tot;}); cats.forEach(c=>{cl[c.nom]=(cl[c.nom]||0)+c.ing;});
