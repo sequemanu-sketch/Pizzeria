@@ -488,6 +488,22 @@ window.abrirWhatsapp = function(num) {
   window.open(waLink(num), '_blank');
 };
 
+// Boton de WhatsApp en cada pedido: si el cliente ya tiene numero guardado abre
+// el chat directo. Si no lo tiene, lo pide en el momento y ofrece guardarlo
+// para que la proxima vez ya aparezca solo.
+window.abrirWhatsappPedido = function(nombreCliente) {
+  const cliente = findClientePorNombre(nombreCliente);
+  if (cliente && cliente.whatsapp) { abrirWhatsapp(cliente.whatsapp); return; }
+  const num = prompt('No tenes el WhatsApp de "'+nombreCliente+'" guardado.\nIngresalo con codigo de pais y area, sin espacios ni "+" (ej: 5491122334455):');
+  if (!num) return;
+  const digits = num.replace(/\D/g,'');
+  if (!digits) return;
+  abrirWhatsapp(digits);
+  if (confirm('¿Guardar este numero para "'+nombreCliente+'" y que aparezca solo la proxima vez?')) {
+    setDoc(doc(db,'clientes',slug(nombreCliente)), { nombre: nombreCliente, whatsapp: digits, ts: serverTimestamp() }, { merge: true }).catch(()=>setSyncDot(false));
+  }
+};
+
 function findClientePorNombre(nom) {
   const key = slug(nom);
   return clientes.find(c => slug(c.nombre) === key);
@@ -504,8 +520,7 @@ function renderPeds() {
     const pago=p.pago||'sin_pagar';
     const pagoBadge=pago==='sin_pagar'?'<span class="pl prd">Sin pagar</span>':pago==='efectivo'?'<span class="pl ptl">💵 Efectivo</span>':'<span class="pl ppu">📲 Transferencia</span>';
     const btnPago=pago==='sin_pagar'?'<button class="delbtn" style="border-color:#534AB7;background:#EEEDFE;color:#3C3489" onclick="showPagoOpts(\''+p.id+'\')">$ Pago</button>':'';
-    const cliente = findClientePorNombre(p.nom);
-    const btnWa = (cliente && cliente.whatsapp) ? '<button class="wabtn" onclick="abrirWhatsapp(\''+cliente.whatsapp+'\')">📲 WhatsApp</button>' : '';
+    const btnWa = '<button class="wabtn" onclick="abrirWhatsappPedido(\''+p.nom.replace(/'/g,"\\'")+'\')">📲 WhatsApp</button>';
     return '<div class="pi '+p.est+'" id="pi-'+p.id+'"><div class="ptop"><div><div class="lim">'+p.nom+'</div><div class="lis">'+(p.fec||'')+' · '+p.loc+' · '+parts+'</div></div>'+badge+'</div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'+pagoBadge+'<span style="font-size:16px;font-weight:700">'+fmt(p.tot)+'</span></div><div id="pago-opts-'+p.id+'" style="display:none;background:#f7f5f2;border-radius:10px;padding:10px;margin-bottom:8px"><div style="font-size:12px;color:#888;margin-bottom:8px;font-weight:500">Seleccionar forma de pago:</div><div style="display:flex;gap:8px"><button onclick="registrarPago(\''+p.id+'\',\'efectivo\')" style="flex:1;padding:9px;border-radius:8px;border:1.5px solid #34D399;background:#E1F5EE;color:#085041;font-weight:600;cursor:pointer;font-size:13px">💵 Efectivo</button><button onclick="registrarPago(\''+p.id+'\',\'transferencia\')" style="flex:1;padding:9px;border-radius:8px;border:1.5px solid #534AB7;background:#EEEDFE;color:#3C3489;font-weight:600;cursor:pointer;font-size:13px">📲 Transferencia</button></div></div><div class="pbot">'+btnEntrega+btnWa+btnPago+'</div></div>';
   }).join('');
 }
