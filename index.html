@@ -59,8 +59,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .pi.pend{border-left:4px solid #F59E0B}
 .pi.done{border-left:4px solid #34D399;opacity:.8}
 .ptop{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;gap:8px}
-.pbot{display:flex;justify-content:space-between;align-items:center}
+.pbot{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
 .delbtn{font-size:12px;padding:8px 14px;border-radius:999px;border:1.5px solid #34D399;background:#E1F5EE;color:#085041;cursor:pointer;font-weight:600}
+.wabtn{font-size:12px;padding:8px 14px;border-radius:999px;border:1.5px solid #25D366;background:#E7F9EF;color:#0B7A3C;cursor:pointer;font-weight:600}
 .tbrow{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
 .tb{padding:7px 12px;border-radius:999px;border:1.5px solid #e8e2db;background:#fff;font-size:12px;cursor:pointer;color:#888;font-weight:500}
 .tb.on{background:#D85A30;border-color:#D85A30;color:#fff;font-weight:600}
@@ -95,183 +96,192 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .mov-title{font-size:13px;font-weight:600;color:#1a1a1a}
 .mov-sub{font-size:11px;color:#aaa;margin-top:2px}
 .loading{text-align:center;padding:3rem 0;color:#aaa;font-size:14px}
+.hist-summary{font-size:12px;color:#888;cursor:pointer;margin:8px 0 4px}
 </style>
 </head>
 <body>
-
 <div class="header">
-  <div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg></div>
-  <div><h1>Mi pizzería</h1><p>Panel de gestión</p></div>
-  <div class="sync-dot" id="sync-dot" title="Estado de conexión"></div>
+<div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg></div>
+<div><h1>Mi pizzería</h1><p>Panel de gestión</p></div>
+<div class="sync-dot" id="sync-dot" title="Estado de conexión"></div>
 </div>
-
 <div class="content">
 
 <div id="sec-stock" class="sec on">
-  <div id="stock-display"><div class="loading">Cargando stock...</div></div>
-  <div class="card">
-    <div class="ch"><div class="ci" style="background:#FAECE7"><svg viewBox="0 0 16 16" fill="none" stroke="#993C1D" stroke-width="1.5"><path d="M8 2v12M2 8h12"/></svg></div><div><div class="ct">Precios por producto</div><div class="cs">Afecta calculos futuros</div></div></div>
-    <div class="pline"><span>Pizza Jamon ($)</span><input type="number" id="pj" value="3500" oninput="savePrecios()"></div>
-    <div class="pline"><span>Pizza Cebolla ($)</span><input type="number" id="pc" value="3200" oninput="savePrecios()"></div>
-    <div class="pline"><span>Pizza Mozzarella ($)</span><input type="number" id="pm" value="3000" oninput="savePrecios()"></div>
-    <div class="pline"><span>Empanada Carne ($)</span><input type="number" id="pec" value="800" oninput="savePrecios()"></div>
-    <div class="pline"><span>Empanada Queso ($)</span><input type="number" id="peq" value="800" oninput="savePrecios()"></div>
-    <p class="note">Los pedidos ya registrados conservan su precio original.</p>
-  </div>
-  <div class="card">
-    <div class="ch"><div class="ci" style="background:#FFF3E0"><svg viewBox="0 0 16 16" fill="none" stroke="#7A4F00" stroke-width="1.5"><rect x="2" y="4" width="12" height="9" rx="1"/><path d="M5 4V3a1 1 0 011-1h4a1 1 0 011 1v1"/></svg></div><div><div class="ct">Cargar stock</div></div></div>
-    <div class="r2">
-      <div class="f"><label>Categoria</label><select id="s-cat" onchange="updVarSelect()"><option value="pizza">Pizza</option><option value="empanada">Empanada</option></select></div>
-      <div class="f"><label>Variedad</label><select id="s-var"></select></div>
-    </div>
-    <div class="r2">
-      <div class="f"><label>Ubicacion</label><select id="s-loc"><option value="Manuel">Manuel</option><option value="Santiago">Santiago</option></select></div>
-      <div class="f"><label>Cantidad</label><input type="number" id="sq" placeholder="0" min="0"></div>
-    </div>
-    <div class="r2">
-      <div class="f"><label>Costo unitario ($)</label><input type="number" id="sc" placeholder="0"></div>
-      <div class="f"><label>Mes</label><input type="month" id="sm"></div>
-    </div>
-    <button class="abtn" onclick="addStock()">+ Agregar al stock</button>
-  </div>
-  <div class="card">
-    <div class="ch"><div class="ci" style="background:#EEEDFE"><svg viewBox="0 0 16 16" fill="none" stroke="#534AB7" stroke-width="1.5"><path d="M2 8h12M9 5l3 3-3 3M7 5L4 8l3 3"/></svg></div><div><div class="ct">Transferir stock</div><div class="cs">Entre Manuel y Santiago</div></div></div>
-    <div class="r2">
-      <div class="f"><label>Categoria</label><select id="t-cat" onchange="updTrVar()"><option value="pizza">Pizza</option><option value="empanada">Empanada</option></select></div>
-      <div class="f"><label>Variedad</label><select id="t-var"></select></div>
-    </div>
-    <div class="r2">
-      <div class="f"><label>Desde</label><select id="t-from"><option value="Manuel">Manuel</option><option value="Santiago">Santiago</option></select></div>
-      <div class="f"><label>Hacia</label><select id="t-to"><option value="Santiago">Santiago</option><option value="Manuel">Manuel</option></select></div>
-    </div>
-    <div class="f" style="margin-bottom:10px"><label>Cantidad</label><input type="number" id="t-qty" placeholder="0" min="0"></div>
-    <div class="warn" id="t-warn"></div>
-    <button class="abtn purp" onclick="transferStock()">Transferir</button>
-  </div>
+<div id="stock-display"><div class="loading">Cargando stock...</div></div>
+<div class="card">
+<div class="ch"><div class="ci" style="background:#FAECE7"><svg viewBox="0 0 16 16" fill="none" stroke="#993C1D" stroke-width="1.5"><path d="M8 2v12M2 8h12"/></svg></div><div><div class="ct">Precios por producto</div><div class="cs">Afecta calculos futuros</div></div></div>
+<div class="pline"><span>Pizza Jamon ($)</span><input type="number" id="pj" value="3500" oninput="savePrecios()"></div>
+<div class="pline"><span>Pizza Cebolla ($)</span><input type="number" id="pc" value="3200" oninput="savePrecios()"></div>
+<div class="pline"><span>Pizza Mozzarella ($)</span><input type="number" id="pm" value="3000" oninput="savePrecios()"></div>
+<div class="pline"><span>Empanada Carne ($)</span><input type="number" id="pec" value="800" oninput="savePrecios()"></div>
+<div class="pline"><span>Empanada Queso ($)</span><input type="number" id="peq" value="800" oninput="savePrecios()"></div>
+<p class="note">Los pedidos ya registrados conservan su precio original.</p>
+</div>
+<div class="card">
+<div class="ch"><div class="ci" style="background:#FFF3E0"><svg viewBox="0 0 16 16" fill="none" stroke="#7A4F00" stroke-width="1.5"><rect x="2" y="4" width="12" height="9" rx="1"/><path d="M5 4V3a1 1 0 011-1h4a1 1 0 011 1v1"/></svg></div><div><div class="ct">Cargar stock</div></div></div>
+<div class="r2">
+<div class="f"><label>Categoria</label><select id="s-cat" onchange="updVarSelect()"><option value="pizza">Pizza</option><option value="empanada">Empanada</option></select></div>
+<div class="f"><label>Variedad</label><select id="s-var"></select></div>
+</div>
+<div class="r2">
+<div class="f"><label>Ubicacion</label><select id="s-loc"><option value="Manuel">Manuel</option><option value="Santiago">Santiago</option></select></div>
+<div class="f"><label>Cantidad</label><input type="number" id="sq" placeholder="0" min="0"></div>
+</div>
+<div class="r2">
+<div class="f"><label>Costo unitario ($)</label><input type="number" id="sc" placeholder="0"></div>
+<div class="f"><label>Mes</label><input type="month" id="sm"></div>
+</div>
+<button class="abtn" onclick="addStock()">+ Agregar al stock</button>
+</div>
+<div class="card">
+<div class="ch"><div class="ci" style="background:#EEEDFE"><svg viewBox="0 0 16 16" fill="none" stroke="#534AB7" stroke-width="1.5"><path d="M2 8h12M9 5l3 3-3 3M7 5L4 8l3 3"/></svg></div><div><div class="ct">Transferir stock</div><div class="cs">Entre Manuel y Santiago</div></div></div>
+<div class="r2">
+<div class="f"><label>Categoria</label><select id="t-cat" onchange="updTrVar()"><option value="pizza">Pizza</option><option value="empanada">Empanada</option></select></div>
+<div class="f"><label>Variedad</label><select id="t-var"></select></div>
+</div>
+<div class="r2">
+<div class="f"><label>Desde</label><select id="t-from"><option value="Manuel">Manuel</option><option value="Santiago">Santiago</option></select></div>
+<div class="f"><label>Hacia</label><select id="t-to"><option value="Santiago">Santiago</option><option value="Manuel">Manuel</option></select></div>
+</div>
+<div class="f" style="margin-bottom:10px"><label>Cantidad</label><input type="number" id="t-qty" placeholder="0" min="0"></div>
+<div class="warn" id="t-warn"></div>
+<button class="abtn purp" onclick="transferStock()">Transferir</button>
+</div>
 </div>
 
 <div id="sec-pedidos" class="sec">
-  <div class="card">
-    <div class="ch"><div class="ci" style="background:#FAECE7"><svg viewBox="0 0 16 16" fill="none" stroke="#993C1D" stroke-width="1.5"><path d="M8 2v12M2 8h12"/></svg></div><div><div class="ct">Nuevo pedido</div><div class="cs">Selecciona ubicacion para descontar stock</div></div></div>
-    <div class="r2">
-      <div class="f"><label>Cliente</label><input type="text" id="pnom" placeholder="Nombre"></div>
-      <div class="f"><label>Fecha</label><input type="date" id="pfec"></div>
-    </div>
-    <div class="f" style="margin-bottom:10px"><label>Ubicacion (descuento de stock)</label><select id="p-loc"><option value="Manuel">Manuel</option><option value="Santiago">Santiago</option></select></div>
-    <div style="font-size:12px;color:#888;font-weight:500;margin-bottom:8px">Pizzas</div>
-    <div class="r3">
-      <div class="f"><label id="lj">Jamon</label><input type="number" id="pqj" value="0" min="0" oninput="calcPed()"></div>
-      <div class="f"><label id="lc">Cebolla</label><input type="number" id="pqc" value="0" min="0" oninput="calcPed()"></div>
-      <div class="f"><label id="lm">Mozzarella</label><input type="number" id="pqm" value="0" min="0" oninput="calcPed()"></div>
-    </div>
-    <div style="font-size:12px;color:#888;font-weight:500;margin-bottom:8px">Empanadas</div>
-    <div class="r2">
-      <div class="f"><label id="lec">Carne</label><input type="number" id="pqec" value="0" min="0" oninput="calcPed()"></div>
-      <div class="f"><label id="leq">Queso</label><input type="number" id="pqeq" value="0" min="0" oninput="calcPed()"></div>
-    </div>
-    <div class="warn" id="pwarn"></div>
-    <div class="trow"><span class="tl">Total del pedido</span><span class="ta" id="ptot">$0</span></div>
-    <button class="abtn" onclick="addPed()">+ Registrar como pendiente</button>
-  </div>
-  <div class="card">
-    <div class="ch"><div class="ci" style="background:#E1F5EE"><svg viewBox="0 0 16 16" fill="none" stroke="#0F6E56" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h8"/></svg></div><div><div class="ct">Pedidos</div></div></div>
-    <div class="tbrow">
-      <button class="tb on" id="tf-todos" onclick="filtrar('todos','tf-todos')">Todos</button>
-      <button class="tb" id="tf-pend" onclick="filtrar('pend','tf-pend')">Pendientes</button>
-      <button class="tb" id="tf-done" onclick="filtrar('done','tf-done')">Entregados</button>
-    </div>
-    <div id="plist"><div class="empty">Sin pedidos aun</div></div>
-  </div>
+<div class="card">
+<div class="ch"><div class="ci" style="background:#FAECE7"><svg viewBox="0 0 16 16" fill="none" stroke="#993C1D" stroke-width="1.5"><path d="M8 2v12M2 8h12"/></svg></div><div><div class="ct">Nuevo pedido</div><div class="cs">Selecciona ubicacion para descontar stock</div></div></div>
+<div class="r2">
+<div class="f"><label>Cliente</label><input type="text" id="pnom" placeholder="Nombre" list="clientes-dl"></div>
+<datalist id="clientes-dl"></datalist>
+<div class="f"><label>Fecha</label><input type="date" id="pfec"></div>
+</div>
+<div class="f" style="margin-bottom:10px"><label>Ubicacion (descuento de stock)</label><select id="p-loc"><option value="Manuel">Manuel</option><option value="Santiago">Santiago</option></select></div>
+<div style="font-size:12px;color:#888;font-weight:500;margin-bottom:8px">Pizzas</div>
+<div class="r3">
+<div class="f"><label id="lj">Jamon</label><input type="number" id="pqj" value="0" min="0" oninput="calcPed()"></div>
+<div class="f"><label id="lc">Cebolla</label><input type="number" id="pqc" value="0" min="0" oninput="calcPed()"></div>
+<div class="f"><label id="lm">Mozzarella</label><input type="number" id="pqm" value="0" min="0" oninput="calcPed()"></div>
+</div>
+<div style="font-size:12px;color:#888;font-weight:500;margin-bottom:8px">Empanadas</div>
+<div class="r2">
+<div class="f"><label id="lec">Carne</label><input type="number" id="pqec" value="0" min="0" oninput="calcPed()"></div>
+<div class="f"><label id="leq">Queso</label><input type="number" id="pqeq" value="0" min="0" oninput="calcPed()"></div>
+</div>
+<div class="warn" id="pwarn"></div>
+<div class="trow"><span class="tl">Total del pedido</span><span class="ta" id="ptot">$0</span></div>
+<button class="abtn" onclick="addPed()">+ Registrar como pendiente</button>
+</div>
+<div class="card">
+<div class="ch"><div class="ci" style="background:#E1F5EE"><svg viewBox="0 0 16 16" fill="none" stroke="#0F6E56" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h8"/></svg></div><div><div class="ct">Pedidos</div></div></div>
+<div class="tbrow">
+<button class="tb on" id="tf-todos" onclick="filtrar('todos','tf-todos')">Todos</button>
+<button class="tb" id="tf-pend" onclick="filtrar('pend','tf-pend')">Pendientes</button>
+<button class="tb" id="tf-done" onclick="filtrar('done','tf-done')">Entregados</button>
+</div>
+<div id="plist"><div class="empty">Sin pedidos aun</div></div>
+</div>
 </div>
 
 <div id="sec-ganancias" class="sec">
-  <div class="met">
-    <div class="mc" style="background:#E1F5EE"><div class="ml" style="color:#0F6E56">Ingresos totales</div><div class="mv" style="color:#085041" id="gv">$0</div></div>
-    <div class="mc" style="background:#FCEBEB"><div class="ml" style="color:#A32D2D">Gastos totales</div><div class="mv" style="color:#791F1F" id="gg">$0</div></div>
-  </div>
-  <div class="gbox">
-    <div class="gbox-title">Desglose de gastos</div>
-    <div class="grow"><span style="color:#888">Compra de stock</span><span id="gstock" style="font-weight:600">$0</span></div>
-    <div class="grow"><span style="color:#888">Gastos catering</span><span id="gcater" style="font-weight:600">$0</span></div>
-    <div class="gsep"></div>
-    <div class="grow"><span style="font-weight:600;font-size:15px">Ganancia neta</span><span class="neta-big" id="gn">$0</span></div>
-  </div>
-  <div class="gbox">
-    <div class="gbox-title">Cobros de pedidos</div>
-    <div id="g-pagos"></div>
-  </div>
-  <div class="card">
-    <div class="ch"><div class="ci" style="background:#FFF3E0"><svg viewBox="0 0 16 16" fill="none" stroke="#7A4F00" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg></div><div><div class="ct">Top clientes</div><div class="cs">Por total de ventas entregadas</div></div></div>
-    <div id="toplist"><div class="empty">Sin datos aun</div></div>
-  </div>
-  <div class="card">
-    <div class="ch"><div class="ci" style="background:#FAECE7"><svg viewBox="0 0 16 16" fill="none" stroke="#993C1D" stroke-width="1.5"><path d="M2 12l3-4 3 2 3-5 3 3"/></svg></div><div><div class="ct">Ventas por tipo</div></div></div>
-    <div id="vtipo"><div class="empty">Sin datos aun</div></div>
-  </div>
+<div class="met">
+<div class="mc" style="background:#E1F5EE"><div class="ml" style="color:#0F6E56">Ingresos totales</div><div class="mv" style="color:#085041" id="gv">$0</div></div>
+<div class="mc" style="background:#FCEBEB"><div class="ml" style="color:#A32D2D">Gastos totales</div><div class="mv" style="color:#791F1F" id="gg">$0</div></div>
+</div>
+<div class="gbox">
+<div class="gbox-title">Desglose de gastos</div>
+<div class="grow"><span style="color:#888">Compra de stock</span><span id="gstock" style="font-weight:600">$0</span></div>
+<div class="grow"><span style="color:#888">Gastos catering</span><span id="gcater" style="font-weight:600">$0</span></div>
+<div class="gsep"></div>
+<div class="grow"><span style="font-weight:600;font-size:15px">Ganancia neta</span><span class="neta-big" id="gn">$0</span></div>
+</div>
+<div class="gbox">
+<div class="gbox-title">Cobros de pedidos</div>
+<div id="g-pagos"></div>
+</div>
+<div class="card">
+<div class="ch"><div class="ci" style="background:#FFF3E0"><svg viewBox="0 0 16 16" fill="none" stroke="#7A4F00" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg></div><div><div class="ct">Top clientes</div><div class="cs">Por total de ventas entregadas</div></div></div>
+<div id="toplist"><div class="empty">Sin datos aun</div></div>
+</div>
+<div class="card">
+<div class="ch"><div class="ci" style="background:#FAECE7"><svg viewBox="0 0 16 16" fill="none" stroke="#993C1D" stroke-width="1.5"><path d="M2 12l3-4 3 2 3-5 3 3"/></svg></div><div><div class="ct">Ventas por tipo</div></div></div>
+<div id="vtipo"><div class="empty">Sin datos aun</div></div>
+</div>
 </div>
 
 <div id="sec-catering" class="sec">
-  <div class="card">
-    <div class="ch"><div class="ci" style="background:#EEEDFE"><svg viewBox="0 0 16 16" fill="none" stroke="#534AB7" stroke-width="1.5"><path d="M2 13h12M4 13V6M12 13V6M8 13V4M1 6h14"/></svg></div><div><div class="ct">Nuevo evento</div><div class="cs">Los gastos impactan en ganancia neta</div></div></div>
-    <div class="r2">
-      <div class="f"><label>Cliente / Evento</label><input type="text" id="cnom" placeholder="Nombre"></div>
-      <div class="f"><label>Fecha</label><input type="date" id="cfec"></div>
-    </div>
-    <div class="r2">
-      <div class="f"><label>Ingresos ($)</label><input type="number" id="cing" placeholder="0" oninput="calcCat()"></div>
-      <div class="f"><label>Gastos ($)</label><input type="number" id="cgas" placeholder="0" oninput="calcCat()"></div>
-    </div>
-    <div class="f" style="margin-bottom:12px"><label>Detalle de gastos</label><input type="text" id="cdet" placeholder="Ingredientes, transporte..."></div>
-    <div class="trow" style="background:#EEEDFE"><span class="tl" style="color:#534AB7">Resultado neto</span><span class="ta" style="color:#3C3489" id="cnet">$0</span></div>
-    <button class="abtn purp" onclick="addCat()">+ Registrar catering</button>
-  </div>
-  <div class="card">
-    <div class="ch"><div class="ci" style="background:#E1F5EE"><svg viewBox="0 0 16 16" fill="none" stroke="#0F6E56" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h8"/></svg></div><div><div class="ct">Historial de catering</div></div></div>
-    <div id="clist"><div class="empty">Sin registros aun</div></div>
-  </div>
+<div class="card">
+<div class="ch"><div class="ci" style="background:#EEEDFE"><svg viewBox="0 0 16 16" fill="none" stroke="#534AB7" stroke-width="1.5"><path d="M2 13h12M4 13V6M12 13V6M8 13V4M1 6h14"/></svg></div><div><div class="ct">Nuevo evento</div><div class="cs">Los gastos impactan en ganancia neta</div></div></div>
+<div class="r2">
+<div class="f"><label>Cliente / Evento</label><input type="text" id="cnom" placeholder="Nombre"></div>
+<div class="f"><label>Fecha</label><input type="date" id="cfec"></div>
+</div>
+<div class="r2">
+<div class="f"><label>Ingresos ($)</label><input type="number" id="cing" placeholder="0" oninput="calcCat()"></div>
+<div class="f"><label>Gastos ($)</label><input type="number" id="cgas" placeholder="0" oninput="calcCat()"></div>
+</div>
+<div class="f" style="margin-bottom:12px"><label>Detalle de gastos</label><input type="text" id="cdet" placeholder="Ingredientes, transporte..."></div>
+<div class="trow" style="background:#EEEDFE"><span class="tl" style="color:#534AB7">Resultado neto</span><span class="ta" style="color:#3C3489" id="cnet">$0</span></div>
+<button class="abtn purp" onclick="addCat()">+ Registrar catering</button>
+</div>
+<div class="card">
+<div class="ch"><div class="ci" style="background:#E1F5EE"><svg viewBox="0 0 16 16" fill="none" stroke="#0F6E56" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h8"/></svg></div><div><div class="ct">Historial de catering</div></div></div>
+<div id="clist"><div class="empty">Sin registros aun</div></div>
+</div>
 </div>
 
-<div id="sec-movimientos" class="sec">
-  <div class="card">
-    <div class="ch"><div class="ci" style="background:#E1F5EE"><svg viewBox="0 0 16 16" fill="none" stroke="#0F6E56" stroke-width="1.5"><path d="M2 8h12M10 4l4 4-4 4"/></svg></div><div><div class="ct">Movimientos de stock</div><div class="cs">Ingresos, ventas y transferencias</div></div></div>
-    <div class="tbrow">
-      <button class="tb on" id="mf-todos" onclick="filtrarMov('todos','mf-todos')">Todos</button>
-      <button class="tb" id="mf-ingreso" onclick="filtrarMov('Ingreso','mf-ingreso')">Ingresos</button>
-      <button class="tb" id="mf-venta" onclick="filtrarMov('Venta','mf-venta')">Ventas</button>
-      <button class="tb" id="mf-transf" onclick="filtrarMov('Transferencia','mf-transf')">Transferencias</button>
-    </div>
-    <div id="movlist"><div class="loading">Cargando...</div></div>
-  </div>
+<div id="sec-clientes" class="sec">
+<div class="card">
+<div class="ch"><div class="ci" style="background:#E7F9EF"><svg viewBox="0 0 16 16" fill="none" stroke="#0B7A3C" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg></div><div><div class="ct">Nuevo cliente</div><div class="cs">Guarda el WhatsApp para contactarlo en un toque</div></div></div>
+<div class="r2">
+<div class="f"><label>Nombre</label><input type="text" id="clnom" placeholder="Igual al que cargas en pedidos"></div>
+<div class="f"><label>WhatsApp</label><input type="tel" id="clwa" placeholder="Ej: 5491122334455"></div>
+</div>
+<p class="note">Usa el mismo nombre que usás al cargar pedidos para que se relacionen automáticamente. El numero va con codigo de pais y area, sin espacios ni "+" (ej: 549 + area + numero).</p>
+<button class="abtn teal" onclick="addCliente()">+ Guardar cliente</button>
+</div>
+<div class="card">
+<div class="ch"><div class="ci" style="background:#FFF3E0"><svg viewBox="0 0 16 16" fill="none" stroke="#7A4F00" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h8"/></svg></div><div><div class="ct">Clientes</div><div class="cs">Pedidos totales, historial y contacto</div></div></div>
+<div id="clientlist"><div class="empty">Sin clientes aun</div></div>
+</div>
 </div>
 
 </div>
 
 <nav class="nav">
-  <button class="nb on" id="btn-stock" onclick="show('stock','btn-stock')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-    Stock
-  </button>
-  <button class="nb" id="btn-pedidos" onclick="show('pedidos','btn-pedidos')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12l2 14H4L6 2z"/><circle cx="9" cy="20.5" r="1.5"/><circle cx="15" cy="20.5" r="1.5"/></svg>
-    Pedidos
-  </button>
-  <button class="nb" id="btn-ganancias" onclick="show('ganancias','btn-ganancias')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l4-6 4 3 4-7 4 4"/></svg>
-    Ganancias
-  </button>
-  <button class="nb" id="btn-catering" onclick="show('catering','btn-catering')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19h18M6 19V9M18 19V9M12 19V6M2 9h20"/></svg>
-    Catering
-  </button>
-  <button class="nb" id="btn-movimientos" onclick="show('movimientos','btn-movimientos')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M15 6l6 6-6 6"/></svg>
-    Movim.
-  </button>
+<button class="nb on" id="btn-stock" onclick="show('stock','btn-stock')">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+Stock
+</button>
+<button class="nb" id="btn-pedidos" onclick="show('pedidos','btn-pedidos')">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12l2 14H4L6 2z"/><circle cx="9" cy="20.5" r="1.5"/><circle cx="15" cy="20.5" r="1.5"/></svg>
+Pedidos
+</button>
+<button class="nb" id="btn-clientes" onclick="show('clientes','btn-clientes')">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+Clientes
+</button>
+<button class="nb" id="btn-ganancias" onclick="show('ganancias','btn-ganancias')">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l4-6 4 3 4-7 4 4"/></svg>
+Ganancias
+</button>
+<button class="nb" id="btn-catering" onclick="show('catering','btn-catering')">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19h18M6 19V9M18 19V9M12 19V6M2 9h20"/></svg>
+Catering
+</button>
+<button class="nb" id="btn-movimientos" onclick="show('movimientos','btn-movimientos')">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M15 6l6 6-6 6"/></svg>
+Movim.
+</button>
 </nav>
+
+<div id="sec-movimientos-wrap" style="display:none"></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, doc, setDoc, getDoc, onSnapshot, addDoc, query, orderBy, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, doc, setDoc, getDoc, onSnapshot, addDoc, query, orderBy, updateDoc, serverTimestamp, runTransaction } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC0yrI1SUgWxIJ3ScuuCGDvggEiett_Iog",
@@ -288,7 +298,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 let stockData = {};
-let peds = [], cats = [], movimientos = [];
+let peds = [], cats = [], movimientos = [], clientes = [];
 let pfilt = 'todos', movFilt = 'todos';
 let precios = { pj: 3500, pc: 3200, pm: 3000, pec: 800, peq: 800 };
 
@@ -302,6 +312,8 @@ function stockKey(cat, vari, loc) { return cat+'_'+vari+'_'+loc; }
 function getStock(cat, vari, loc) { return stockData[stockKey(cat,vari,loc)] || 0; }
 function setSyncDot(ok) { document.getElementById('sync-dot').className = 'sync-dot '+(ok?'ok':'err'); }
 function fmt(n) { return '$'+Math.round(n).toLocaleString('es-AR'); }
+function slug(s) { return (s||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'_'); }
+function waLink(num) { return 'https://wa.me/'+(num||'').replace(/\D/g,''); }
 
 window.show = function(sec, btnId) {
   document.querySelectorAll('.sec').forEach(s => s.classList.remove('on'));
@@ -310,6 +322,7 @@ window.show = function(sec, btnId) {
   document.getElementById(btnId).classList.add('on');
   if (sec==='ganancias') renderGan();
   if (sec==='movimientos') renderMov();
+  if (sec==='clientes') renderClientes();
   window.scrollTo(0,0);
 };
 
@@ -370,24 +383,53 @@ window.addStock = async function() {
   } catch(e) { setSyncDot(false); alert('Error al guardar.'); }
 };
 
+// TRANSFERENCIA DE STOCK — corregida con transaccion atomica de Firestore.
+// Antes se hacian dos escrituras separadas (resta en origen + suma en destino);
+// si la segunda fallaba (corte de señal, uso simultaneo con Santiago, etc.) el
+// producto quedaba restado en origen pero nunca sumado en destino: "desaparecia".
+// Ahora ambas escrituras se aplican juntas o ninguna se aplica, y ademas se
+// valida el stock real del servidor (no la copia local), evitando descuadres
+// cuando dos personas transfieren al mismo tiempo.
 window.transferStock = async function() {
   const cat = document.getElementById('t-cat').value, vari = document.getElementById('t-var').value;
   const from = document.getElementById('t-from').value, to = document.getElementById('t-to').value;
   const qty = parseFloat(document.getElementById('t-qty').value)||0;
   const warn = document.getElementById('t-warn');
-  if (!qty || from===to) return;
+  warn.style.display = 'none';
+
+  if (!qty) { warn.style.display='block'; warn.textContent='Ingresa una cantidad valida.'; return; }
+  if (from===to) { warn.style.display='block'; warn.textContent='Elegi dos ubicaciones distintas.'; return; }
+
   const fromKey = stockKey(cat,vari,from), toKey = stockKey(cat,vari,to);
-  const fromStock = stockData[fromKey]||0;
-  if (qty > fromStock) { warn.style.display='block'; warn.textContent='Stock insuficiente en '+from+'. Hay '+fromStock+' unidades.'; return; }
-  warn.style.display='none';
-  stockData[fromKey] = fromStock - qty;
-  stockData[toKey] = (stockData[toKey]||0) + qty;
+  const fromRef = doc(db,'stock',fromKey), toRef = doc(db,'stock',toKey);
+
   try {
-    await setDoc(doc(db,'stock',fromKey), { cat, vari, loc: from, qty: stockData[fromKey] });
-    await setDoc(doc(db,'stock',toKey), { cat, vari, loc: to, qty: stockData[toKey] });
+    await runTransaction(db, async (tx) => {
+      const fromSnap = await tx.get(fromRef);
+      const toSnap = await tx.get(toRef);
+      const fromQty = fromSnap.exists() ? (fromSnap.data().qty||0) : 0;
+      const toQty = toSnap.exists() ? (toSnap.data().qty||0) : 0;
+      if (qty > fromQty) {
+        throw new Error('STOCK_INSUFICIENTE:'+fromQty);
+      }
+      tx.set(fromRef, { cat, vari, loc: from, qty: fromQty - qty });
+      tx.set(toRef, { cat, vari, loc: to, qty: toQty + qty });
+    });
     await addDoc(collection(db,'movimientos'), { fecha: new Date().toISOString().split('T')[0], producto: PRODUCTOS[cat].label+' '+PRODUCTOS[cat].labels[vari], cantidad: qty, ubicacion: from+' → '+to, tipo: 'Transferencia', ts: serverTimestamp() });
-    setSyncDot(true); renderStockDisplay(); document.getElementById('t-qty').value = '';
-  } catch(e) { setSyncDot(false); }
+    setSyncDot(true);
+    document.getElementById('t-qty').value = '';
+  } catch(e) {
+    const msg = String(e && e.message || '');
+    if (msg.startsWith('STOCK_INSUFICIENTE')) {
+      const disp = msg.split(':')[1];
+      warn.style.display = 'block';
+      warn.textContent = 'Stock insuficiente en '+from+'. Hay '+disp+' unidades.';
+    } else {
+      setSyncDot(false);
+      warn.style.display = 'block';
+      warn.textContent = 'Error al transferir, intenta de nuevo.';
+    }
+  }
 };
 
 window.calcPed = function() {
@@ -438,8 +480,18 @@ window.registrarPago = async function(id, forma) {
 };
 
 window.filtrar = function(f,btnId) {
-  pfilt=f; document.querySelectorAll('.tb').forEach(b=>b.classList.remove('on')); document.getElementById(btnId).classList.add('on'); renderPeds();
+  pfilt=f; document.querySelectorAll('#sec-pedidos .tb').forEach(b=>b.classList.remove('on')); document.getElementById(btnId).classList.add('on'); renderPeds();
 };
+
+window.abrirWhatsapp = function(num) {
+  if (!num) return;
+  window.open(waLink(num), '_blank');
+};
+
+function findClientePorNombre(nom) {
+  const key = slug(nom);
+  return clientes.find(c => slug(c.nombre) === key);
+}
 
 function renderPeds() {
   const lista=peds.filter(p=>pfilt==='todos'||p.est===pfilt);
@@ -452,7 +504,9 @@ function renderPeds() {
     const pago=p.pago||'sin_pagar';
     const pagoBadge=pago==='sin_pagar'?'<span class="pl prd">Sin pagar</span>':pago==='efectivo'?'<span class="pl ptl">💵 Efectivo</span>':'<span class="pl ppu">📲 Transferencia</span>';
     const btnPago=pago==='sin_pagar'?'<button class="delbtn" style="border-color:#534AB7;background:#EEEDFE;color:#3C3489" onclick="showPagoOpts(\''+p.id+'\')">$ Pago</button>':'';
-    return '<div class="pi '+p.est+'" id="pi-'+p.id+'"><div class="ptop"><div><div class="lim">'+p.nom+'</div><div class="lis">'+(p.fec||'')+' · '+p.loc+' · '+parts+'</div></div>'+badge+'</div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'+pagoBadge+'<span style="font-size:16px;font-weight:700">'+fmt(p.tot)+'</span></div><div id="pago-opts-'+p.id+'" style="display:none;background:#f7f5f2;border-radius:10px;padding:10px;margin-bottom:8px"><div style="font-size:12px;color:#888;margin-bottom:8px;font-weight:500">Seleccionar forma de pago:</div><div style="display:flex;gap:8px"><button onclick="registrarPago(\''+p.id+'\',\'efectivo\')" style="flex:1;padding:9px;border-radius:8px;border:1.5px solid #34D399;background:#E1F5EE;color:#085041;font-weight:600;cursor:pointer;font-size:13px">💵 Efectivo</button><button onclick="registrarPago(\''+p.id+'\',\'transferencia\')" style="flex:1;padding:9px;border-radius:8px;border:1.5px solid #534AB7;background:#EEEDFE;color:#3C3489;font-weight:600;cursor:pointer;font-size:13px">📲 Transferencia</button></div></div><div class="pbot">'+btnEntrega+btnPago+'</div></div>';
+    const cliente = findClientePorNombre(p.nom);
+    const btnWa = (cliente && cliente.whatsapp) ? '<button class="wabtn" onclick="abrirWhatsapp(\''+cliente.whatsapp+'\')">📲 WhatsApp</button>' : '';
+    return '<div class="pi '+p.est+'" id="pi-'+p.id+'"><div class="ptop"><div><div class="lim">'+p.nom+'</div><div class="lis">'+(p.fec||'')+' · '+p.loc+' · '+parts+'</div></div>'+badge+'</div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'+pagoBadge+'<span style="font-size:16px;font-weight:700">'+fmt(p.tot)+'</span></div><div id="pago-opts-'+p.id+'" style="display:none;background:#f7f5f2;border-radius:10px;padding:10px;margin-bottom:8px"><div style="font-size:12px;color:#888;margin-bottom:8px;font-weight:500">Seleccionar forma de pago:</div><div style="display:flex;gap:8px"><button onclick="registrarPago(\''+p.id+'\',\'efectivo\')" style="flex:1;padding:9px;border-radius:8px;border:1.5px solid #34D399;background:#E1F5EE;color:#085041;font-weight:600;cursor:pointer;font-size:13px">💵 Efectivo</button><button onclick="registrarPago(\''+p.id+'\',\'transferencia\')" style="flex:1;padding:9px;border-radius:8px;border:1.5px solid #534AB7;background:#EEEDFE;color:#3C3489;font-weight:600;cursor:pointer;font-size:13px">📲 Transferencia</button></div></div><div class="pbot">'+btnEntrega+btnWa+btnPago+'</div></div>';
   }).join('');
 }
 
@@ -504,7 +558,7 @@ function renderCats() {
 }
 
 window.filtrarMov = function(f,btnId) {
-  movFilt=f; document.querySelectorAll('.tb').forEach(b=>b.classList.remove('on')); document.getElementById(btnId).classList.add('on'); renderMov();
+  movFilt=f; document.querySelectorAll('#sec-movimientos .tb').forEach(b=>b.classList.remove('on')); document.getElementById(btnId).classList.add('on'); renderMov();
 };
 
 function renderMov() {
@@ -515,10 +569,52 @@ function renderMov() {
   el.innerHTML=lista.map(m=>'<div class="mov-item"><div class="mov-top"><div><div class="mov-title">'+m.producto+' — '+m.cantidad+' u.</div><div class="mov-sub">'+[m.fecha,m.ubicacion,m.cliente?'Cliente: '+m.cliente:''].filter(Boolean).join(' · ')+'</div></div><span class="pl '+(cmap[m.tipo]||'pgr')+'">'+m.tipo+'</span></div></div>').join('');
 }
 
+// CLIENTES
+window.addCliente = async function() {
+  const nom = document.getElementById('clnom').value.trim();
+  const wa = document.getElementById('clwa').value.trim().replace(/\D/g,'');
+  if (!nom) return;
+  const key = slug(nom);
+  try {
+    await setDoc(doc(db,'clientes',key), { nombre: nom, whatsapp: wa, ts: serverTimestamp() }, { merge: true });
+    setSyncDot(true);
+    document.getElementById('clnom').value=''; document.getElementById('clwa').value='';
+  } catch(e) { setSyncDot(false); }
+};
+
+function clienteStats(nombre) {
+  const key = slug(nombre);
+  const pedidosCliente = peds.filter(p => slug(p.nom) === key);
+  const entregados = pedidosCliente.filter(p=>p.est==='done');
+  const total = entregados.reduce((a,p)=>a+p.tot,0);
+  return { pedidos: pedidosCliente, count: pedidosCliente.length, total };
+}
+
+function renderClientes() {
+  const el = document.getElementById('clientlist');
+  const dl = document.getElementById('clientes-dl');
+  if (dl) dl.innerHTML = clientes.map(c=>'<option value="'+c.nombre+'">').join('');
+  if (!clientes.length) { el.innerHTML = '<div class="empty">Sin clientes aun</div>'; return; }
+  el.innerHTML = clientes.map(c => {
+    const stats = clienteStats(c.nombre);
+    const historyHtml = stats.pedidos.length
+      ? stats.pedidos.slice(0,10).map(p=>'<div class="mov-item"><div class="mov-top"><div><div class="mov-title">'+(p.fec||'')+' · '+p.loc+'</div><div class="mov-sub">'+(p.est==='done'?'Entregado':'Pendiente')+'</div></div><span class="pl '+(p.est==='done'?'ptl':'pam')+'">'+fmt(p.tot)+'</span></div></div>').join('')
+      : '<div class="empty">Sin pedidos aun</div>';
+    const waBtn = c.whatsapp ? '<button class="wabtn" onclick="abrirWhatsapp(\''+c.whatsapp+'\')">📲 Abrir WhatsApp</button>' : '<span style="font-size:11px;color:#bbb">Sin WhatsApp cargado</span>';
+    return '<div class="pi" style="border-left:4px solid #0F6E56;margin-bottom:10px">'
+      + '<div class="ptop"><div><div class="lim">'+c.nombre+'</div><div class="lis">'+stats.count+' pedido(s) · '+fmt(stats.total)+' entregado</div></div></div>'
+      + '<div class="pbot">'+waBtn+'</div>'
+      + '<div class="hist-summary">Historial de pedidos</div>'
+      + historyHtml
+      + '</div>';
+  }).join('');
+}
+
 onSnapshot(collection(db,'stock'),snap=>{snap.forEach(d=>{stockData[d.id]=d.data().qty||0;});renderStockDisplay();setSyncDot(true);});
-onSnapshot(query(collection(db,'pedidos'),orderBy('ts','desc')),snap=>{peds=snap.docs.map(d=>({id:d.id,...d.data()}));renderPeds();setSyncDot(true);});
+onSnapshot(query(collection(db,'pedidos'),orderBy('ts','desc')),snap=>{peds=snap.docs.map(d=>({id:d.id,...d.data()}));renderPeds();if(document.getElementById('sec-clientes').classList.contains('on'))renderClientes();setSyncDot(true);});
 onSnapshot(query(collection(db,'catering'),orderBy('ts','desc')),snap=>{cats=snap.docs.map(d=>({id:d.id,...d.data()}));renderCats();setSyncDot(true);});
 onSnapshot(query(collection(db,'movimientos'),orderBy('ts','desc')),snap=>{movimientos=snap.docs.map(d=>({id:d.id,...d.data()}));renderMov();setSyncDot(true);});
+onSnapshot(collection(db,'clientes'),snap=>{clientes=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.nombre||'').localeCompare(b.nombre||''));renderClientes();setSyncDot(true);});
 getDoc(doc(db,'config','precios')).then(d=>{if(d.exists()){precios=d.data();document.getElementById('pj').value=precios.pj||3500;document.getElementById('pc').value=precios.pc||3200;document.getElementById('pm').value=precios.pm||3000;document.getElementById('pec').value=precios.pec||800;document.getElementById('peq').value=precios.peq||800;}});
 
 const today=new Date().toISOString().split('T')[0];
