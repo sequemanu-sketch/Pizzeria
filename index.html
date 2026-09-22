@@ -116,12 +116,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="pline"><span>Pizza Mozzarella ($)</span><input type="number" id="pm" value="3000" oninput="savePrecios()"></div>
 <div class="pline"><span>Empanada Carne ($)</span><input type="number" id="pec" value="800" oninput="savePrecios()"></div>
 <div class="pline"><span>Empanada Queso ($)</span><input type="number" id="peq" value="800" oninput="savePrecios()"></div>
+<div class="pline"><span>Wrap Roast Beef ($)</span><input type="number" id="pwrb" value="4000" oninput="savePrecios()"></div>
+<div class="pline"><span>Wrap Pollo ($)</span><input type="number" id="pwp" value="4000" oninput="savePrecios()"></div>
+<div class="pline"><span>Wrap Bondiola ($)</span><input type="number" id="pwb" value="4000" oninput="savePrecios()"></div>
 <p class="note">Los pedidos ya registrados conservan su precio original.</p>
 </div>
 <div class="card">
 <div class="ch"><div class="ci" style="background:#FFF3E0"><svg viewBox="0 0 16 16" fill="none" stroke="#7A4F00" stroke-width="1.5"><rect x="2" y="4" width="12" height="9" rx="1"/><path d="M5 4V3a1 1 0 011-1h4a1 1 0 011 1v1"/></svg></div><div><div class="ct">Cargar stock</div></div></div>
 <div class="r2">
-<div class="f"><label>Categoria</label><select id="s-cat" onchange="updVarSelect()"><option value="pizza">Pizza</option><option value="empanada">Empanada</option></select></div>
+<div class="f"><label>Categoria</label><select id="s-cat" onchange="updVarSelect()"><option value="pizza">Pizza</option><option value="empanada">Empanada</option><option value="wrap">Wrap</option></select></div>
 <div class="f"><label>Variedad</label><select id="s-var"></select></div>
 </div>
 <div class="r2">
@@ -137,7 +140,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="card">
 <div class="ch"><div class="ci" style="background:#EEEDFE"><svg viewBox="0 0 16 16" fill="none" stroke="#534AB7" stroke-width="1.5"><path d="M2 8h12M9 5l3 3-3 3M7 5L4 8l3 3"/></svg></div><div><div class="ct">Transferir stock</div><div class="cs">Entre Manuel y Santiago</div></div></div>
 <div class="r2">
-<div class="f"><label>Categoria</label><select id="t-cat" onchange="updTrVar()"><option value="pizza">Pizza</option><option value="empanada">Empanada</option></select></div>
+<div class="f"><label>Categoria</label><select id="t-cat" onchange="updTrVar()"><option value="pizza">Pizza</option><option value="empanada">Empanada</option><option value="wrap">Wrap</option></select></div>
 <div class="f"><label>Variedad</label><select id="t-var"></select></div>
 </div>
 <div class="r2">
@@ -169,6 +172,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="r2">
 <div class="f"><label id="lec">Carne</label><input type="number" id="pqec" value="0" min="0" oninput="calcPed()"></div>
 <div class="f"><label id="leq">Queso</label><input type="number" id="pqeq" value="0" min="0" oninput="calcPed()"></div>
+</div>
+<div style="font-size:12px;color:#888;font-weight:500;margin-bottom:8px">Wraps</div>
+<div class="r3">
+<div class="f"><label id="lwrb">Roast Beef</label><input type="number" id="pqwrb" value="0" min="0" oninput="calcPed()"></div>
+<div class="f"><label id="lwp">Pollo</label><input type="number" id="pqwp" value="0" min="0" oninput="calcPed()"></div>
+<div class="f"><label id="lwb">Bondiola</label><input type="number" id="pqwb" value="0" min="0" oninput="calcPed()"></div>
 </div>
 <div class="warn" id="pwarn"></div>
 <div class="trow"><span class="tl">Total del pedido</span><span class="ta" id="ptot">$0</span></div>
@@ -300,12 +309,13 @@ const db = getFirestore(app);
 let stockData = {};
 let peds = [], cats = [], movimientos = [], clientes = [];
 let pfilt = 'todos', movFilt = 'todos';
-let precios = { pj: 3500, pc: 3200, pm: 3000, pec: 800, peq: 800 };
+let precios = { pj: 3500, pc: 3200, pm: 3000, pec: 800, peq: 800, pwrb: 4000, pwp: 4000, pwb: 4000 };
 
 const LOCS = ['Manuel', 'Santiago'];
 const PRODUCTOS = {
   pizza: { label: 'Pizza', vars: ['jamon','cebolla','mozzarella'], labels: { jamon:'Jamon', cebolla:'Cebolla', mozzarella:'Mozzarella' } },
-  empanada: { label: 'Empanada', vars: ['carne','queso'], labels: { carne:'Carne', queso:'Queso' } }
+  empanada: { label: 'Empanada', vars: ['carne','queso'], labels: { carne:'Carne', queso:'Queso' } },
+  wrap: { label: 'Wrap', vars: ['roastbeef','pollo','bondiola'], labels: { roastbeef:'Roast Beef', pollo:'Pollo', bondiola:'Bondiola' } }
 };
 
 function stockKey(cat, vari, loc) { return cat+'_'+vari+'_'+loc; }
@@ -351,6 +361,9 @@ function updHints() {
   if (document.getElementById('lm')) document.getElementById('lm').textContent = 'Mozzarella ('+getStock('pizza','mozzarella',loc)+')';
   if (document.getElementById('lec')) document.getElementById('lec').textContent = 'Carne ('+getStock('empanada','carne',loc)+')';
   if (document.getElementById('leq')) document.getElementById('leq').textContent = 'Queso ('+getStock('empanada','queso',loc)+')';
+  if (document.getElementById('lwrb')) document.getElementById('lwrb').textContent = 'Roast Beef ('+getStock('wrap','roastbeef',loc)+')';
+  if (document.getElementById('lwp')) document.getElementById('lwp').textContent = 'Pollo ('+getStock('wrap','pollo',loc)+')';
+  if (document.getElementById('lwb')) document.getElementById('lwb').textContent = 'Bondiola ('+getStock('wrap','bondiola',loc)+')';
 }
 
 window.updVarSelect = function() {
@@ -364,7 +377,7 @@ window.updTrVar = function() {
 updVarSelect(); updTrVar();
 
 window.savePrecios = function() {
-  precios = { pj: parseFloat(document.getElementById('pj').value)||0, pc: parseFloat(document.getElementById('pc').value)||0, pm: parseFloat(document.getElementById('pm').value)||0, pec: parseFloat(document.getElementById('pec').value)||0, peq: parseFloat(document.getElementById('peq').value)||0 };
+  precios = { pj: parseFloat(document.getElementById('pj').value)||0, pc: parseFloat(document.getElementById('pc').value)||0, pm: parseFloat(document.getElementById('pm').value)||0, pec: parseFloat(document.getElementById('pec').value)||0, peq: parseFloat(document.getElementById('peq').value)||0, pwrb: parseFloat(document.getElementById('pwrb').value)||0, pwp: parseFloat(document.getElementById('pwp').value)||0, pwb: parseFloat(document.getElementById('pwb').value)||0 };
   setDoc(doc(db,'config','precios'), precios).catch(() => setSyncDot(false));
 };
 
@@ -436,13 +449,17 @@ window.calcPed = function() {
   const loc = document.getElementById('p-loc').value;
   const qj=parseFloat(document.getElementById('pqj').value)||0, qc=parseFloat(document.getElementById('pqc').value)||0, qm=parseFloat(document.getElementById('pqm').value)||0;
   const qec=parseFloat(document.getElementById('pqec').value)||0, qeq=parseFloat(document.getElementById('pqeq').value)||0;
-  document.getElementById('ptot').textContent = fmt(qj*precios.pj+qc*precios.pc+qm*precios.pm+qec*precios.pec+qeq*precios.peq);
+  const qwrb=parseFloat(document.getElementById('pqwrb').value)||0, qwp=parseFloat(document.getElementById('pqwp').value)||0, qwb=parseFloat(document.getElementById('pqwb').value)||0;
+  document.getElementById('ptot').textContent = fmt(qj*precios.pj+qc*precios.pc+qm*precios.pm+qec*precios.pec+qeq*precios.peq+qwrb*precios.pwrb+qwp*precios.pwp+qwb*precios.pwb);
   const w=[];
   if(qj>getStock('pizza','jamon',loc)) w.push('Jamon: '+qj+'/'+getStock('pizza','jamon',loc));
   if(qc>getStock('pizza','cebolla',loc)) w.push('Cebolla: '+qc+'/'+getStock('pizza','cebolla',loc));
   if(qm>getStock('pizza','mozzarella',loc)) w.push('Mozza: '+qm+'/'+getStock('pizza','mozzarella',loc));
   if(qec>getStock('empanada','carne',loc)) w.push('Emp.Carne: '+qec+'/'+getStock('empanada','carne',loc));
   if(qeq>getStock('empanada','queso',loc)) w.push('Emp.Queso: '+qeq+'/'+getStock('empanada','queso',loc));
+  if(qwrb>getStock('wrap','roastbeef',loc)) w.push('Wrap R.Beef: '+qwrb+'/'+getStock('wrap','roastbeef',loc));
+  if(qwp>getStock('wrap','pollo',loc)) w.push('Wrap Pollo: '+qwp+'/'+getStock('wrap','pollo',loc));
+  if(qwb>getStock('wrap','bondiola',loc)) w.push('Wrap Bondiola: '+qwb+'/'+getStock('wrap','bondiola',loc));
   const we=document.getElementById('pwarn');
   if(w.length){we.style.display='block';we.textContent='Stock insuficiente en '+loc+': '+w.join(' / ');}
   else{we.style.display='none';}
@@ -452,16 +469,17 @@ window.addPed = async function() {
   const nom=document.getElementById('pnom').value.trim(), fec=document.getElementById('pfec').value, loc=document.getElementById('p-loc').value;
   const qj=parseFloat(document.getElementById('pqj').value)||0, qc=parseFloat(document.getElementById('pqc').value)||0, qm=parseFloat(document.getElementById('pqm').value)||0;
   const qec=parseFloat(document.getElementById('pqec').value)||0, qeq=parseFloat(document.getElementById('pqeq').value)||0;
-  if(!nom||(!qj&&!qc&&!qm&&!qec&&!qeq)) return;
-  const checks=[['pizza','jamon',qj],['pizza','cebolla',qc],['pizza','mozzarella',qm],['empanada','carne',qec],['empanada','queso',qeq]];
+  const qwrb=parseFloat(document.getElementById('pqwrb').value)||0, qwp=parseFloat(document.getElementById('pqwp').value)||0, qwb=parseFloat(document.getElementById('pqwb').value)||0;
+  if(!nom||(!qj&&!qc&&!qm&&!qec&&!qeq&&!qwrb&&!qwp&&!qwb)) return;
+  const checks=[['pizza','jamon',qj],['pizza','cebolla',qc],['pizza','mozzarella',qm],['empanada','carne',qec],['empanada','queso',qeq],['wrap','roastbeef',qwrb],['wrap','pollo',qwp],['wrap','bondiola',qwb]];
   for(const [cat,vari,qty] of checks){ if(qty>getStock(cat,vari,loc)){ document.getElementById('pwarn').style.display='block'; document.getElementById('pwarn').textContent='Stock insuficiente en '+loc+'.'; return; } }
-  const tot=qj*precios.pj+qc*precios.pc+qm*precios.pm+qec*precios.pec+qeq*precios.peq;
+  const tot=qj*precios.pj+qc*precios.pc+qm*precios.pm+qec*precios.pec+qeq*precios.peq+qwrb*precios.pwrb+qwp*precios.pwp+qwb*precios.pwb;
   for(const [cat,vari,qty] of checks){ if(qty>0){ const key=stockKey(cat,vari,loc); stockData[key]=(stockData[key]||0)-qty; await setDoc(doc(db,'stock',key),{cat,vari,loc,qty:stockData[key]}); } }
-  await addDoc(collection(db,'pedidos'),{nom,fec,loc,qj,qc,qm,qec,qeq,tot,pj:precios.pj,pc:precios.pc,pm:precios.pm,pec:precios.pec,peq:precios.peq,est:'pend',ts:serverTimestamp()});
-  await addDoc(collection(db,'movimientos'),{fecha:fec,producto:'Pedido',cantidad:qj+qc+qm+qec+qeq,ubicacion:loc,tipo:'Venta',cliente:nom,total:tot,ts:serverTimestamp()});
+  await addDoc(collection(db,'pedidos'),{nom,fec,loc,qj,qc,qm,qec,qeq,qwrb,qwp,qwb,tot,pj:precios.pj,pc:precios.pc,pm:precios.pm,pec:precios.pec,peq:precios.peq,pwrb:precios.pwrb,pwp:precios.pwp,pwb:precios.pwb,est:'pend',ts:serverTimestamp()});
+  await addDoc(collection(db,'movimientos'),{fecha:fec,producto:'Pedido',cantidad:qj+qc+qm+qec+qeq+qwrb+qwp+qwb,ubicacion:loc,tipo:'Venta',cliente:nom,total:tot,ts:serverTimestamp()});
   setSyncDot(true); renderStockDisplay();
   document.getElementById('pnom').value='';
-  ['pqj','pqc','pqm','pqec','pqeq'].forEach(id=>document.getElementById(id).value=0);
+  ['pqj','pqc','pqm','pqec','pqeq','pqwrb','pqwp','pqwb'].forEach(id=>document.getElementById(id).value=0);
   document.getElementById('pwarn').style.display='none'; calcPed();
 };
 
@@ -514,7 +532,7 @@ function renderPeds() {
   const el=document.getElementById('plist');
   if(!lista.length){el.innerHTML='<div class="empty">Sin pedidos aun</div>';return;}
   el.innerHTML=lista.map(p=>{
-    const parts=[p.qj?p.qj+' jamon':'',p.qc?p.qc+' cebolla':'',p.qm?p.qm+' mozza':'',p.qec?p.qec+' emp.carne':'',p.qeq?p.qeq+' emp.queso':''].filter(Boolean).join(', ');
+    const parts=[p.qj?p.qj+' jamon':'',p.qc?p.qc+' cebolla':'',p.qm?p.qm+' mozza':'',p.qec?p.qec+' emp.carne':'',p.qeq?p.qeq+' emp.queso':'',p.qwrb?p.qwrb+' wrap r.beef':'',p.qwp?p.qwp+' wrap pollo':'',p.qwb?p.qwb+' wrap bondiola':''].filter(Boolean).join(', ');
     const badge=p.est==='pend'?'<span class="pl pam">Pendiente</span>':'<span class="pl ptl">Entregado</span>';
     const btnEntrega=p.est==='pend'?'<button class="delbtn" onclick="entregar(\''+p.id+'\')">✓ Entregar</button>':'<span style="font-size:11px;color:#bbb">Entregado</span>';
     const pago=p.pago||'sin_pagar';
@@ -546,7 +564,7 @@ function renderGan() {
   const sorted=Object.keys(cl).map(k=>[k,cl[k]]).sort((a,b)=>b[1]-a[1]).slice(0,5);
   document.getElementById('toplist').innerHTML=sorted.length?sorted.map((x,i)=>'<div class="li"><div style="display:flex;align-items:center"><span class="rn'+(i===0?' g':'')+'>'+(i+1)+'</span><span class="lim">'+x[0]+'</span></div><span style="font-size:15px;font-weight:700">'+fmt(x[1])+'</span></div>').join(''):'<div class="empty">Sin datos aun</div>';
   const byType={};
-  ent.forEach(p=>{if(p.qj)byType['Pizza Jamon']=(byType['Pizza Jamon']||0)+p.qj*p.pj;if(p.qc)byType['Pizza Cebolla']=(byType['Pizza Cebolla']||0)+p.qc*p.pc;if(p.qm)byType['Pizza Mozzarella']=(byType['Pizza Mozzarella']||0)+p.qm*p.pm;if(p.qec)byType['Emp. Carne']=(byType['Emp. Carne']||0)+p.qec*p.pec;if(p.qeq)byType['Emp. Queso']=(byType['Emp. Queso']||0)+p.qeq*p.peq;});
+  ent.forEach(p=>{if(p.qj)byType['Pizza Jamon']=(byType['Pizza Jamon']||0)+p.qj*p.pj;if(p.qc)byType['Pizza Cebolla']=(byType['Pizza Cebolla']||0)+p.qc*p.pc;if(p.qm)byType['Pizza Mozzarella']=(byType['Pizza Mozzarella']||0)+p.qm*p.pm;if(p.qec)byType['Emp. Carne']=(byType['Emp. Carne']||0)+p.qec*p.pec;if(p.qeq)byType['Emp. Queso']=(byType['Emp. Queso']||0)+p.qeq*p.peq;if(p.qwrb)byType['Wrap Roast Beef']=(byType['Wrap Roast Beef']||0)+p.qwrb*p.pwrb;if(p.qwp)byType['Wrap Pollo']=(byType['Wrap Pollo']||0)+p.qwp*p.pwp;if(p.qwb)byType['Wrap Bondiola']=(byType['Wrap Bondiola']||0)+p.qwb*p.pwb;});
   const tt=Object.values(byType).reduce((a,v)=>a+v,0)||1;
   document.getElementById('vtipo').innerHTML=ent.length?Object.entries(byType).sort((a,b)=>b[1]-a[1]).map(([n,v])=>'<div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:14px;color:#888">'+n+'</span><span style="font-size:14px;font-weight:600">'+fmt(v)+' <span style="color:#bbb">'+Math.round(v/tt*100)+'%</span></span></div><div class="bw"><div class="bf" style="width:'+Math.round(v/tt*100)+'%"></div></div></div>').join(''):'<div class="empty">Sin datos aun</div>';
 }
@@ -630,7 +648,7 @@ onSnapshot(query(collection(db,'pedidos'),orderBy('ts','desc')),snap=>{peds=snap
 onSnapshot(query(collection(db,'catering'),orderBy('ts','desc')),snap=>{cats=snap.docs.map(d=>({id:d.id,...d.data()}));renderCats();setSyncDot(true);});
 onSnapshot(query(collection(db,'movimientos'),orderBy('ts','desc')),snap=>{movimientos=snap.docs.map(d=>({id:d.id,...d.data()}));renderMov();setSyncDot(true);});
 onSnapshot(collection(db,'clientes'),snap=>{clientes=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.nombre||'').localeCompare(b.nombre||''));renderClientes();setSyncDot(true);});
-getDoc(doc(db,'config','precios')).then(d=>{if(d.exists()){precios=d.data();document.getElementById('pj').value=precios.pj||3500;document.getElementById('pc').value=precios.pc||3200;document.getElementById('pm').value=precios.pm||3000;document.getElementById('pec').value=precios.pec||800;document.getElementById('peq').value=precios.peq||800;}});
+getDoc(doc(db,'config','precios')).then(d=>{if(d.exists()){precios=d.data();document.getElementById('pj').value=precios.pj||3500;document.getElementById('pc').value=precios.pc||3200;document.getElementById('pm').value=precios.pm||3000;document.getElementById('pec').value=precios.pec||800;document.getElementById('peq').value=precios.peq||800;document.getElementById('pwrb').value=precios.pwrb||4000;document.getElementById('pwp').value=precios.pwp||4000;document.getElementById('pwb').value=precios.pwb||4000;}});
 
 const today=new Date().toISOString().split('T')[0];
 document.getElementById('pfec').value=today; document.getElementById('cfec').value=today; document.getElementById('sm').value=today.slice(0,7);
