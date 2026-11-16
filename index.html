@@ -31,8 +31,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .r2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
 .r3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
 .f label{font-size:12px;color:#888;display:block;margin-bottom:6px;font-weight:500}
-.f input,.f select{width:100%;padding:10px 12px;border:1.5px solid #e8e2db;border-radius:10px;font-size:15px;background:#fafafa;color:#1a1a1a;-webkit-appearance:none}
-.f input:focus,.f select:focus{outline:none;border-color:#D85A30;background:#fff}
+.f input,.f select,.f textarea{width:100%;padding:10px 12px;border:1.5px solid #e8e2db;border-radius:10px;font-size:15px;background:#fafafa;color:#1a1a1a;-webkit-appearance:none;font-family:inherit}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:#D85A30;background:#fff}
 .trow{display:flex;justify-content:space-between;align-items:center;background:#FAECE7;border-radius:10px;padding:12px 14px;margin:12px 0}
 .tl{font-size:13px;color:#712B13;font-weight:600}
 .ta{font-size:22px;font-weight:700;color:#993C1D}
@@ -40,6 +40,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .abtn:active{background:#B94820}
 .abtn.purp{background:#534AB7}
 .abtn.teal{background:#0F6E56}
+.abtn.ghost{background:#fff;color:#888;border:1.5px solid #e8e2db;margin-top:8px}
+.abtn.wa{background:#25D366;margin-top:8px}
+.sbtn{width:100%;padding:10px;border-radius:10px;border:1.5px dashed #d8d0c6;background:#fff;font-size:13px;font-weight:600;cursor:pointer;color:#888;margin-top:6px}
 .pline{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f0ece8}
 .pline:last-of-type{border-bottom:none}
 .pline span{font-size:14px;color:#888}
@@ -57,11 +60,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .pi{border:1.5px solid #e8e2db;border-radius:12px;padding:12px 14px;margin-bottom:10px;background:#fff}
 .pi:last-child{margin-bottom:0}
 .pi.pend{border-left:4px solid #F59E0B}
-.pi.done{border-left:4px solid #34D399;opacity:.8}
+.pi.done{border-left:4px solid #34D399;opacity:.85}
 .ptop{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;gap:8px}
-.pbot{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
-.delbtn{font-size:12px;padding:8px 14px;border-radius:999px;border:1.5px solid #34D399;background:#E1F5EE;color:#085041;cursor:pointer;font-weight:600}
-.wabtn{font-size:12px;padding:8px 14px;border-radius:999px;border:1.5px solid #25D366;background:#E7F9EF;color:#0B7A3C;cursor:pointer;font-weight:600}
+.pbot{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.delbtn{font-size:12px;padding:8px 12px;border-radius:999px;border:1.5px solid #34D399;background:#E1F5EE;color:#085041;cursor:pointer;font-weight:600}
+.wabtn{font-size:12px;padding:8px 12px;border-radius:999px;border:1.5px solid #25D366;background:#E7F9EF;color:#0B7A3C;cursor:pointer;font-weight:600}
+.gbtn{font-size:12px;padding:8px 12px;border-radius:999px;border:1.5px solid #e8e2db;background:#fff;color:#666;cursor:pointer;font-weight:600}
+.rbtn{font-size:12px;padding:8px 12px;border-radius:999px;border:1.5px solid #F2B8B5;background:#fff;color:#A32D2D;cursor:pointer;font-weight:600}
+.pbtn{font-size:12px;padding:8px 12px;border-radius:999px;border:1.5px solid #534AB7;background:#EEEDFE;color:#3C3489;cursor:pointer;font-weight:600}
+.xbtn{width:28px;height:28px;border-radius:8px;border:1.5px solid #f0d4d2;background:#fff;color:#A32D2D;cursor:pointer;font-size:15px;line-height:1;flex-shrink:0}
 .tbrow{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
 .tb{padding:7px 12px;border-radius:999px;border:1.5px solid #e8e2db;background:#fff;font-size:12px;cursor:pointer;color:#888;font-weight:500}
 .tb.on{background:#D85A30;border-color:#D85A30;color:#fff;font-weight:600}
@@ -92,11 +99,51 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .stock-loc-val.lo{color:#E24B4A}
 .mov-item{padding:10px 0;border-bottom:1px solid #f0ece8}
 .mov-item:last-child{border-bottom:none}
-.mov-top{display:flex;justify-content:space-between;align-items:flex-start}
+.mov-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
 .mov-title{font-size:13px;font-weight:600;color:#1a1a1a}
 .mov-sub{font-size:11px;color:#aaa;margin-top:2px}
 .loading{text-align:center;padding:3rem 0;color:#aaa;font-size:14px}
-.hist-summary{font-size:12px;color:#888;cursor:pointer;margin:8px 0 4px}
+.hist-summary{font-size:12px;color:#888;margin:8px 0 4px}
+.subt{font-size:12px;color:#888;font-weight:500;margin:4px 0 8px}
+.chk{display:flex;align-items:center;gap:8px;font-size:13px;color:#555;margin:4px 0 6px;cursor:pointer}
+.chk input{width:18px;height:18px;accent-color:#D85A30}
+.combo-info{font-size:12px;color:#0F6E56;background:#E1F5EE;border-radius:8px;padding:8px 10px;margin-bottom:6px;display:none}
+.combo-row{display:flex;align-items:center;gap:6px;padding:8px 0;border-bottom:1px solid #f0ece8;font-size:13px;color:#888}
+.combo-row input{width:72px;text-align:right;padding:8px;border:1.5px solid #e8e2db;border-radius:8px;font-size:15px;background:#fafafa}
+.combo-row input.pr{width:100px}
+.combo-row .cu{margin-left:auto;font-size:11px;color:#bbb;white-space:nowrap}
+.evitem{border:1.5px solid #e8e2db;border-radius:10px;padding:10px;margin-bottom:8px;background:#fcfbfa}
+.evitem-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.evitem-name{font-size:13px;font-weight:600;flex:1}
+.evitem-name input{width:100%;padding:8px 10px;border:1.5px solid #e8e2db;border-radius:8px;font-size:14px;background:#fff}
+.evitem-unit{font-size:11px;color:#aaa;white-space:nowrap}
+.evitem .r3{margin-bottom:4px}
+.evitem .f label{font-size:11px;margin-bottom:4px}
+.evitem .f input{padding:8px 10px;font-size:14px}
+.evitem-sub{font-size:12px;color:#888;text-align:right}
+.evgasto{display:grid;grid-template-columns:1fr 110px 28px;gap:6px;align-items:center;margin-bottom:6px}
+.evgasto input{padding:9px 10px;border:1.5px solid #e8e2db;border-radius:8px;font-size:14px;background:#fafafa;width:100%}
+.optrow{border-bottom:1px solid #f0ece8;padding:10px 0}
+.optrow:last-child{border-bottom:none}
+.optrow .r3{margin:6px 0 0}
+.optrow .f label{font-size:11px;margin-bottom:4px}
+.optrow .f input,.optrow .f select{padding:8px 10px;font-size:14px}
+.optname{display:flex;gap:6px;align-items:center}
+.optname input{flex:1;padding:8px 10px;border:1.5px solid #e8e2db;border-radius:8px;font-size:14px;background:#fafafa}
+.evsum{background:#f7f5f2;border-radius:10px;padding:12px 14px;margin:12px 0}
+.estados{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0}
+.est{font-size:11px;padding:5px 10px;border-radius:999px;border:1.5px solid #e8e2db;background:#fff;color:#999;cursor:pointer;font-weight:600}
+.est.on.presupuesto{background:#f0ece8;border-color:#d8d0c6;color:#555}
+.est.on.confirmado{background:#EEEDFE;border-color:#534AB7;color:#3C3489}
+.est.on.realizado{background:#E1F5EE;border-color:#34D399;color:#085041}
+.est.on.cancelado{background:#FCEBEB;border-color:#E24B4A;color:#791F1F}
+.ev-items{font-size:12px;color:#777;margin:6px 0;line-height:1.6}
+.toggle-h{cursor:pointer;user-select:none}
+.toggle-h .arrow{margin-left:auto;color:#bbb;font-size:12px}
+.toast{position:fixed;left:12px;right:12px;bottom:calc(76px + env(safe-area-inset-bottom));background:#1a1a1a;color:#fff;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px;font-size:13px;z-index:200;box-shadow:0 6px 20px rgba(0,0,0,.25);transform:translateY(150%);opacity:0;transition:all .25s}
+.toast.on{transform:translateY(0);opacity:1}
+.toast span{flex:1;line-height:1.4}
+.toast button{background:none;border:none;color:#FFB59A;font-weight:700;font-size:13px;cursor:pointer;padding:4px 6px;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -107,6 +154,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </div>
 <div class="content">
 
+<!-- ======================= STOCK ======================= -->
 <div id="sec-stock" class="sec on">
 <div id="stock-display"><div class="loading">Cargando stock...</div></div>
 <div class="card">
@@ -121,6 +169,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="pline"><span>Wrap Bondiola ($)</span><input type="number" id="pwb" value="4000" oninput="savePrecios()"></div>
 <p class="note">Los pedidos ya registrados conservan su precio original.</p>
 </div>
+
+<div class="card">
+<div class="ch"><div class="ci" style="background:#E1F5EE"><svg viewBox="0 0 16 16" fill="none" stroke="#0F6E56" stroke-width="1.5"><rect x="2" y="5" width="12" height="9" rx="1"/><path d="M2 8h12M8 5v9M8 5c-1-3-4-3-4-1s4 1 4 1zM8 5c1-3 4-3 4-1s-4 1-4 1z"/></svg></div><div><div class="ct">Combos de wraps</div><div class="cs">Se pueden mezclar variedades</div></div></div>
+<div id="combo-list"></div>
+<button class="sbtn" onclick="addCombo()">+ Agregar combo</button>
+<p class="note">Ej: 3 wraps por $11.000. Al cargar un pedido la app arma solita la combinación más barata para el cliente (combos + sueltos). Si un combo sale más caro que comprarlos sueltos, no se aplica.</p>
+</div>
+
 <div class="card">
 <div class="ch"><div class="ci" style="background:#FFF3E0"><svg viewBox="0 0 16 16" fill="none" stroke="#7A4F00" stroke-width="1.5"><rect x="2" y="4" width="12" height="9" rx="1"/><path d="M5 4V3a1 1 0 011-1h4a1 1 0 011 1v1"/></svg></div><div><div class="ct">Cargar stock</div></div></div>
 <div class="r2">
@@ -137,6 +193,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </div>
 <button class="abtn" onclick="addStock()">+ Agregar al stock</button>
 </div>
+
 <div class="card">
 <div class="ch"><div class="ci" style="background:#EEEDFE"><svg viewBox="0 0 16 16" fill="none" stroke="#534AB7" stroke-width="1.5"><path d="M2 8h12M9 5l3 3-3 3M7 5L4 8l3 3"/></svg></div><div><div class="ct">Transferir stock</div><div class="cs">Entre Manuel y Santiago</div></div></div>
 <div class="r2">
@@ -150,9 +207,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="f" style="margin-bottom:10px"><label>Cantidad</label><input type="number" id="t-qty" placeholder="0" min="0"></div>
 <div class="warn" id="t-warn"></div>
 <button class="abtn purp" onclick="transferStock()">Transferir</button>
+<p class="note">Para deshacer una carga o transferencia vieja: pestaña Movim. → "↺ Revertir".</p>
 </div>
 </div>
 
+<!-- ======================= PEDIDOS ======================= -->
 <div id="sec-pedidos" class="sec">
 <div class="card">
 <div class="ch"><div class="ci" style="background:#FAECE7"><svg viewBox="0 0 16 16" fill="none" stroke="#993C1D" stroke-width="1.5"><path d="M8 2v12M2 8h12"/></svg></div><div><div class="ct">Nuevo pedido</div><div class="cs">Selecciona ubicacion para descontar stock</div></div></div>
@@ -162,52 +221,59 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="f"><label>Fecha</label><input type="date" id="pfec"></div>
 </div>
 <div class="f" style="margin-bottom:10px"><label>Ubicacion (descuento de stock)</label><select id="p-loc"><option value="Manuel">Manuel</option><option value="Santiago">Santiago</option></select></div>
-<div style="font-size:12px;color:#888;font-weight:500;margin-bottom:8px">Pizzas</div>
+<div class="subt">Pizzas</div>
 <div class="r3">
 <div class="f"><label id="lj">Jamon</label><input type="number" id="pqj" value="0" min="0" oninput="calcPed()"></div>
 <div class="f"><label id="lc">Cebolla</label><input type="number" id="pqc" value="0" min="0" oninput="calcPed()"></div>
 <div class="f"><label id="lm">Mozzarella</label><input type="number" id="pqm" value="0" min="0" oninput="calcPed()"></div>
 </div>
-<div style="font-size:12px;color:#888;font-weight:500;margin-bottom:8px">Empanadas</div>
+<div class="subt">Empanadas</div>
 <div class="r2">
 <div class="f"><label id="lec">Carne</label><input type="number" id="pqec" value="0" min="0" oninput="calcPed()"></div>
 <div class="f"><label id="leq">Queso</label><input type="number" id="pqeq" value="0" min="0" oninput="calcPed()"></div>
 </div>
-<div style="font-size:12px;color:#888;font-weight:500;margin-bottom:8px">Wraps</div>
+<div class="subt">Wraps</div>
 <div class="r3">
 <div class="f"><label id="lwrb">Roast Beef</label><input type="number" id="pqwrb" value="0" min="0" oninput="calcPed()"></div>
 <div class="f"><label id="lwp">Pollo</label><input type="number" id="pqwp" value="0" min="0" oninput="calcPed()"></div>
 <div class="f"><label id="lwb">Bondiola</label><input type="number" id="pqwb" value="0" min="0" oninput="calcPed()"></div>
 </div>
+<label class="chk"><input type="checkbox" id="pcombo" checked onchange="calcPed()"> Aplicar combos de wraps</label>
+<div class="combo-info" id="pcombo-info"></div>
 <div class="warn" id="pwarn"></div>
 <div class="trow"><span class="tl">Total del pedido</span><span class="ta" id="ptot">$0</span></div>
 <button class="abtn" onclick="addPed()">+ Registrar como pendiente</button>
 </div>
 <div class="card">
-<div class="ch"><div class="ci" style="background:#E1F5EE"><svg viewBox="0 0 16 16" fill="none" stroke="#0F6E56" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h8"/></svg></div><div><div class="ct">Pedidos</div></div></div>
+<div class="ch"><div class="ci" style="background:#E1F5EE"><svg viewBox="0 0 16 16" fill="none" stroke="#0F6E56" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h8"/></svg></div><div><div class="ct">Pedidos</div><div class="cs">Todo se puede revertir</div></div></div>
 <div class="tbrow">
 <button class="tb on" id="tf-todos" onclick="filtrar('todos','tf-todos')">Todos</button>
 <button class="tb" id="tf-pend" onclick="filtrar('pend','tf-pend')">Pendientes</button>
 <button class="tb" id="tf-done" onclick="filtrar('done','tf-done')">Entregados</button>
+<button class="tb" id="tf-sinpago" onclick="filtrar('sinpago','tf-sinpago')">Sin cobrar</button>
 </div>
 <div id="plist"><div class="empty">Sin pedidos aun</div></div>
 </div>
 </div>
 
+<!-- ======================= GANANCIAS ======================= -->
 <div id="sec-ganancias" class="sec">
 <div class="met">
 <div class="mc" style="background:#E1F5EE"><div class="ml" style="color:#0F6E56">Ingresos totales</div><div class="mv" style="color:#085041" id="gv">$0</div></div>
 <div class="mc" style="background:#FCEBEB"><div class="ml" style="color:#A32D2D">Gastos totales</div><div class="mv" style="color:#791F1F" id="gg">$0</div></div>
 </div>
 <div class="gbox">
-<div class="gbox-title">Desglose de gastos</div>
+<div class="gbox-title">Desglose</div>
+<div class="grow"><span style="color:#888">Ventas pedidos (entregados)</span><span id="gventas" style="font-weight:600">$0</span></div>
+<div class="grow"><span style="color:#888">Ingresos eventos (realizados)</span><span id="gcating" style="font-weight:600">$0</span></div>
+<div class="gsep"></div>
 <div class="grow"><span style="color:#888">Compra de stock</span><span id="gstock" style="font-weight:600">$0</span></div>
-<div class="grow"><span style="color:#888">Gastos catering</span><span id="gcater" style="font-weight:600">$0</span></div>
+<div class="grow"><span style="color:#888">Gastos eventos</span><span id="gcater" style="font-weight:600">$0</span></div>
 <div class="gsep"></div>
 <div class="grow"><span style="font-weight:600;font-size:15px">Ganancia neta</span><span class="neta-big" id="gn">$0</span></div>
 </div>
 <div class="gbox">
-<div class="gbox-title">Cobros de pedidos</div>
+<div class="gbox-title">Cobros</div>
 <div id="g-pagos"></div>
 </div>
 <div class="card">
@@ -220,27 +286,76 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </div>
 </div>
 
+<!-- ======================= EVENTOS / CATERING ======================= -->
 <div id="sec-catering" class="sec">
+
 <div class="card">
-<div class="ch"><div class="ci" style="background:#EEEDFE"><svg viewBox="0 0 16 16" fill="none" stroke="#534AB7" stroke-width="1.5"><path d="M2 13h12M4 13V6M12 13V6M8 13V4M1 6h14"/></svg></div><div><div class="ct">Nuevo evento</div><div class="cs">Los gastos impactan en ganancia neta</div></div></div>
+<div class="ch toggle-h" onclick="toggleMenuCat()"><div class="ci" style="background:#FFF3E0"><svg viewBox="0 0 16 16" fill="none" stroke="#7A4F00" stroke-width="1.5"><path d="M3 2v12M3 2h8a2 2 0 012 2v0a2 2 0 01-2 2H3M3 8h6"/></svg></div><div><div class="ct">Menú de catering</div><div class="cs">Tus opciones con precio y costo</div></div><span class="arrow" id="menucat-arrow">▼</span></div>
+<div id="menucat-body" style="display:none">
+<div id="optlist"></div>
+<button class="sbtn" onclick="addOpt()">+ Agregar opción</button>
+<button class="abtn" style="margin-top:10px" onclick="guardarMenu()">Guardar menú</button>
+<p class="note">"Por persona" multiplica por la cantidad de invitados. "Costo" es lo que te sale a vos (insumos, mano de obra): sirve para ver el margen antes de pasar el presupuesto.</p>
+</div>
+</div>
+
+<div class="card" id="ev-form-card">
+<div class="ch"><div class="ci" style="background:#EEEDFE"><svg viewBox="0 0 16 16" fill="none" stroke="#534AB7" stroke-width="1.5"><path d="M2 13h12M4 13V6M12 13V6M8 13V4M1 6h14"/></svg></div><div><div class="ct" id="ev-form-title">Nuevo evento</div><div class="cs">Armá el presupuesto con tus opciones</div></div></div>
 <div class="r2">
-<div class="f"><label>Cliente / Evento</label><input type="text" id="cnom" placeholder="Nombre"></div>
+<div class="f"><label>Cliente / Evento</label><input type="text" id="cnom" placeholder="Ej: Cumple Juan" list="clientes-dl"></div>
 <div class="f"><label>Fecha</label><input type="date" id="cfec"></div>
 </div>
 <div class="r2">
-<div class="f"><label>Ingresos ($)</label><input type="number" id="cing" placeholder="0" oninput="calcCat()"></div>
-<div class="f"><label>Gastos ($)</label><input type="number" id="cgas" placeholder="0" oninput="calcCat()"></div>
+<div class="f"><label>Hora</label><input type="time" id="chora"></div>
+<div class="f"><label>Invitados</label><input type="number" id="cpers" placeholder="0" min="0" oninput="evPersChange()"></div>
 </div>
-<div class="f" style="margin-bottom:12px"><label>Detalle de gastos</label><input type="text" id="cdet" placeholder="Ingredientes, transporte..."></div>
-<div class="trow" style="background:#EEEDFE"><span class="tl" style="color:#534AB7">Resultado neto</span><span class="ta" style="color:#3C3489" id="cnet">$0</span></div>
-<button class="abtn purp" onclick="addCat()">+ Registrar catering</button>
+<div class="r2">
+<div class="f"><label>Lugar</label><input type="text" id="clugar" placeholder="Dirección / barrio"></div>
+<div class="f"><label>WhatsApp</label><input type="tel" id="cwa" placeholder="5491122334455"></div>
+</div>
+<div class="f" style="margin-bottom:12px"><label>Estado</label><select id="cestado"><option value="presupuesto">Presupuesto</option><option value="confirmado">Confirmado</option><option value="realizado">Realizado</option><option value="cancelado">Cancelado</option></select></div>
+
+<div class="subt">Opciones del evento</div>
+<div style="display:flex;gap:6px;margin-bottom:10px">
+<div class="f" style="flex:1"><select id="ev-opt-sel"></select></div>
+<button class="pbtn" style="border-radius:10px;padding:0 14px" onclick="evAddOpt()">+ Sumar</button>
+</div>
+<div id="ev-items"></div>
+
+<div class="subt" style="margin-top:12px">Otros gastos</div>
+<div id="ev-gastos"></div>
+<button class="sbtn" onclick="evAddGasto()">+ Agregar gasto (bebidas, flete, mozo...)</button>
+
+<div class="r2" style="margin-top:12px">
+<div class="f"><label>Seña cobrada ($)</label><input type="number" id="csena" placeholder="0" oninput="calcEv()"></div>
+<div class="f"><label>Notas</label><input type="text" id="cnotas" placeholder="Opcional"></div>
+</div>
+
+<div class="evsum">
+<div class="grow"><span style="color:#888">Total a cobrar</span><span id="ev-ing" style="font-weight:700">$0</span></div>
+<div class="grow"><span style="color:#888">Costo de las opciones</span><span id="ev-costo" style="font-weight:600">$0</span></div>
+<div class="grow"><span style="color:#888">Otros gastos</span><span id="ev-extra" style="font-weight:600">$0</span></div>
+<div class="gsep"></div>
+<div class="grow"><span style="font-weight:600">Resultado neto</span><span id="cnet" style="font-size:20px;font-weight:700;color:#3C3489">$0</span></div>
+<div class="grow"><span style="color:#888">Margen</span><span id="ev-margen" style="font-weight:600">—</span></div>
+<div class="grow"><span style="color:#888">Saldo a cobrar (total − seña)</span><span id="ev-saldo" style="font-weight:600">$0</span></div>
+</div>
+<button class="abtn purp" id="ev-save-btn" onclick="guardarEvento()">+ Guardar evento</button>
+<button class="abtn wa" onclick="presupuestoWAForm()">📲 Mandar presupuesto por WhatsApp</button>
+<button class="abtn ghost" id="ev-cancel-btn" style="display:none" onclick="cancelarEdicion()">Cancelar edición</button>
+</div>
+
+<div class="card">
+<div class="ch"><div class="ci" style="background:#E1F5EE"><svg viewBox="0 0 16 16" fill="none" stroke="#0F6E56" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="1"/><path d="M2 6h12M5 1v3M11 1v3"/></svg></div><div><div class="ct">Próximos eventos</div><div class="cs">Presupuestos y confirmados</div></div></div>
+<div id="clist-prox"><div class="empty">Sin eventos próximos</div></div>
 </div>
 <div class="card">
-<div class="ch"><div class="ci" style="background:#E1F5EE"><svg viewBox="0 0 16 16" fill="none" stroke="#0F6E56" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h8"/></svg></div><div><div class="ct">Historial de catering</div></div></div>
+<div class="ch"><div class="ci" style="background:#f0ece8"><svg viewBox="0 0 16 16" fill="none" stroke="#666" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h8"/></svg></div><div><div class="ct">Historial de eventos</div><div class="cs">Realizados, cancelados y pasados</div></div></div>
 <div id="clist"><div class="empty">Sin registros aun</div></div>
 </div>
 </div>
 
+<!-- ======================= CLIENTES ======================= -->
 <div id="sec-clientes" class="sec">
 <div class="card">
 <div class="ch"><div class="ci" style="background:#E7F9EF"><svg viewBox="0 0 16 16" fill="none" stroke="#0B7A3C" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg></div><div><div class="ct">Nuevo cliente</div><div class="cs">Guarda el WhatsApp para contactarlo en un toque</div></div></div>
@@ -248,7 +363,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="f"><label>Nombre</label><input type="text" id="clnom" placeholder="Igual al que cargas en pedidos"></div>
 <div class="f"><label>WhatsApp</label><input type="tel" id="clwa" placeholder="Ej: 5491122334455"></div>
 </div>
-<p class="note">Usa el mismo nombre que usás al cargar pedidos para que se relacionen automáticamente. El numero va con codigo de pais y area, sin espacios ni "+" (ej: 549 + area + numero).</p>
+<p class="note">Usa el mismo nombre que usás al cargar pedidos para que se relacionen automáticamente. El numero va con codigo de pais y area, sin espacios ni "+" (ej: 549 + area + numero). Si el nombre ya existe, se actualiza el número.</p>
 <button class="abtn teal" onclick="addCliente()">+ Guardar cliente</button>
 </div>
 <div class="card">
@@ -257,7 +372,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </div>
 </div>
 
+<!-- ======================= MOVIMIENTOS ======================= -->
+<div id="sec-movimientos" class="sec">
+<div class="card">
+<div class="ch"><div class="ci" style="background:#EEEDFE"><svg viewBox="0 0 16 16" fill="none" stroke="#534AB7" stroke-width="1.5"><path d="M2 8h12M9 5l3 3-3 3"/></svg></div><div><div class="ct">Movimientos de stock</div><div class="cs">Cargas, ventas y transferencias. Se pueden revertir.</div></div></div>
+<div class="tbrow">
+<button class="tb on" id="mf-todos" onclick="filtrarMov('todos','mf-todos')">Todos</button>
+<button class="tb" id="mf-ing" onclick="filtrarMov('Ingreso','mf-ing')">Cargas</button>
+<button class="tb" id="mf-venta" onclick="filtrarMov('Venta','mf-venta')">Ventas</button>
+<button class="tb" id="mf-trans" onclick="filtrarMov('Transferencia','mf-trans')">Transferencias</button>
 </div>
+<div id="movlist"><div class="empty">Sin movimientos aun</div></div>
+</div>
+</div>
+
+</div>
+
+<div class="toast" id="toast"><span id="toast-msg"></span><button id="toast-undo">Deshacer</button></div>
 
 <nav class="nav">
 <button class="nb on" id="btn-stock" onclick="show('stock','btn-stock')">
@@ -278,7 +409,7 @@ Ganancias
 </button>
 <button class="nb" id="btn-catering" onclick="show('catering','btn-catering')">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19h18M6 19V9M18 19V9M12 19V6M2 9h20"/></svg>
-Catering
+Eventos
 </button>
 <button class="nb" id="btn-movimientos" onclick="show('movimientos','btn-movimientos')">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M15 6l6 6-6 6"/></svg>
@@ -286,11 +417,9 @@ Movim.
 </button>
 </nav>
 
-<div id="sec-movimientos-wrap" style="display:none"></div>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, doc, setDoc, getDoc, onSnapshot, addDoc, query, orderBy, updateDoc, serverTimestamp, runTransaction } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, doc, setDoc, getDoc, onSnapshot, addDoc, query, orderBy, updateDoc, deleteDoc, serverTimestamp, runTransaction } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC0yrI1SUgWxIJ3ScuuCGDvggEiett_Iog",
@@ -306,10 +435,16 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// ============================================================
+// ESTADO
+// ============================================================
 let stockData = {};
 let peds = [], cats = [], movimientos = [], clientes = [];
 let pfilt = 'todos', movFilt = 'todos';
 let precios = { pj: 3500, pc: 3200, pm: 3000, pec: 800, peq: 800, pwrb: 4000, pwp: 4000, pwb: 4000 };
+let combos = [];       // [{cant, precio}] combos de wraps (precio total del combo)
+let catOpts = [];      // menu de catering [{id, nombre, unidad, precio, costo}]
+let evItems = [], evGastos = [], evEditId = null;
 
 const LOCS = ['Manuel', 'Santiago'];
 const PRODUCTOS = {
@@ -317,14 +452,88 @@ const PRODUCTOS = {
   empanada: { label: 'Empanada', vars: ['carne','queso'], labels: { carne:'Carne', queso:'Queso' } },
   wrap: { label: 'Wrap', vars: ['roastbeef','pollo','bondiola'], labels: { roastbeef:'Roast Beef', pollo:'Pollo', bondiola:'Bondiola' } }
 };
+// Cada item del pedido: campo de cantidad (q), campo de precio (p), producto, texto corto y nombre para reportes
+const ITEMS = [
+  { q:'qj',   p:'pj',   cat:'pizza',    vari:'jamon',      corto:'jamon',         tipo:'Pizza Jamon' },
+  { q:'qc',   p:'pc',   cat:'pizza',    vari:'cebolla',    corto:'cebolla',       tipo:'Pizza Cebolla' },
+  { q:'qm',   p:'pm',   cat:'pizza',    vari:'mozzarella', corto:'mozza',         tipo:'Pizza Mozzarella' },
+  { q:'qec',  p:'pec',  cat:'empanada', vari:'carne',      corto:'emp.carne',     tipo:'Emp. Carne' },
+  { q:'qeq',  p:'peq',  cat:'empanada', vari:'queso',      corto:'emp.queso',     tipo:'Emp. Queso' },
+  { q:'qwrb', p:'pwrb', cat:'wrap',     vari:'roastbeef',  corto:'wrap r.beef',   tipo:'Wrap Roast Beef' },
+  { q:'qwp',  p:'pwp',  cat:'wrap',     vari:'pollo',      corto:'wrap pollo',    tipo:'Wrap Pollo' },
+  { q:'qwb',  p:'pwb',  cat:'wrap',     vari:'bondiola',   corto:'wrap bondiola', tipo:'Wrap Bondiola' }
+];
+const PRECIO_DEF = { pj: 3500, pc: 3200, pm: 3000, pec: 800, peq: 800, pwrb: 4000, pwp: 4000, pwb: 4000 };
+const UNIDADES = { persona: 'por persona', unidad: 'por unidad', fijo: 'precio fijo' };
+const ESTADOS = { presupuesto: 'Presupuesto', confirmado: 'Confirmado', realizado: 'Realizado', cancelado: 'Cancelado' };
+const CAT_DEFAULT = [
+  { id: 'o1', nombre: 'Pizza party (pizza libre)', unidad: 'persona', precio: 0, costo: 0 },
+  { id: 'o2', nombre: 'Empanadas (docena)',        unidad: 'unidad',  precio: 0, costo: 0 },
+  { id: 'o3', nombre: 'Wraps cortados (bandeja)',  unidad: 'unidad',  precio: 0, costo: 0 },
+  { id: 'o4', nombre: 'Pizzero + horno en el evento', unidad: 'fijo', precio: 0, costo: 0 },
+  { id: 'o5', nombre: 'Traslado / logística',      unidad: 'fijo',    precio: 0, costo: 0 }
+];
 
+// ============================================================
+// UTILIDADES
+// ============================================================
 function stockKey(cat, vari, loc) { return cat+'_'+vari+'_'+loc; }
 function getStock(cat, vari, loc) { return stockData[stockKey(cat,vari,loc)] || 0; }
 function setSyncDot(ok) { document.getElementById('sync-dot').className = 'sync-dot '+(ok?'ok':'err'); }
-function fmt(n) { return '$'+Math.round(n).toLocaleString('es-AR'); }
-function slug(s) { return (s||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'_'); }
-function waLink(num) { return 'https://wa.me/'+(num||'').replace(/\D/g,''); }
+function fmt(n) { return '$'+Math.round(n||0).toLocaleString('es-AR'); }
+function slug(s) { return (s||'').trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\s+/g,'_'); }
+function waLink(num, text) { const n=(num||'').replace(/\D/g,''); return 'https://wa.me/'+n+(text?'?text='+encodeURIComponent(text):''); }
+function esc(s) { return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+function num(v) { return parseFloat(v)||0; }
+function hoy() { const d=new Date(); return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().split('T')[0]; }
+function prodLabel(cat, vari) { return PRODUCTOS[cat].label+' '+PRODUCTOS[cat].labels[vari]; }
+function sinId(o) { const c={...o}; delete c.id; return c; }
+function fechaLinda(f) { if(!f) return ''; const [y,m,d]=f.split('-'); return d+'/'+m+'/'+y; }
 
+// ---------- Toast con "Deshacer" ----------
+let toastTimer = null, toastUndo = null;
+function toast(msg, undoFn) {
+  const t=document.getElementById('toast'), b=document.getElementById('toast-undo');
+  document.getElementById('toast-msg').textContent = msg;
+  toastUndo = undoFn || null;
+  b.style.display = undoFn ? 'block' : 'none';
+  t.classList.add('on');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('on'), undoFn ? 8000 : 3500);
+}
+document.getElementById('toast-undo').onclick = async () => {
+  const fn = toastUndo; toastUndo = null;
+  document.getElementById('toast').classList.remove('on');
+  if (!fn) return;
+  try { await fn(); setSyncDot(true); toast('Listo, deshecho.'); }
+  catch(e) { errorMsg(e); }
+};
+
+function errorMsg(e, warnEl) {
+  const msg = String(e && e.message || '');
+  let txt;
+  if (msg.startsWith('STOCK_INSUFICIENTE:')) txt = 'Stock insuficiente: '+msg.slice(19);
+  else { setSyncDot(false); txt = 'Error de conexión, intentá de nuevo.'; console.error(e); }
+  if (warnEl) { warnEl.style.display='block'; warnEl.textContent=txt; }
+  else toast(txt);
+}
+
+// ---------- Ajuste de stock atómico ----------
+// cambios: [{cat, vari, loc, delta}]. Lee el stock real del servidor, valida que
+// nada quede negativo y escribe todo junto (o nada). Usar SIEMPRE dentro de runTransaction.
+async function txStock(tx, cambios) {
+  const refs = cambios.map(c => doc(db,'stock',stockKey(c.cat,c.vari,c.loc)));
+  const actuales = [];
+  for (const r of refs) { const s = await tx.get(r); actuales.push(s.exists() ? (s.data().qty||0) : 0); }
+  cambios.forEach((c,i) => {
+    if (actuales[i] + c.delta < 0) throw new Error('STOCK_INSUFICIENTE:'+prodLabel(c.cat,c.vari)+' en '+c.loc+' (hay '+actuales[i]+')');
+  });
+  return () => cambios.forEach((c,i) => tx.set(refs[i], { cat:c.cat, vari:c.vari, loc:c.loc, qty: actuales[i]+c.delta }));
+}
+
+// ============================================================
+// NAVEGACION
+// ============================================================
 window.show = function(sec, btnId) {
   document.querySelectorAll('.sec').forEach(s => s.classList.remove('on'));
   document.querySelectorAll('.nb').forEach(b => b.classList.remove('on'));
@@ -336,6 +545,9 @@ window.show = function(sec, btnId) {
   window.scrollTo(0,0);
 };
 
+// ============================================================
+// STOCK
+// ============================================================
 function renderStockDisplay() {
   let html = '';
   for (const [cat, info] of Object.entries(PRODUCTOS)) {
@@ -355,15 +567,11 @@ function renderStockDisplay() {
 }
 
 function updHints() {
-  const loc = document.getElementById('p-loc') ? document.getElementById('p-loc').value : 'Manuel';
-  if (document.getElementById('lj')) document.getElementById('lj').textContent = 'Jamon ('+getStock('pizza','jamon',loc)+')';
-  if (document.getElementById('lc')) document.getElementById('lc').textContent = 'Cebolla ('+getStock('pizza','cebolla',loc)+')';
-  if (document.getElementById('lm')) document.getElementById('lm').textContent = 'Mozzarella ('+getStock('pizza','mozzarella',loc)+')';
-  if (document.getElementById('lec')) document.getElementById('lec').textContent = 'Carne ('+getStock('empanada','carne',loc)+')';
-  if (document.getElementById('leq')) document.getElementById('leq').textContent = 'Queso ('+getStock('empanada','queso',loc)+')';
-  if (document.getElementById('lwrb')) document.getElementById('lwrb').textContent = 'Roast Beef ('+getStock('wrap','roastbeef',loc)+')';
-  if (document.getElementById('lwp')) document.getElementById('lwp').textContent = 'Pollo ('+getStock('wrap','pollo',loc)+')';
-  if (document.getElementById('lwb')) document.getElementById('lwb').textContent = 'Bondiola ('+getStock('wrap','bondiola',loc)+')';
+  const loc = document.getElementById('p-loc').value;
+  ITEMS.forEach(it => {
+    const el = document.getElementById('l'+it.q.slice(1));
+    if (el) el.textContent = PRODUCTOS[it.cat].labels[it.vari]+' ('+getStock(it.cat,it.vari,loc)+')';
+  });
 }
 
 window.updVarSelect = function() {
@@ -377,114 +585,206 @@ window.updTrVar = function() {
 updVarSelect(); updTrVar();
 
 window.savePrecios = function() {
-  precios = { pj: parseFloat(document.getElementById('pj').value)||0, pc: parseFloat(document.getElementById('pc').value)||0, pm: parseFloat(document.getElementById('pm').value)||0, pec: parseFloat(document.getElementById('pec').value)||0, peq: parseFloat(document.getElementById('peq').value)||0, pwrb: parseFloat(document.getElementById('pwrb').value)||0, pwp: parseFloat(document.getElementById('pwp').value)||0, pwb: parseFloat(document.getElementById('pwb').value)||0 };
+  const n = {};
+  Object.keys(PRECIO_DEF).forEach(k => n[k] = num(document.getElementById(k).value));
+  precios = n;
+  calcPed();
   setDoc(doc(db,'config','precios'), precios).catch(() => setSyncDot(false));
 };
 
 window.addStock = async function() {
   const cat = document.getElementById('s-cat').value, vari = document.getElementById('s-var').value;
-  const loc = document.getElementById('s-loc').value, qty = parseFloat(document.getElementById('sq').value)||0;
-  const cost = parseFloat(document.getElementById('sc').value)||0, mes = document.getElementById('sm').value;
-  if (!qty) return;
-  const key = stockKey(cat,vari,loc);
-  stockData[key] = (stockData[key]||0) + qty;
+  const loc = document.getElementById('s-loc').value, qty = num(document.getElementById('sq').value);
+  const costo = num(document.getElementById('sc').value), mes = document.getElementById('sm').value;
+  if (qty <= 0) return;
+  const movRef = doc(collection(db,'movimientos'));
   try {
-    await setDoc(doc(db,'stock',key), { cat, vari, loc, qty: stockData[key] });
-    await addDoc(collection(db,'movimientos'), { fecha: new Date().toISOString().split('T')[0], producto: PRODUCTOS[cat].label+' '+PRODUCTOS[cat].labels[vari], cantidad: qty, ubicacion: loc, tipo: 'Ingreso', costo: cost, mes, ts: serverTimestamp() });
-    setSyncDot(true); renderStockDisplay();
+    await runTransaction(db, async tx => {
+      const aplicar = await txStock(tx, [{cat,vari,loc,delta:qty}]);
+      aplicar();
+      tx.set(movRef, { fecha: hoy(), producto: prodLabel(cat,vari), cat, vari, cantidad: qty, ubicacion: loc, tipo: 'Ingreso', costo, mes, ts: serverTimestamp() });
+    });
+    setSyncDot(true);
     document.getElementById('sq').value = ''; document.getElementById('sc').value = '';
-  } catch(e) { setSyncDot(false); alert('Error al guardar.'); }
+    toast('+'+qty+' '+prodLabel(cat,vari)+' en '+loc, () => revertirMovData(movRef.id, { tipo:'Ingreso', cat, vari, cantidad: qty, ubicacion: loc }));
+  } catch(e) { errorMsg(e); }
 };
 
-// TRANSFERENCIA DE STOCK — corregida con transaccion atomica de Firestore.
-// Antes se hacian dos escrituras separadas (resta en origen + suma en destino);
-// si la segunda fallaba (corte de señal, uso simultaneo con Santiago, etc.) el
-// producto quedaba restado en origen pero nunca sumado en destino: "desaparecia".
-// Ahora ambas escrituras se aplican juntas o ninguna se aplica, y ademas se
-// valida el stock real del servidor (no la copia local), evitando descuadres
-// cuando dos personas transfieren al mismo tiempo.
 window.transferStock = async function() {
   const cat = document.getElementById('t-cat').value, vari = document.getElementById('t-var').value;
   const from = document.getElementById('t-from').value, to = document.getElementById('t-to').value;
-  const qty = parseFloat(document.getElementById('t-qty').value)||0;
+  const qty = num(document.getElementById('t-qty').value);
   const warn = document.getElementById('t-warn');
   warn.style.display = 'none';
-
-  if (!qty) { warn.style.display='block'; warn.textContent='Ingresa una cantidad valida.'; return; }
+  if (qty <= 0) { warn.style.display='block'; warn.textContent='Ingresa una cantidad valida.'; return; }
   if (from===to) { warn.style.display='block'; warn.textContent='Elegi dos ubicaciones distintas.'; return; }
-
-  const fromKey = stockKey(cat,vari,from), toKey = stockKey(cat,vari,to);
-  const fromRef = doc(db,'stock',fromKey), toRef = doc(db,'stock',toKey);
-
+  const movRef = doc(collection(db,'movimientos'));
   try {
-    await runTransaction(db, async (tx) => {
-      const fromSnap = await tx.get(fromRef);
-      const toSnap = await tx.get(toRef);
-      const fromQty = fromSnap.exists() ? (fromSnap.data().qty||0) : 0;
-      const toQty = toSnap.exists() ? (toSnap.data().qty||0) : 0;
-      if (qty > fromQty) {
-        throw new Error('STOCK_INSUFICIENTE:'+fromQty);
-      }
-      tx.set(fromRef, { cat, vari, loc: from, qty: fromQty - qty });
-      tx.set(toRef, { cat, vari, loc: to, qty: toQty + qty });
+    await runTransaction(db, async tx => {
+      const aplicar = await txStock(tx, [{cat,vari,loc:from,delta:-qty},{cat,vari,loc:to,delta:qty}]);
+      aplicar();
+      tx.set(movRef, { fecha: hoy(), producto: prodLabel(cat,vari), cat, vari, from, to, cantidad: qty, ubicacion: from+' → '+to, tipo: 'Transferencia', ts: serverTimestamp() });
     });
-    await addDoc(collection(db,'movimientos'), { fecha: new Date().toISOString().split('T')[0], producto: PRODUCTOS[cat].label+' '+PRODUCTOS[cat].labels[vari], cantidad: qty, ubicacion: from+' → '+to, tipo: 'Transferencia', ts: serverTimestamp() });
     setSyncDot(true);
     document.getElementById('t-qty').value = '';
-  } catch(e) {
-    const msg = String(e && e.message || '');
-    if (msg.startsWith('STOCK_INSUFICIENTE')) {
-      const disp = msg.split(':')[1];
-      warn.style.display = 'block';
-      warn.textContent = 'Stock insuficiente en '+from+'. Hay '+disp+' unidades.';
-    } else {
-      setSyncDot(false);
-      warn.style.display = 'block';
-      warn.textContent = 'Error al transferir, intenta de nuevo.';
-    }
-  }
+    toast(qty+' '+prodLabel(cat,vari)+': '+from+' → '+to, () => revertirMovData(movRef.id, { tipo:'Transferencia', cat, vari, from, to, cantidad: qty }));
+  } catch(e) { errorMsg(e, warn); }
 };
+
+// ============================================================
+// COMBOS DE WRAPS
+// ============================================================
+function renderCombos() {
+  const el = document.getElementById('combo-list');
+  if (!combos.length) { el.innerHTML = '<div class="empty" style="padding:1rem 0">Sin combos. Agregá uno.</div>'; return; }
+  el.innerHTML = combos.map((c,i) =>
+    '<div class="combo-row"><input type="number" min="1" value="'+(c.cant||'')+'" placeholder="3" onchange="setCombo('+i+',\'cant\',this.value)"> wraps por $'
+    +'<input class="pr" type="number" min="0" value="'+(c.precio||'')+'" placeholder="11000" onchange="setCombo('+i+',\'precio\',this.value)">'
+    +'<span class="cu" id="combo-cu-'+i+'">'+(c.cant>0&&c.precio>0?fmt(c.precio/c.cant)+' c/u':'')+'</span>'
+    +'<button class="xbtn" onclick="delCombo('+i+')">×</button></div>'
+  ).join('');
+}
+function saveCombos() {
+  setDoc(doc(db,'config','combos'), { wraps: combos }).then(()=>setSyncDot(true)).catch(()=>setSyncDot(false));
+  calcPed();
+}
+window.addCombo = function() { combos.push({ cant: 0, precio: 0 }); renderCombos(); };
+window.setCombo = function(i, k, v) {
+  combos[i][k] = num(v);
+  const c = combos[i], cu = document.getElementById('combo-cu-'+i);
+  if (cu) cu.textContent = c.cant>0&&c.precio>0 ? fmt(c.precio/c.cant)+' c/u' : '';
+  saveCombos();
+};
+window.delCombo = function(i) {
+  const prev = combos.slice();
+  combos.splice(i,1); renderCombos(); saveCombos();
+  toast('Combo eliminado', () => { combos = prev; renderCombos(); saveCombos(); });
+};
+
+// Calcula el precio de los wraps buscando la combinación más barata para el cliente:
+// los wraps más caros van a los combos y el resto se cobra suelto.
+function calcWraps(q, pr, aplicar) {
+  const unit = [];
+  for (let i=0;i<(q.qwrb||0);i++) unit.push(pr.pwrb||0);
+  for (let i=0;i<(q.qwp||0);i++)  unit.push(pr.pwp||0);
+  for (let i=0;i<(q.qwb||0);i++)  unit.push(pr.pwb||0);
+  unit.sort((a,b)=>b-a);
+  const n = unit.length, sub = unit.reduce((a,v)=>a+v,0);
+  const res = { n, sub, tot: sub, ahorro: 0, det: [], sueltos: n };
+  const cs = (combos||[]).filter(c => c.cant>0 && c.precio>0 && Number.isInteger(c.cant));
+  if (!aplicar || !n || !cs.length) return res;
+  const best = new Array(n+1).fill(Infinity), pick = new Array(n+1).fill(-1);
+  best[0] = 0;
+  for (let k=1;k<=n;k++) for (let j=0;j<cs.length;j++) {
+    const c = cs[j];
+    if (c.cant<=k && best[k-c.cant]+c.precio < best[k]) { best[k] = best[k-c.cant]+c.precio; pick[k] = j; }
+  }
+  const suf = new Array(n+1).fill(0);
+  for (let i=n-1;i>=0;i--) suf[i] = suf[i+1]+unit[i];
+  let bk = 0, bt = sub;
+  for (let k=1;k<=n;k++) { if (best[k]===Infinity) continue; const t = best[k]+suf[k]; if (t < bt) { bt = t; bk = k; } }
+  if (!bk) return res;
+  const cnt = {}; let k = bk;
+  while (k>0) { const j = pick[k]; cnt[j] = (cnt[j]||0)+1; k -= cs[j].cant; }
+  res.tot = bt; res.ahorro = sub-bt; res.sueltos = n-bk;
+  res.det = Object.keys(cnt).map(j => ({ cant: cs[j].cant, precio: cs[j].precio, veces: cnt[j] }));
+  return res;
+}
+function comboTexto(w) {
+  if (!w.det.length) return '';
+  return w.det.map(d => d.veces+'× combo '+d.cant+' ('+fmt(d.precio)+')').join(' + ') + (w.sueltos ? ' + '+w.sueltos+' suelto'+(w.sueltos>1?'s':'') : '');
+}
+
+// ============================================================
+// PEDIDOS
+// ============================================================
+function leerCantidades() {
+  const q = {};
+  ITEMS.forEach(it => q[it.q] = Math.max(0, num(document.getElementById('p'+it.q).value)));
+  return q;
+}
+function calcularPedido(q, pr, aplicarCombo) {
+  let otros = 0;
+  ITEMS.forEach(it => { if (it.cat!=='wrap') otros += q[it.q]*(pr[it.p]||0); });
+  const w = calcWraps(q, pr, aplicarCombo);
+  return { tot: otros + w.tot, w };
+}
 
 window.calcPed = function() {
   const loc = document.getElementById('p-loc').value;
-  const qj=parseFloat(document.getElementById('pqj').value)||0, qc=parseFloat(document.getElementById('pqc').value)||0, qm=parseFloat(document.getElementById('pqm').value)||0;
-  const qec=parseFloat(document.getElementById('pqec').value)||0, qeq=parseFloat(document.getElementById('pqeq').value)||0;
-  const qwrb=parseFloat(document.getElementById('pqwrb').value)||0, qwp=parseFloat(document.getElementById('pqwp').value)||0, qwb=parseFloat(document.getElementById('pqwb').value)||0;
-  document.getElementById('ptot').textContent = fmt(qj*precios.pj+qc*precios.pc+qm*precios.pm+qec*precios.pec+qeq*precios.peq+qwrb*precios.pwrb+qwp*precios.pwp+qwb*precios.pwb);
-  const w=[];
-  if(qj>getStock('pizza','jamon',loc)) w.push('Jamon: '+qj+'/'+getStock('pizza','jamon',loc));
-  if(qc>getStock('pizza','cebolla',loc)) w.push('Cebolla: '+qc+'/'+getStock('pizza','cebolla',loc));
-  if(qm>getStock('pizza','mozzarella',loc)) w.push('Mozza: '+qm+'/'+getStock('pizza','mozzarella',loc));
-  if(qec>getStock('empanada','carne',loc)) w.push('Emp.Carne: '+qec+'/'+getStock('empanada','carne',loc));
-  if(qeq>getStock('empanada','queso',loc)) w.push('Emp.Queso: '+qeq+'/'+getStock('empanada','queso',loc));
-  if(qwrb>getStock('wrap','roastbeef',loc)) w.push('Wrap R.Beef: '+qwrb+'/'+getStock('wrap','roastbeef',loc));
-  if(qwp>getStock('wrap','pollo',loc)) w.push('Wrap Pollo: '+qwp+'/'+getStock('wrap','pollo',loc));
-  if(qwb>getStock('wrap','bondiola',loc)) w.push('Wrap Bondiola: '+qwb+'/'+getStock('wrap','bondiola',loc));
-  const we=document.getElementById('pwarn');
-  if(w.length){we.style.display='block';we.textContent='Stock insuficiente en '+loc+': '+w.join(' / ');}
-  else{we.style.display='none';}
+  const q = leerCantidades();
+  const { tot, w } = calcularPedido(q, precios, document.getElementById('pcombo').checked);
+  document.getElementById('ptot').textContent = fmt(tot);
+  const ci = document.getElementById('pcombo-info');
+  if (w.ahorro > 0) { ci.style.display='block'; ci.textContent = '🎁 '+comboTexto(w)+' · ahorro '+fmt(w.ahorro); }
+  else ci.style.display='none';
+  const faltan = ITEMS.filter(it => q[it.q] > getStock(it.cat,it.vari,loc)).map(it => it.tipo+': '+q[it.q]+'/'+getStock(it.cat,it.vari,loc));
+  const we = document.getElementById('pwarn');
+  if (faltan.length) { we.style.display='block'; we.textContent='Stock insuficiente en '+loc+': '+faltan.join(' / '); }
+  else we.style.display='none';
 };
 
 window.addPed = async function() {
-  const nom=document.getElementById('pnom').value.trim(), fec=document.getElementById('pfec').value, loc=document.getElementById('p-loc').value;
-  const qj=parseFloat(document.getElementById('pqj').value)||0, qc=parseFloat(document.getElementById('pqc').value)||0, qm=parseFloat(document.getElementById('pqm').value)||0;
-  const qec=parseFloat(document.getElementById('pqec').value)||0, qeq=parseFloat(document.getElementById('pqeq').value)||0;
-  const qwrb=parseFloat(document.getElementById('pqwrb').value)||0, qwp=parseFloat(document.getElementById('pqwp').value)||0, qwb=parseFloat(document.getElementById('pqwb').value)||0;
-  if(!nom||(!qj&&!qc&&!qm&&!qec&&!qeq&&!qwrb&&!qwp&&!qwb)) return;
-  const checks=[['pizza','jamon',qj],['pizza','cebolla',qc],['pizza','mozzarella',qm],['empanada','carne',qec],['empanada','queso',qeq],['wrap','roastbeef',qwrb],['wrap','pollo',qwp],['wrap','bondiola',qwb]];
-  for(const [cat,vari,qty] of checks){ if(qty>getStock(cat,vari,loc)){ document.getElementById('pwarn').style.display='block'; document.getElementById('pwarn').textContent='Stock insuficiente en '+loc+'.'; return; } }
-  const tot=qj*precios.pj+qc*precios.pc+qm*precios.pm+qec*precios.pec+qeq*precios.peq+qwrb*precios.pwrb+qwp*precios.pwp+qwb*precios.pwb;
-  for(const [cat,vari,qty] of checks){ if(qty>0){ const key=stockKey(cat,vari,loc); stockData[key]=(stockData[key]||0)-qty; await setDoc(doc(db,'stock',key),{cat,vari,loc,qty:stockData[key]}); } }
-  await addDoc(collection(db,'pedidos'),{nom,fec,loc,qj,qc,qm,qec,qeq,qwrb,qwp,qwb,tot,pj:precios.pj,pc:precios.pc,pm:precios.pm,pec:precios.pec,peq:precios.peq,pwrb:precios.pwrb,pwp:precios.pwp,pwb:precios.pwb,est:'pend',ts:serverTimestamp()});
-  await addDoc(collection(db,'movimientos'),{fecha:fec,producto:'Pedido',cantidad:qj+qc+qm+qec+qeq+qwrb+qwp+qwb,ubicacion:loc,tipo:'Venta',cliente:nom,total:tot,ts:serverTimestamp()});
-  setSyncDot(true); renderStockDisplay();
-  document.getElementById('pnom').value='';
-  ['pqj','pqc','pqm','pqec','pqeq','pqwrb','pqwp','pqwb'].forEach(id=>document.getElementById(id).value=0);
-  document.getElementById('pwarn').style.display='none'; calcPed();
+  const nom = document.getElementById('pnom').value.trim(), fec = document.getElementById('pfec').value, loc = document.getElementById('p-loc').value;
+  const q = leerCantidades();
+  const cantTotal = ITEMS.reduce((a,it)=>a+q[it.q],0);
+  const we = document.getElementById('pwarn');
+  if (!nom) { we.style.display='block'; we.textContent='Poné el nombre del cliente.'; return; }
+  if (!cantTotal) { we.style.display='block'; we.textContent='El pedido está vacío.'; return; }
+  const aplicarCombo = document.getElementById('pcombo').checked;
+  const { tot, w } = calcularPedido(q, precios, aplicarCombo);
+  const data = { nom, fec, loc, ...q, tot, est: 'pend', pago: 'sin_pagar', wrapSub: w.sub, wrapTot: w.tot, comboTxt: comboTexto(w), ahorroCombo: w.ahorro, ts: serverTimestamp() };
+  ITEMS.forEach(it => data[it.p] = precios[it.p]||0);
+  const pedRef = doc(collection(db,'pedidos')), movRef = doc(collection(db,'movimientos'));
+  try {
+    await runTransaction(db, async tx => {
+      const aplicar = await txStock(tx, ITEMS.filter(it=>q[it.q]>0).map(it => ({ cat:it.cat, vari:it.vari, loc, delta: -q[it.q] })));
+      aplicar();
+      tx.set(pedRef, data);
+      tx.set(movRef, { fecha: fec, producto: 'Pedido', cantidad: cantTotal, ubicacion: loc, tipo: 'Venta', cliente: nom, total: tot, pedidoId: pedRef.id, ts: serverTimestamp() });
+    });
+    setSyncDot(true);
+    document.getElementById('pnom').value = '';
+    ITEMS.forEach(it => document.getElementById('p'+it.q).value = 0);
+    we.style.display = 'none'; calcPed();
+    toast('Pedido de '+nom+' registrado ('+fmt(tot)+')', () => anularPedido(pedRef.id, true));
+  } catch(e) { errorMsg(e, we); }
 };
 
-window.entregar = async function(id) {
-  await updateDoc(doc(db,'pedidos',id),{est:'done'}); setSyncDot(true);
+// Anula un pedido: devuelve el stock y lo borra (con su movimiento de venta).
+window.anularPedido = async function(id, sinConfirmar) {
+  const p = peds.find(x => x.id===id);
+  if (!p) { if (sinConfirmar) throw new Error('Pedido no encontrado'); return; }
+  if (!sinConfirmar && !confirm('¿Anular el pedido de '+p.nom+' ('+fmt(p.tot)+')?\nSe devuelve el stock a '+p.loc+'.')) return;
+  const movs = movimientos.filter(m => m.pedidoId===id);
+  try {
+    await runTransaction(db, async tx => {
+      const aplicar = await txStock(tx, ITEMS.filter(it=>(p[it.q]||0)>0).map(it => ({ cat:it.cat, vari:it.vari, loc:p.loc, delta: p[it.q] })));
+      aplicar();
+      tx.delete(doc(db,'pedidos',id));
+      movs.forEach(m => tx.delete(doc(db,'movimientos',m.id)));
+    });
+    setSyncDot(true);
+    if (!sinConfirmar) toast('Pedido de '+p.nom+' anulado, stock devuelto', () => restaurarPedido(p, movs));
+  } catch(e) { errorMsg(e); }
+};
+
+async function restaurarPedido(p, movs) {
+  await runTransaction(db, async tx => {
+    const aplicar = await txStock(tx, ITEMS.filter(it=>(p[it.q]||0)>0).map(it => ({ cat:it.cat, vari:it.vari, loc:p.loc, delta: -p[it.q] })));
+    aplicar();
+    tx.set(doc(db,'pedidos',p.id), { ...sinId(p), ts: p.ts || serverTimestamp() });
+    movs.forEach(m => tx.set(doc(db,'movimientos',m.id), { ...sinId(m), ts: m.ts || serverTimestamp() }));
+  });
+}
+
+window.toggleEntrega = async function(id) {
+  const p = peds.find(x => x.id===id); if (!p) return;
+  const prev = p.est, nuevo = prev==='pend' ? 'done' : 'pend';
+  try {
+    await updateDoc(doc(db,'pedidos',id), { est: nuevo }); setSyncDot(true);
+    toast(p.nom+': '+(nuevo==='done'?'entregado':'vuelve a pendiente'), () => updateDoc(doc(db,'pedidos',id), { est: prev }));
+  } catch(e) { errorMsg(e); }
 };
 
 window.showPagoOpts = function(id) {
@@ -492,33 +792,39 @@ window.showPagoOpts = function(id) {
   el.style.display = el.style.display === 'none' ? 'block' : 'none';
 };
 
+const PAGO_TXT = { efectivo: '💵 Efectivo', transferencia: '📲 Transferencia', sin_pagar: 'Sin pagar' };
 window.registrarPago = async function(id, forma) {
-  await updateDoc(doc(db,'pedidos',id), { pago: forma });
-  setSyncDot(true);
+  const p = peds.find(x => x.id===id); if (!p) return;
+  const prev = p.pago || 'sin_pagar';
+  if (prev === forma) { showPagoOpts(id); return; }
+  try {
+    await updateDoc(doc(db,'pedidos',id), { pago: forma }); setSyncDot(true);
+    toast(p.nom+': '+PAGO_TXT[forma], () => updateDoc(doc(db,'pedidos',id), { pago: prev }));
+  } catch(e) { errorMsg(e); }
 };
 
-window.filtrar = function(f,btnId) {
-  pfilt=f; document.querySelectorAll('#sec-pedidos .tb').forEach(b=>b.classList.remove('on')); document.getElementById(btnId).classList.add('on'); renderPeds();
+window.filtrar = function(f, btnId) {
+  pfilt = f; document.querySelectorAll('#sec-pedidos .tb').forEach(b=>b.classList.remove('on')); document.getElementById(btnId).classList.add('on'); renderPeds();
 };
 
-window.abrirWhatsapp = function(num) {
-  if (!num) return;
-  window.open(waLink(num), '_blank');
+window.abrirWhatsapp = function(numero, text) {
+  if (!numero && !text) return;
+  window.open(waLink(numero, text), '_blank');
 };
 
-// Boton de WhatsApp en cada pedido: si el cliente ya tiene numero guardado abre
-// el chat directo. Si no lo tiene, lo pide en el momento y ofrece guardarlo
-// para que la proxima vez ya aparezca solo.
-window.abrirWhatsappPedido = function(nombreCliente) {
-  const cliente = findClientePorNombre(nombreCliente);
+// WhatsApp desde un pedido: si el cliente tiene numero guardado abre el chat directo;
+// si no, lo pide y ofrece guardarlo.
+window.abrirWhatsappPedido = function(id) {
+  const p = peds.find(x => x.id===id); if (!p) return;
+  const cliente = findClientePorNombre(p.nom);
   if (cliente && cliente.whatsapp) { abrirWhatsapp(cliente.whatsapp); return; }
-  const num = prompt('No tenes el WhatsApp de "'+nombreCliente+'" guardado.\nIngresalo con codigo de pais y area, sin espacios ni "+" (ej: 5491122334455):');
-  if (!num) return;
-  const digits = num.replace(/\D/g,'');
+  const n = prompt('No tenes el WhatsApp de "'+p.nom+'" guardado.\nIngresalo con codigo de pais y area, sin espacios ni "+" (ej: 5491122334455):');
+  if (!n) return;
+  const digits = n.replace(/\D/g,'');
   if (!digits) return;
   abrirWhatsapp(digits);
-  if (confirm('¿Guardar este numero para "'+nombreCliente+'" y que aparezca solo la proxima vez?')) {
-    setDoc(doc(db,'clientes',slug(nombreCliente)), { nombre: nombreCliente, whatsapp: digits, ts: serverTimestamp() }, { merge: true }).catch(()=>setSyncDot(false));
+  if (confirm('¿Guardar este numero para "'+p.nom+'" y que aparezca solo la proxima vez?')) {
+    setDoc(doc(db,'clientes',slug(p.nom)), { nombre: p.nom, whatsapp: digits, ts: serverTimestamp() }, { merge: true }).catch(()=>setSyncDot(false));
   }
 };
 
@@ -528,131 +834,487 @@ function findClientePorNombre(nom) {
 }
 
 function renderPeds() {
-  const lista=peds.filter(p=>pfilt==='todos'||p.est===pfilt);
-  const el=document.getElementById('plist');
-  if(!lista.length){el.innerHTML='<div class="empty">Sin pedidos aun</div>';return;}
-  el.innerHTML=lista.map(p=>{
-    const parts=[p.qj?p.qj+' jamon':'',p.qc?p.qc+' cebolla':'',p.qm?p.qm+' mozza':'',p.qec?p.qec+' emp.carne':'',p.qeq?p.qeq+' emp.queso':'',p.qwrb?p.qwrb+' wrap r.beef':'',p.qwp?p.qwp+' wrap pollo':'',p.qwb?p.qwb+' wrap bondiola':''].filter(Boolean).join(', ');
-    const badge=p.est==='pend'?'<span class="pl pam">Pendiente</span>':'<span class="pl ptl">Entregado</span>';
-    const btnEntrega=p.est==='pend'?'<button class="delbtn" onclick="entregar(\''+p.id+'\')">✓ Entregar</button>':'<span style="font-size:11px;color:#bbb">Entregado</span>';
-    const pago=p.pago||'sin_pagar';
-    const pagoBadge=pago==='sin_pagar'?'<span class="pl prd">Sin pagar</span>':pago==='efectivo'?'<span class="pl ptl">💵 Efectivo</span>':'<span class="pl ppu">📲 Transferencia</span>';
-    const btnPago=pago==='sin_pagar'?'<button class="delbtn" style="border-color:#534AB7;background:#EEEDFE;color:#3C3489" onclick="showPagoOpts(\''+p.id+'\')">$ Pago</button>':'';
-    const btnWa = '<button class="wabtn" onclick="abrirWhatsappPedido(\''+p.nom.replace(/'/g,"\\'")+'\')">📲 WhatsApp</button>';
-    return '<div class="pi '+p.est+'" id="pi-'+p.id+'"><div class="ptop"><div><div class="lim">'+p.nom+'</div><div class="lis">'+(p.fec||'')+' · '+p.loc+' · '+parts+'</div></div>'+badge+'</div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'+pagoBadge+'<span style="font-size:16px;font-weight:700">'+fmt(p.tot)+'</span></div><div id="pago-opts-'+p.id+'" style="display:none;background:#f7f5f2;border-radius:10px;padding:10px;margin-bottom:8px"><div style="font-size:12px;color:#888;margin-bottom:8px;font-weight:500">Seleccionar forma de pago:</div><div style="display:flex;gap:8px"><button onclick="registrarPago(\''+p.id+'\',\'efectivo\')" style="flex:1;padding:9px;border-radius:8px;border:1.5px solid #34D399;background:#E1F5EE;color:#085041;font-weight:600;cursor:pointer;font-size:13px">💵 Efectivo</button><button onclick="registrarPago(\''+p.id+'\',\'transferencia\')" style="flex:1;padding:9px;border-radius:8px;border:1.5px solid #534AB7;background:#EEEDFE;color:#3C3489;font-weight:600;cursor:pointer;font-size:13px">📲 Transferencia</button></div></div><div class="pbot">'+btnEntrega+btnWa+btnPago+'</div></div>';
+  const lista = peds.filter(p => pfilt==='todos' || p.est===pfilt || (pfilt==='sinpago' && (!p.pago || p.pago==='sin_pagar')));
+  const el = document.getElementById('plist');
+  if (!lista.length) { el.innerHTML='<div class="empty">Sin pedidos aca</div>'; return; }
+  el.innerHTML = lista.map(p => {
+    const parts = ITEMS.filter(it => p[it.q]).map(it => p[it.q]+' '+it.corto).join(', ');
+    const combo = p.comboTxt ? '<div class="lis" style="color:#0F6E56">🎁 '+esc(p.comboTxt)+(p.ahorroCombo?' · ahorro '+fmt(p.ahorroCombo):'')+'</div>' : '';
+    const badge = p.est==='pend' ? '<span class="pl pam">Pendiente</span>' : '<span class="pl ptl">Entregado</span>';
+    const btnEntrega = p.est==='pend'
+      ? '<button class="delbtn" onclick="toggleEntrega(\''+p.id+'\')">✓ Entregar</button>'
+      : '<button class="gbtn" onclick="toggleEntrega(\''+p.id+'\')">↺ No entregado</button>';
+    const pago = p.pago || 'sin_pagar';
+    const pagoBadge = pago==='sin_pagar' ? '<span class="pl prd">Sin pagar</span>' : pago==='efectivo' ? '<span class="pl ptl">💵 Efectivo</span>' : '<span class="pl ppu">📲 Transferencia</span>';
+    const btnPago = pago==='sin_pagar'
+      ? '<button class="pbtn" onclick="showPagoOpts(\''+p.id+'\')">$ Pago</button>'
+      : '<button class="gbtn" onclick="showPagoOpts(\''+p.id+'\')">↺ Pago</button>';
+    const opt = (forma, estilo) => '<button onclick="registrarPago(\''+p.id+'\',\''+forma+'\')" style="flex:1;padding:9px;border-radius:8px;font-weight:600;cursor:pointer;font-size:12px;'+estilo+(pago===forma?';outline:2px solid #1a1a1a':'')+'">'+PAGO_TXT[forma]+'</button>';
+    const pagoOpts = '<div id="pago-opts-'+p.id+'" style="display:none;background:#f7f5f2;border-radius:10px;padding:10px;margin-bottom:8px"><div style="font-size:12px;color:#888;margin-bottom:8px;font-weight:500">Forma de pago:</div><div style="display:flex;gap:6px">'
+      + opt('efectivo','border:1.5px solid #34D399;background:#E1F5EE;color:#085041')
+      + opt('transferencia','border:1.5px solid #534AB7;background:#EEEDFE;color:#3C3489')
+      + opt('sin_pagar','border:1.5px solid #F2B8B5;background:#fff;color:#A32D2D')
+      + '</div></div>';
+    const btnWa = '<button class="wabtn" onclick="abrirWhatsappPedido(\''+p.id+'\')">📲</button>';
+    const btnAnular = '<button class="rbtn" onclick="anularPedido(\''+p.id+'\')">✕ Anular</button>';
+    return '<div class="pi '+p.est+'"><div class="ptop"><div><div class="lim">'+esc(p.nom)+'</div><div class="lis">'+esc(fechaLinda(p.fec))+' · '+esc(p.loc)+' · '+parts+'</div>'+combo+'</div>'+badge+'</div>'
+      + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'+pagoBadge+'<span style="font-size:16px;font-weight:700">'+fmt(p.tot)+'</span></div>'
+      + pagoOpts
+      + '<div class="pbot">'+btnEntrega+btnPago+btnWa+btnAnular+'</div></div>';
   }).join('');
 }
 
+// ============================================================
+// GANANCIAS
+// ============================================================
+function eventoCuenta(c) { return !c.estado || c.estado==='realizado'; } // los viejos (sin estado) cuentan como realizados
+
 function renderGan() {
-  const ent=peds.filter(p=>p.est==='done');
-  const ventas=ent.reduce((a,p)=>a+p.tot,0), catIng=cats.reduce((a,c)=>a+c.ing,0), catGas=cats.reduce((a,c)=>a+c.gas,0);
-  const stockGas=movimientos.filter(m=>m.tipo==='Ingreso').reduce((a,m)=>a+(m.costo||0)*(m.cantidad||0),0);
-  const neta=ventas+catIng-stockGas-catGas;
-  document.getElementById('gv').textContent=fmt(ventas+catIng);
-  document.getElementById('gg').textContent=fmt(stockGas+catGas);
-  document.getElementById('gstock').textContent=fmt(stockGas);
-  document.getElementById('gcater').textContent=fmt(catGas);
-  document.getElementById('gn').textContent=fmt(neta);
-  document.getElementById('gn').style.color=neta>=0?'#1D9E75':'#E24B4A';
-  const efectivo=ent.filter(p=>p.pago==='efectivo').reduce((a,p)=>a+p.tot,0);
-  const transf=ent.filter(p=>p.pago==='transferencia').reduce((a,p)=>a+p.tot,0);
-  const sinPagar=ent.filter(p=>!p.pago||p.pago==='sin_pagar').reduce((a,p)=>a+p.tot,0);
-  const gpEl=document.getElementById('g-pagos');
-  if(gpEl) gpEl.innerHTML='<div class="grow"><span style="color:#888">💵 Efectivo</span><span style="font-weight:600">'+fmt(efectivo)+'</span></div><div class="grow"><span style="color:#888">📲 Transferencia</span><span style="font-weight:600">'+fmt(transf)+'</span></div><div class="grow"><span style="color:#888">⏳ Sin cobrar</span><span style="font-weight:600;color:#E24B4A">'+fmt(sinPagar)+'</span></div>';
-  const cl={};
-  ent.forEach(p=>{cl[p.nom]=(cl[p.nom]||0)+p.tot;}); cats.forEach(c=>{cl[c.nom]=(cl[c.nom]||0)+c.ing;});
-  const sorted=Object.keys(cl).map(k=>[k,cl[k]]).sort((a,b)=>b[1]-a[1]).slice(0,5);
-  document.getElementById('toplist').innerHTML=sorted.length?sorted.map((x,i)=>'<div class="li"><div style="display:flex;align-items:center"><span class="rn'+(i===0?' g':'')+'>'+(i+1)+'</span><span class="lim">'+x[0]+'</span></div><span style="font-size:15px;font-weight:700">'+fmt(x[1])+'</span></div>').join(''):'<div class="empty">Sin datos aun</div>';
-  const byType={};
-  ent.forEach(p=>{if(p.qj)byType['Pizza Jamon']=(byType['Pizza Jamon']||0)+p.qj*p.pj;if(p.qc)byType['Pizza Cebolla']=(byType['Pizza Cebolla']||0)+p.qc*p.pc;if(p.qm)byType['Pizza Mozzarella']=(byType['Pizza Mozzarella']||0)+p.qm*p.pm;if(p.qec)byType['Emp. Carne']=(byType['Emp. Carne']||0)+p.qec*p.pec;if(p.qeq)byType['Emp. Queso']=(byType['Emp. Queso']||0)+p.qeq*p.peq;if(p.qwrb)byType['Wrap Roast Beef']=(byType['Wrap Roast Beef']||0)+p.qwrb*p.pwrb;if(p.qwp)byType['Wrap Pollo']=(byType['Wrap Pollo']||0)+p.qwp*p.pwp;if(p.qwb)byType['Wrap Bondiola']=(byType['Wrap Bondiola']||0)+p.qwb*p.pwb;});
-  const tt=Object.values(byType).reduce((a,v)=>a+v,0)||1;
-  document.getElementById('vtipo').innerHTML=ent.length?Object.entries(byType).sort((a,b)=>b[1]-a[1]).map(([n,v])=>'<div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:14px;color:#888">'+n+'</span><span style="font-size:14px;font-weight:600">'+fmt(v)+' <span style="color:#bbb">'+Math.round(v/tt*100)+'%</span></span></div><div class="bw"><div class="bf" style="width:'+Math.round(v/tt*100)+'%"></div></div></div>').join(''):'<div class="empty">Sin datos aun</div>';
+  const ent = peds.filter(p => p.est==='done');
+  const evs = cats.filter(eventoCuenta);
+  const ventas = ent.reduce((a,p)=>a+(p.tot||0),0);
+  const catIng = evs.reduce((a,c)=>a+(c.ing||0),0), catGas = evs.reduce((a,c)=>a+(c.gas||0),0);
+  const stockGas = movimientos.filter(m=>m.tipo==='Ingreso').reduce((a,m)=>a+(m.costo||0)*(m.cantidad||0),0);
+  const neta = ventas+catIng-stockGas-catGas;
+  document.getElementById('gv').textContent = fmt(ventas+catIng);
+  document.getElementById('gg').textContent = fmt(stockGas+catGas);
+  document.getElementById('gventas').textContent = fmt(ventas);
+  document.getElementById('gcating').textContent = fmt(catIng);
+  document.getElementById('gstock').textContent = fmt(stockGas);
+  document.getElementById('gcater').textContent = fmt(catGas);
+  document.getElementById('gn').textContent = fmt(neta);
+  document.getElementById('gn').style.color = neta>=0 ? '#1D9E75' : '#E24B4A';
+
+  const efectivo = ent.filter(p=>p.pago==='efectivo').reduce((a,p)=>a+p.tot,0);
+  const transf = ent.filter(p=>p.pago==='transferencia').reduce((a,p)=>a+p.tot,0);
+  const sinPagar = ent.filter(p=>!p.pago||p.pago==='sin_pagar').reduce((a,p)=>a+p.tot,0);
+  const confirmados = cats.filter(c=>c.estado==='confirmado');
+  const evPorCobrar = confirmados.reduce((a,c)=>a+(c.ing||0)-(c.sena||0),0);
+  const ahorroCombos = peds.reduce((a,p)=>a+(p.ahorroCombo||0),0);
+  document.getElementById('g-pagos').innerHTML =
+    '<div class="grow"><span style="color:#888">💵 Efectivo</span><span style="font-weight:600">'+fmt(efectivo)+'</span></div>'
+    + '<div class="grow"><span style="color:#888">📲 Transferencia</span><span style="font-weight:600">'+fmt(transf)+'</span></div>'
+    + '<div class="grow"><span style="color:#888">⏳ Entregado sin cobrar</span><span style="font-weight:600;color:#E24B4A">'+fmt(sinPagar)+'</span></div>'
+    + '<div class="gsep"></div>'
+    + '<div class="grow"><span style="color:#888">🎉 Eventos confirmados ('+confirmados.length+') · saldo a cobrar</span><span style="font-weight:600;color:#534AB7">'+fmt(evPorCobrar)+'</span></div>'
+    + (ahorroCombos ? '<div class="grow"><span style="color:#888">🎁 Descuento dado en combos</span><span style="font-weight:600">'+fmt(ahorroCombos)+'</span></div>' : '');
+
+  const cl = {};
+  ent.forEach(p => { cl[p.nom] = (cl[p.nom]||0)+p.tot; });
+  evs.forEach(c => { cl[c.nom] = (cl[c.nom]||0)+(c.ing||0); });
+  const sorted = Object.keys(cl).map(k=>[k,cl[k]]).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  document.getElementById('toplist').innerHTML = sorted.length ? sorted.map((x,i)=>'<div class="li"><div style="display:flex;align-items:center"><span class="rn'+(i===0?' g':'')+'">'+(i+1)+'</span><span class="lim">'+esc(x[0])+'</span></div><span style="font-size:15px;font-weight:700">'+fmt(x[1])+'</span></div>').join('') : '<div class="empty">Sin datos aun</div>';
+
+  // Ventas por tipo (en wraps se prorratea el descuento de combos)
+  const byType = {};
+  ent.forEach(p => {
+    const fw = (p.wrapSub && p.wrapTot!=null) ? p.wrapTot/p.wrapSub : 1;
+    ITEMS.forEach(it => { if (p[it.q]) byType[it.tipo] = (byType[it.tipo]||0) + p[it.q]*(p[it.p]||0)*(it.cat==='wrap'?fw:1); });
+  });
+  if (evs.length) byType['Eventos'] = catIng;
+  const tt = Object.values(byType).reduce((a,v)=>a+v,0) || 1;
+  const entries = Object.entries(byType).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]);
+  document.getElementById('vtipo').innerHTML = entries.length ? entries.map(([n,v])=>'<div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:14px;color:#888">'+n+'</span><span style="font-size:14px;font-weight:600">'+fmt(v)+' <span style="color:#bbb">'+Math.round(v/tt*100)+'%</span></span></div><div class="bw"><div class="bf" style="width:'+Math.round(v/tt*100)+'%"></div></div></div>').join('') : '<div class="empty">Sin datos aun</div>';
 }
 
-window.calcCat = function() {
-  const n=(parseFloat(document.getElementById('cing').value)||0)-(parseFloat(document.getElementById('cgas').value)||0);
-  document.getElementById('cnet').textContent=fmt(n); document.getElementById('cnet').style.color=n>=0?'#3C3489':'#791F1F';
+// ============================================================
+// EVENTOS / CATERING
+// ============================================================
+// ----- Menu de opciones -----
+window.toggleMenuCat = function() {
+  const b = document.getElementById('menucat-body'), a = document.getElementById('menucat-arrow');
+  const abrir = b.style.display==='none';
+  b.style.display = abrir ? 'block' : 'none'; a.textContent = abrir ? '▲' : '▼';
+};
+function renderOpts() {
+  const el = document.getElementById('optlist');
+  if (!catOpts.length) { el.innerHTML = '<div class="empty" style="padding:1rem 0">Sin opciones</div>'; return; }
+  el.innerHTML = catOpts.map((o,i) =>
+    '<div class="optrow"><div class="optname"><input value="'+esc(o.nombre)+'" placeholder="Nombre de la opción" onchange="setOpt('+i+',\'nombre\',this.value)"><button class="xbtn" onclick="delOpt('+i+')">×</button></div>'
+    + '<div class="r3"><div class="f"><label>Se cobra</label><select onchange="setOpt('+i+',\'unidad\',this.value)">'
+    + Object.entries(UNIDADES).map(([k,v])=>'<option value="'+k+'"'+(o.unidad===k?' selected':'')+'>'+v+'</option>').join('')
+    + '</select></div><div class="f"><label>Precio ($)</label><input type="number" value="'+(o.precio||'')+'" placeholder="0" onchange="setOpt('+i+',\'precio\',this.value)"></div>'
+    + '<div class="f"><label>Costo ($)</label><input type="number" value="'+(o.costo||'')+'" placeholder="0" onchange="setOpt('+i+',\'costo\',this.value)"></div></div></div>'
+  ).join('');
+}
+window.setOpt = function(i, k, v) { catOpts[i][k] = (k==='precio'||k==='costo') ? num(v) : v; renderOptSelect(); };
+window.addOpt = function() { catOpts.push({ id: 'o'+Date.now(), nombre: '', unidad: 'unidad', precio: 0, costo: 0 }); renderOpts(); };
+window.delOpt = function(i) { catOpts.splice(i,1); renderOpts(); renderOptSelect(); };
+window.guardarMenu = async function() {
+  const limpio = catOpts.filter(o => (o.nombre||'').trim());
+  try {
+    const prevSnap = await getDoc(doc(db,'config','cateringOpciones'));
+    await setDoc(doc(db,'config','cateringOpciones'), { items: limpio });
+    catOpts = limpio; renderOpts(); renderOptSelect(); setSyncDot(true);
+    toast('Menú guardado ('+limpio.length+' opciones)', async () => {
+      if (prevSnap.exists()) { await setDoc(doc(db,'config','cateringOpciones'), prevSnap.data()); catOpts = prevSnap.data().items||[]; }
+      else { await deleteDoc(doc(db,'config','cateringOpciones')); catOpts = CAT_DEFAULT.map(o=>({...o})); }
+      renderOpts(); renderOptSelect();
+    });
+  } catch(e) { errorMsg(e); }
+};
+function renderOptSelect() {
+  document.getElementById('ev-opt-sel').innerHTML =
+    catOpts.filter(o=>(o.nombre||'').trim()).map(o => '<option value="'+esc(o.id)+'">'+esc(o.nombre)+' · '+fmt(o.precio)+' '+UNIDADES[o.unidad]+'</option>').join('')
+    + '<option value="__otro">Otro (lo escribo yo)</option>';
+}
+
+// ----- Formulario del evento -----
+window.evAddOpt = function() {
+  const id = document.getElementById('ev-opt-sel').value;
+  const pers = num(document.getElementById('cpers').value);
+  if (id === '__otro') { evItems.push({ nombre: '', unidad: 'unidad', precio: 0, costo: 0, cant: 1, manual: true }); }
+  else {
+    const o = catOpts.find(x => x.id===id); if (!o) return;
+    evItems.push({ nombre: o.nombre, unidad: o.unidad, precio: o.precio||0, costo: o.costo||0, cant: o.unidad==='persona' ? (pers||1) : 1 });
+  }
+  renderEvItems();
+};
+window.evItemSet = function(i, k, v) {
+  evItems[i][k] = k==='nombre' ? v : num(v);
+  const it = evItems[i], s = document.getElementById('evsub-'+i);
+  if (s) s.textContent = 'Subtotal '+fmt(it.precio*it.cant)+(it.costo?' · costo '+fmt(it.costo*it.cant):'');
+  calcEv();
+};
+window.evDelItem = function(i) { evItems.splice(i,1); renderEvItems(); };
+window.evPersChange = function() {
+  const pers = num(document.getElementById('cpers').value);
+  let cambio = false;
+  evItems.forEach(it => { if (it.unidad==='persona') { it.cant = pers; cambio = true; } });
+  if (cambio) renderEvItems();
+};
+function renderEvItems() {
+  const el = document.getElementById('ev-items');
+  if (!evItems.length) { el.innerHTML = '<div class="empty" style="padding:.8rem 0">Elegí una opción y tocá "+ Sumar"</div>'; calcEv(); return; }
+  el.innerHTML = evItems.map((it,i) =>
+    '<div class="evitem"><div class="evitem-top">'
+    + (it.manual ? '<div class="evitem-name"><input value="'+esc(it.nombre)+'" placeholder="Descripción" oninput="evItemSet('+i+',\'nombre\',this.value)"></div>' : '<span class="evitem-name">'+esc(it.nombre)+'</span>')
+    + '<span class="evitem-unit">'+UNIDADES[it.unidad]+'</span><button class="xbtn" onclick="evDelItem('+i+')">×</button></div>'
+    + '<div class="r3"><div class="f"><label>'+(it.unidad==='persona'?'Personas':'Cantidad')+'</label><input type="number" min="0" value="'+it.cant+'" oninput="evItemSet('+i+',\'cant\',this.value)"></div>'
+    + '<div class="f"><label>Precio u. ($)</label><input type="number" value="'+(it.precio||'')+'" placeholder="0" oninput="evItemSet('+i+',\'precio\',this.value)"></div>'
+    + '<div class="f"><label>Costo u. ($)</label><input type="number" value="'+(it.costo||'')+'" placeholder="0" oninput="evItemSet('+i+',\'costo\',this.value)"></div></div>'
+    + '<div class="evitem-sub" id="evsub-'+i+'">Subtotal '+fmt(it.precio*it.cant)+(it.costo?' · costo '+fmt(it.costo*it.cant):'')+'</div></div>'
+  ).join('');
+  calcEv();
+}
+window.evAddGasto = function() { evGastos.push({ det: '', monto: 0 }); renderEvGastos(); };
+window.evGastoSet = function(i, k, v) { evGastos[i][k] = k==='monto' ? num(v) : v; calcEv(); };
+window.evDelGasto = function(i) { evGastos.splice(i,1); renderEvGastos(); };
+function renderEvGastos() {
+  document.getElementById('ev-gastos').innerHTML = evGastos.map((g,i) =>
+    '<div class="evgasto"><input value="'+esc(g.det)+'" placeholder="Detalle" oninput="evGastoSet('+i+',\'det\',this.value)"><input type="number" value="'+(g.monto||'')+'" placeholder="$" oninput="evGastoSet('+i+',\'monto\',this.value)"><button class="xbtn" onclick="evDelGasto('+i+')">×</button></div>'
+  ).join('');
+  calcEv();
+}
+function totalesEv(items, gastos, sena) {
+  const ing = items.reduce((a,it)=>a+(it.precio||0)*(it.cant||0),0);
+  const costoEst = items.reduce((a,it)=>a+(it.costo||0)*(it.cant||0),0);
+  const gasExtra = gastos.reduce((a,g)=>a+(g.monto||0),0);
+  const gas = costoEst + gasExtra;
+  return { ing, costoEst, gasExtra, gas, net: ing-gas, saldo: ing-(sena||0) };
+}
+window.calcEv = function() {
+  const t = totalesEv(evItems, evGastos, num(document.getElementById('csena').value));
+  document.getElementById('ev-ing').textContent = fmt(t.ing);
+  document.getElementById('ev-costo').textContent = fmt(t.costoEst);
+  document.getElementById('ev-extra').textContent = fmt(t.gasExtra);
+  const n = document.getElementById('cnet');
+  n.textContent = fmt(t.net); n.style.color = t.net>=0 ? '#3C3489' : '#791F1F';
+  document.getElementById('ev-margen').textContent = t.ing ? Math.round(t.net/t.ing*100)+'%' : '—';
+  document.getElementById('ev-saldo').textContent = fmt(t.saldo);
+};
+function leerFormEvento() {
+  const items = evItems.filter(it => (it.nombre||'').trim() && (it.cant||0) > 0).map(it => ({ nombre: it.nombre.trim(), unidad: it.unidad, precio: it.precio||0, costo: it.costo||0, cant: it.cant||0, ...(it.manual?{manual:true}:{}) }));
+  const gastos = evGastos.filter(g => (g.monto||0) || (g.det||'').trim()).map(g => ({ det: (g.det||'').trim(), monto: g.monto||0 }));
+  const sena = num(document.getElementById('csena').value);
+  const t = totalesEv(items, gastos, sena);
+  return {
+    nom: document.getElementById('cnom').value.trim(),
+    fec: document.getElementById('cfec').value,
+    hora: document.getElementById('chora').value,
+    pers: num(document.getElementById('cpers').value),
+    lugar: document.getElementById('clugar').value.trim(),
+    wa: document.getElementById('cwa').value.replace(/\D/g,''),
+    estado: document.getElementById('cestado').value,
+    notas: document.getElementById('cnotas').value.trim(),
+    items, gastos, sena,
+    ing: t.ing, costoEst: t.costoEst, gasExtra: t.gasExtra, gas: t.gas, net: t.net,
+    det: items.map(it => it.nombre).join(', ')
+  };
+}
+function resetFormEvento() {
+  ['cnom','chora','cpers','clugar','cwa','csena','cnotas'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('cfec').value = hoy();
+  document.getElementById('cestado').value = 'presupuesto';
+  evItems = []; evGastos = []; evEditId = null;
+  document.getElementById('ev-form-title').textContent = 'Nuevo evento';
+  document.getElementById('ev-save-btn').textContent = '+ Guardar evento';
+  document.getElementById('ev-cancel-btn').style.display = 'none';
+  renderEvItems(); renderEvGastos();
+}
+window.cancelarEdicion = resetFormEvento;
+
+window.guardarEvento = async function() {
+  const data = leerFormEvento();
+  if (!data.nom) { toast('Poné el nombre del cliente o evento.'); return; }
+  try {
+    if (evEditId) {
+      const id = evEditId, prev = cats.find(c => c.id===id);
+      await updateDoc(doc(db,'catering',id), data);
+      toast('Evento actualizado', prev ? () => setDoc(doc(db,'catering',id), sinId(prev)) : null);
+    } else {
+      const ref = await addDoc(collection(db,'catering'), { ...data, ts: serverTimestamp() });
+      toast('Evento "'+data.nom+'" guardado', () => deleteDoc(doc(db,'catering',ref.id)));
+    }
+    setSyncDot(true);
+    resetFormEvento();
+  } catch(e) { errorMsg(e); }
 };
 
-window.addCat = async function() {
-  const nom=document.getElementById('cnom').value.trim(), fec=document.getElementById('cfec').value;
-  const ing=parseFloat(document.getElementById('cing').value)||0, gas=parseFloat(document.getElementById('cgas').value)||0;
-  const det=document.getElementById('cdet').value;
-  if(!nom) return;
-  await addDoc(collection(db,'catering'),{nom,fec,ing,gas,det,net:ing-gas,ts:serverTimestamp()});
-  setSyncDot(true);
-  ['cnom','cing','cgas','cdet'].forEach(id=>document.getElementById(id).value=''); calcCat();
+window.editarEvento = function(id) {
+  const c = cats.find(x => x.id===id); if (!c) return;
+  evEditId = id;
+  document.getElementById('cnom').value = c.nom||'';
+  document.getElementById('cfec').value = c.fec||'';
+  document.getElementById('chora').value = c.hora||'';
+  document.getElementById('cpers').value = c.pers||'';
+  document.getElementById('clugar').value = c.lugar||'';
+  document.getElementById('cwa').value = c.wa||'';
+  document.getElementById('cestado').value = c.estado||'realizado';
+  document.getElementById('csena').value = c.sena||'';
+  document.getElementById('cnotas').value = c.notas||'';
+  if (c.items) { evItems = c.items.map(it=>({...it})); evGastos = (c.gastos||[]).map(g=>({...g})); }
+  else { // evento cargado con la version vieja
+    evItems = c.ing ? [{ nombre: 'Ingreso del evento', unidad: 'fijo', precio: c.ing, costo: 0, cant: 1, manual: true }] : [];
+    evGastos = c.gas ? [{ det: c.det||'Gastos', monto: c.gas }] : [];
+  }
+  document.getElementById('ev-form-title').textContent = 'Editando: '+(c.nom||'');
+  document.getElementById('ev-save-btn').textContent = 'Guardar cambios';
+  document.getElementById('ev-cancel-btn').style.display = 'block';
+  renderEvItems(); renderEvGastos();
+  document.getElementById('ev-form-card').scrollIntoView({ behavior: 'smooth' });
 };
+
+window.setEstadoEv = async function(id, estado) {
+  const c = cats.find(x => x.id===id); if (!c) return;
+  const prev = c.estado || 'realizado';
+  if (prev === estado) return;
+  try {
+    await updateDoc(doc(db,'catering',id), { estado }); setSyncDot(true);
+    toast((c.nom||'Evento')+': '+ESTADOS[estado], () => updateDoc(doc(db,'catering',id), { estado: prev }));
+  } catch(e) { errorMsg(e); }
+};
+
+window.borrarEvento = async function(id) {
+  const c = cats.find(x => x.id===id); if (!c) return;
+  if (!confirm('¿Eliminar el evento "'+c.nom+'"?')) return;
+  try {
+    await deleteDoc(doc(db,'catering',id)); setSyncDot(true);
+    toast('Evento eliminado', () => setDoc(doc(db,'catering',id), sinId(c)));
+  } catch(e) { errorMsg(e); }
+};
+
+function textoPresupuesto(c) {
+  const l = [];
+  l.push('¡Hola'+(c.nom?' '+c.nom:'')+'! Te paso el presupuesto 🍕');
+  const info = [c.fec?'📅 '+fechaLinda(c.fec)+(c.hora?' '+c.hora+' hs':''):'', c.pers?'👥 '+c.pers+' personas':'', c.lugar?'📍 '+c.lugar:''].filter(Boolean);
+  if (info.length) l.push(info.join('\n'));
+  l.push('');
+  (c.items||[]).forEach(it => {
+    const det = it.unidad==='persona' ? ' ('+it.cant+' pers. × '+fmt(it.precio)+')' : it.unidad==='unidad' && it.cant!==1 ? ' ('+it.cant+' × '+fmt(it.precio)+')' : '';
+    l.push('• '+it.nombre+det+': '+fmt(it.precio*it.cant));
+  });
+  l.push('');
+  l.push('*Total: '+fmt(c.ing)+'*');
+  if (c.sena) { l.push('Seña recibida: '+fmt(c.sena)); l.push('Saldo: '+fmt(c.ing-c.sena)); }
+  if (c.notas) { l.push(''); l.push(c.notas); }
+  return l.join('\n');
+}
+window.presupuestoWAForm = function() {
+  const c = leerFormEvento();
+  if (!c.items.length) { toast('Sumá al menos una opción al evento.'); return; }
+  const numero = c.wa || (findClientePorNombre(c.nom)||{}).whatsapp || '';
+  abrirWhatsapp(numero, textoPresupuesto(c));
+};
+window.presupuestoWA = function(id) {
+  const c = cats.find(x => x.id===id); if (!c) return;
+  const numero = c.wa || (findClientePorNombre(c.nom)||{}).whatsapp || '';
+  abrirWhatsapp(numero, textoPresupuesto(c));
+};
+
+function eventoCard(c) {
+  const est = c.estado || 'realizado';
+  const info = [fechaLinda(c.fec)+(c.hora?' '+c.hora+' hs':''), c.pers?c.pers+' pers.':'', c.lugar].filter(Boolean).map(esc).join(' · ');
+  const items = c.items && c.items.length
+    ? c.items.map(it => esc(it.nombre)+(it.cant!==1||it.unidad==='persona'?' ×'+it.cant:'')+' · '+fmt(it.precio*it.cant)).join('<br>')
+    : (c.det ? esc(c.det) : '');
+  const chips = Object.entries(ESTADOS).map(([k,v]) => '<button class="est '+k+(est===k?' on':'')+'" onclick="setEstadoEv(\''+c.id+'\',\''+k+'\')">'+v+'</button>').join('');
+  const cobro = (c.sena ? 'Seña '+fmt(c.sena)+' · Saldo '+fmt((c.ing||0)-c.sena) : '');
+  return '<div class="pi" style="border-left:4px solid '+({presupuesto:'#bbb',confirmado:'#534AB7',realizado:'#34D399',cancelado:'#E24B4A'}[est])+'">'
+    + '<div class="ptop"><div><div class="lim">'+esc(c.nom)+'</div><div class="lis">'+info+'</div></div>'
+    + '<div style="text-align:right"><div style="font-size:16px;font-weight:700">'+fmt(c.ing)+'</div><span class="pl '+((c.net||0)>=0?'ptl':'prd')+'">neto '+fmt(c.net)+'</span></div></div>'
+    + (items ? '<div class="ev-items">'+items+'</div>' : '')
+    + '<div class="lis">Gastos '+fmt(c.gas)+(cobro?' · '+cobro:'')+(c.notas?' · '+esc(c.notas):'')+'</div>'
+    + '<div class="estados">'+chips+'</div>'
+    + '<div class="pbot"><button class="gbtn" onclick="editarEvento(\''+c.id+'\')">✎ Editar</button>'
+    + (c.items && c.items.length ? '<button class="wabtn" onclick="presupuestoWA(\''+c.id+'\')">📲 Presupuesto</button>' : '')
+    + '<button class="rbtn" onclick="borrarEvento(\''+c.id+'\')">✕ Eliminar</button></div></div>';
+}
 
 function renderCats() {
-  const el=document.getElementById('clist');
-  if(!cats.length){el.innerHTML='<div class="empty">Sin registros aun</div>';return;}
-  el.innerHTML=cats.map(c=>'<div class="li"><div><div class="lim">'+c.nom+'</div>'+(c.det?'<div class="lis">'+c.det+'</div>':'')+(c.fec?'<div class="lis">'+c.fec+'</div>':'')+'</div><div style="text-align:right"><span class="pl '+(c.net>=0?'ptl':'prd')+'">'+fmt(c.net)+'</span><div class="lis">Ing: '+fmt(c.ing)+' / Gas: '+fmt(c.gas)+'</div></div></div>').join('');
+  const h = hoy();
+  const prox = cats.filter(c => (c.estado==='presupuesto'||c.estado==='confirmado') && (!c.fec || c.fec >= h))
+                   .sort((a,b)=>(a.fec||'9999').localeCompare(b.fec||'9999'));
+  const resto = cats.filter(c => !prox.includes(c));
+  document.getElementById('clist-prox').innerHTML = prox.length ? prox.map(eventoCard).join('') : '<div class="empty">Sin eventos próximos</div>';
+  document.getElementById('clist').innerHTML = resto.length ? resto.map(eventoCard).join('') : '<div class="empty">Sin registros aun</div>';
 }
 
-window.filtrarMov = function(f,btnId) {
-  movFilt=f; document.querySelectorAll('#sec-movimientos .tb').forEach(b=>b.classList.remove('on')); document.getElementById(btnId).classList.add('on'); renderMov();
+// ============================================================
+// MOVIMIENTOS
+// ============================================================
+window.filtrarMov = function(f, btnId) {
+  movFilt = f; document.querySelectorAll('#sec-movimientos .tb').forEach(b=>b.classList.remove('on')); document.getElementById(btnId).classList.add('on'); renderMov();
+};
+
+// Para movimientos viejos que no guardaban cat/vari, lo deduce del nombre del producto
+function resolverProd(m) {
+  if (m.cat && m.vari) return { cat: m.cat, vari: m.vari };
+  for (const [cat, info] of Object.entries(PRODUCTOS)) for (const v of info.vars) if (m.producto === prodLabel(cat,v)) return { cat, vari: v };
+  return null;
+}
+function cambiosMov(m, signo) { // signo -1 = revertir, +1 = reaplicar
+  const pr = resolverProd(m); if (!pr) return null;
+  if (m.tipo==='Ingreso') return [{ ...pr, loc: m.ubicacion, delta: signo*m.cantidad }];
+  if (m.tipo==='Transferencia') {
+    const from = m.from || (m.ubicacion||'').split(' → ')[0], to = m.to || (m.ubicacion||'').split(' → ')[1];
+    if (!from || !to) return null;
+    return [{ ...pr, loc: from, delta: -signo*m.cantidad }, { ...pr, loc: to, delta: signo*m.cantidad }];
+  }
+  return null;
+}
+async function revertirMovData(id, m) {
+  const cambios = cambiosMov(m, -1); if (!cambios) throw new Error('NO_REVERTIBLE');
+  await runTransaction(db, async tx => {
+    const aplicar = await txStock(tx, cambios); aplicar();
+    tx.delete(doc(db,'movimientos',id));
+  });
+}
+window.revertirMov = async function(id) {
+  const m = movimientos.find(x => x.id===id); if (!m) return;
+  if (m.tipo==='Venta') {
+    if (m.pedidoId && peds.find(p=>p.id===m.pedidoId)) return anularPedido(m.pedidoId);
+    toast('Esta venta es de antes: anulá el pedido desde la pestaña Pedidos.'); return;
+  }
+  const desc = m.tipo==='Ingreso' ? 'Se restan '+m.cantidad+' '+m.producto+' de '+m.ubicacion+(m.costo?' y se descuenta el costo de ganancias':'')+'.' : 'Se devuelven '+m.cantidad+' '+m.producto+' ('+m.ubicacion+' al revés).';
+  if (!confirm('¿Revertir este movimiento?\n'+desc)) return;
+  try {
+    await revertirMovData(id, m); setSyncDot(true);
+    toast('Movimiento revertido', () => runTransaction(db, async tx => {
+      const aplicar = await txStock(tx, cambiosMov(m, +1)); aplicar();
+      tx.set(doc(db,'movimientos',id), { ...sinId(m), ts: m.ts || serverTimestamp() });
+    }));
+  } catch(e) {
+    if (String(e.message)==='NO_REVERTIBLE') toast('No se pudo identificar el producto de este movimiento.');
+    else errorMsg(e);
+  }
 };
 
 function renderMov() {
-  const lista=movFilt==='todos'?movimientos:movimientos.filter(m=>m.tipo===movFilt);
-  const el=document.getElementById('movlist');
-  if(!lista.length){el.innerHTML='<div class="empty">Sin movimientos aun</div>';return;}
-  const cmap={Ingreso:'ptl',Venta:'prd',Transferencia:'ppu'};
-  el.innerHTML=lista.map(m=>'<div class="mov-item"><div class="mov-top"><div><div class="mov-title">'+m.producto+' — '+m.cantidad+' u.</div><div class="mov-sub">'+[m.fecha,m.ubicacion,m.cliente?'Cliente: '+m.cliente:''].filter(Boolean).join(' · ')+'</div></div><span class="pl '+(cmap[m.tipo]||'pgr')+'">'+m.tipo+'</span></div></div>').join('');
+  const lista = movFilt==='todos' ? movimientos : movimientos.filter(m => m.tipo===movFilt);
+  const el = document.getElementById('movlist');
+  if (!lista.length) { el.innerHTML = '<div class="empty">Sin movimientos aun</div>'; return; }
+  const cmap = { Ingreso:'ptl', Venta:'prd', Transferencia:'ppu' };
+  el.innerHTML = lista.map(m => {
+    const puede = m.tipo==='Ingreso' || m.tipo==='Transferencia' || (m.tipo==='Venta' && m.pedidoId);
+    const extra = m.tipo==='Ingreso' && m.costo ? 'Costo '+fmt(m.costo)+' c/u' : m.tipo==='Venta' && m.total ? fmt(m.total) : '';
+    return '<div class="mov-item"><div class="mov-top"><div><div class="mov-title">'+esc(m.producto)+' — '+m.cantidad+' u.</div><div class="mov-sub">'
+      + [fechaLinda(m.fecha), m.ubicacion, m.cliente?'Cliente: '+m.cliente:'', extra].filter(Boolean).map(esc).join(' · ')+'</div></div>'
+      + '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px"><span class="pl '+(cmap[m.tipo]||'pgr')+'">'+esc(m.tipo)+'</span>'
+      + (puede ? '<button class="gbtn" style="padding:5px 10px;font-size:11px" onclick="revertirMov(\''+m.id+'\')">↺ Revertir</button>' : '')
+      + '</div></div></div>';
+  }).join('');
 }
 
+// ============================================================
 // CLIENTES
+// ============================================================
 window.addCliente = async function() {
   const nom = document.getElementById('clnom').value.trim();
   const wa = document.getElementById('clwa').value.trim().replace(/\D/g,'');
   if (!nom) return;
   const key = slug(nom);
+  const prev = clientes.find(c => c.id===key);
   try {
     await setDoc(doc(db,'clientes',key), { nombre: nom, whatsapp: wa, ts: serverTimestamp() }, { merge: true });
     setSyncDot(true);
     document.getElementById('clnom').value=''; document.getElementById('clwa').value='';
-  } catch(e) { setSyncDot(false); }
+    toast(prev ? 'Cliente '+nom+' actualizado' : 'Cliente '+nom+' guardado', () => prev ? setDoc(doc(db,'clientes',key), sinId(prev)) : deleteDoc(doc(db,'clientes',key)));
+  } catch(e) { errorMsg(e); }
+};
+
+window.borrarCliente = async function(id) {
+  const c = clientes.find(x => x.id===id); if (!c) return;
+  if (!confirm('¿Eliminar a '+c.nombre+' de clientes?\n(Sus pedidos no se borran)')) return;
+  try {
+    await deleteDoc(doc(db,'clientes',id)); setSyncDot(true);
+    toast('Cliente eliminado', () => setDoc(doc(db,'clientes',id), sinId(c)));
+  } catch(e) { errorMsg(e); }
 };
 
 function clienteStats(nombre) {
   const key = slug(nombre);
   const pedidosCliente = peds.filter(p => slug(p.nom) === key);
-  const entregados = pedidosCliente.filter(p=>p.est==='done');
-  const total = entregados.reduce((a,p)=>a+p.tot,0);
+  const total = pedidosCliente.filter(p=>p.est==='done').reduce((a,p)=>a+p.tot,0);
   return { pedidos: pedidosCliente, count: pedidosCliente.length, total };
 }
 
 function renderClientes() {
   const el = document.getElementById('clientlist');
-  const dl = document.getElementById('clientes-dl');
-  if (dl) dl.innerHTML = clientes.map(c=>'<option value="'+c.nombre+'">').join('');
+  document.getElementById('clientes-dl').innerHTML = clientes.map(c=>'<option value="'+esc(c.nombre)+'">').join('');
   if (!clientes.length) { el.innerHTML = '<div class="empty">Sin clientes aun</div>'; return; }
   el.innerHTML = clientes.map(c => {
     const stats = clienteStats(c.nombre);
     const historyHtml = stats.pedidos.length
-      ? stats.pedidos.slice(0,10).map(p=>'<div class="mov-item"><div class="mov-top"><div><div class="mov-title">'+(p.fec||'')+' · '+p.loc+'</div><div class="mov-sub">'+(p.est==='done'?'Entregado':'Pendiente')+'</div></div><span class="pl '+(p.est==='done'?'ptl':'pam')+'">'+fmt(p.tot)+'</span></div></div>').join('')
-      : '<div class="empty">Sin pedidos aun</div>';
-    const waBtn = c.whatsapp ? '<button class="wabtn" onclick="abrirWhatsapp(\''+c.whatsapp+'\')">📲 Abrir WhatsApp</button>' : '<span style="font-size:11px;color:#bbb">Sin WhatsApp cargado</span>';
+      ? stats.pedidos.slice(0,10).map(p=>'<div class="mov-item"><div class="mov-top"><div><div class="mov-title">'+esc(fechaLinda(p.fec))+' · '+esc(p.loc)+'</div><div class="mov-sub">'+(p.est==='done'?'Entregado':'Pendiente')+'</div></div><span class="pl '+(p.est==='done'?'ptl':'pam')+'">'+fmt(p.tot)+'</span></div></div>').join('')
+      : '<div class="empty" style="padding:1rem 0">Sin pedidos aun</div>';
+    const waBtn = c.whatsapp ? '<button class="wabtn" onclick="abrirWhatsapp(\''+esc(c.whatsapp)+'\')">📲 Abrir WhatsApp</button>' : '<span style="font-size:11px;color:#bbb">Sin WhatsApp cargado</span>';
     return '<div class="pi" style="border-left:4px solid #0F6E56;margin-bottom:10px">'
-      + '<div class="ptop"><div><div class="lim">'+c.nombre+'</div><div class="lis">'+stats.count+' pedido(s) · '+fmt(stats.total)+' entregado</div></div></div>'
-      + '<div class="pbot">'+waBtn+'</div>'
+      + '<div class="ptop"><div><div class="lim">'+esc(c.nombre)+'</div><div class="lis">'+stats.count+' pedido(s) · '+fmt(stats.total)+' entregado</div></div></div>'
+      + '<div class="pbot">'+waBtn+'<button class="rbtn" onclick="borrarCliente(\''+esc(c.id)+'\')">✕</button></div>'
       + '<div class="hist-summary">Historial de pedidos</div>'
       + historyHtml
       + '</div>';
   }).join('');
 }
 
-onSnapshot(collection(db,'stock'),snap=>{snap.forEach(d=>{stockData[d.id]=d.data().qty||0;});renderStockDisplay();setSyncDot(true);});
-onSnapshot(query(collection(db,'pedidos'),orderBy('ts','desc')),snap=>{peds=snap.docs.map(d=>({id:d.id,...d.data()}));renderPeds();if(document.getElementById('sec-clientes').classList.contains('on'))renderClientes();setSyncDot(true);});
-onSnapshot(query(collection(db,'catering'),orderBy('ts','desc')),snap=>{cats=snap.docs.map(d=>({id:d.id,...d.data()}));renderCats();setSyncDot(true);});
-onSnapshot(query(collection(db,'movimientos'),orderBy('ts','desc')),snap=>{movimientos=snap.docs.map(d=>({id:d.id,...d.data()}));renderMov();setSyncDot(true);});
-onSnapshot(collection(db,'clientes'),snap=>{clientes=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.nombre||'').localeCompare(b.nombre||''));renderClientes();setSyncDot(true);});
-getDoc(doc(db,'config','precios')).then(d=>{if(d.exists()){precios=d.data();document.getElementById('pj').value=precios.pj||3500;document.getElementById('pc').value=precios.pc||3200;document.getElementById('pm').value=precios.pm||3000;document.getElementById('pec').value=precios.pec||800;document.getElementById('peq').value=precios.peq||800;document.getElementById('pwrb').value=precios.pwrb||4000;document.getElementById('pwp').value=precios.pwp||4000;document.getElementById('pwb').value=precios.pwb||4000;}});
+// ============================================================
+// SINCRONIZACION
+// ============================================================
+onSnapshot(collection(db,'stock'), snap => { stockData = {}; snap.forEach(d => { stockData[d.id] = d.data().qty||0; }); renderStockDisplay(); calcPed(); setSyncDot(true); }, () => setSyncDot(false));
+onSnapshot(query(collection(db,'pedidos'),orderBy('ts','desc')), snap => { peds = snap.docs.map(d=>({id:d.id,...d.data()})); renderPeds(); renderClientes(); if (document.getElementById('sec-ganancias').classList.contains('on')) renderGan(); setSyncDot(true); }, () => setSyncDot(false));
+onSnapshot(query(collection(db,'catering'),orderBy('ts','desc')), snap => { cats = snap.docs.map(d=>({id:d.id,...d.data()})); renderCats(); if (document.getElementById('sec-ganancias').classList.contains('on')) renderGan(); setSyncDot(true); }, () => setSyncDot(false));
+onSnapshot(query(collection(db,'movimientos'),orderBy('ts','desc')), snap => { movimientos = snap.docs.map(d=>({id:d.id,...d.data()})); renderMov(); setSyncDot(true); }, () => setSyncDot(false));
+onSnapshot(collection(db,'clientes'), snap => { clientes = snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.nombre||'').localeCompare(b.nombre||'')); renderClientes(); setSyncDot(true); }, () => setSyncDot(false));
 
-const today=new Date().toISOString().split('T')[0];
-document.getElementById('pfec').value=today; document.getElementById('cfec').value=today; document.getElementById('sm').value=today.slice(0,7);
-document.getElementById('p-loc').addEventListener('change',()=>{updHints();calcPed();}); calcCat();
+getDoc(doc(db,'config','precios')).then(d => {
+  if (d.exists()) { precios = { ...PRECIO_DEF, ...d.data() }; Object.keys(PRECIO_DEF).forEach(k => document.getElementById(k).value = precios[k]); }
+  calcPed();
+});
+getDoc(doc(db,'config','combos')).then(d => { combos = d.exists() ? (d.data().wraps||[]) : []; renderCombos(); calcPed(); }).catch(() => renderCombos());
+getDoc(doc(db,'config','cateringOpciones')).then(d => {
+  catOpts = d.exists() ? (d.data().items||[]) : CAT_DEFAULT.map(o=>({...o}));
+  renderOpts(); renderOptSelect();
+}).catch(() => { catOpts = CAT_DEFAULT.map(o=>({...o})); renderOpts(); renderOptSelect(); });
+
+// ============================================================
+// INICIO
+// ============================================================
+document.getElementById('pfec').value = hoy();
+document.getElementById('cfec').value = hoy();
+document.getElementById('sm').value = hoy().slice(0,7);
+document.getElementById('p-loc').addEventListener('change', () => { updHints(); calcPed(); });
+renderCombos(); renderOpts(); renderOptSelect(); renderEvItems(); renderEvGastos(); calcPed();
 </script>
 </body>
 </html>
